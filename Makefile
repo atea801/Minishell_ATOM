@@ -1,6 +1,6 @@
 NAME = minishell
 
-SRC = readline_test.c
+SRC = src/readline_test.c
 
 OBJ = $(SRC:.c=.o)
 
