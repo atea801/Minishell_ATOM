@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/09/22 16:55:42 by aautret          ###   ########.fr       */
+/*   Updated: 2025/09/22 17:18:50 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,15 @@ int	main(void)
 			printf("exit\n");
 			break ;
 		}
-		if (*input) // si la ligne n’est pas vide
+		if (*input)
+		{
+			if (valide_quote(input) == 1)
+				printf("Invalide quote\n");
 			add_history(input);
+		}
 		printf("Vous avez tapé : %s\n", input);
 		free(input);
-		rl_clear_history();
-		return (0);
 	}
+	rl_clear_history();
+	return (0);
 }
