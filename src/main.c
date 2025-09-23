@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   readline_test.c                                    :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/09/22 18:20:42 by aautret          ###   ########.fr       */
+/*   Updated: 2025/09/23 17:47:43 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../atom.h"
+#include "atom.h"
 
 int	main(void)
 {
 	char	*input;
+	char	*res;
+	t_token	*token;
+	t_token	*head;
 
+	head = malloc(sizeof(t_token));
+	token = head;
 	while (1)
 	{
 		input = readline("minishell$ ");
@@ -26,8 +31,9 @@ int	main(void)
 		}
 		if (*input)
 		{
-			if (valide_quote(input) == 1)
-				printf("Invalide quote\n");
+			res = parsing_1(input);
+			tokenizer(token, res);
+			print_token_list(head);
 			add_history(input);
 		}
 		printf("Vous avez tapé : %s\n", input);
