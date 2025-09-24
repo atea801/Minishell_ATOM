@@ -6,7 +6,7 @@
 #    By: aautret <aautret@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/09/23 17:50:17 by aautret          ###   ########.fr        #
+#    Updated: 2025/09/24 14:54:59 by aautret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRC = src/parsing_1/parsing_1.c \
 		src/parsing_1/clear_input/clear_input.c \
 		src/tokenization/token.c \
 		src/tokenization/token_utils.c \
+		src/tokenization/find_type.c \
 		src/main.c
 
 OBJ = $(SRC:.c=.o)

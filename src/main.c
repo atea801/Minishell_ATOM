@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/09/23 17:47:43 by aautret          ###   ########.fr       */
+/*   Updated: 2025/09/24 17:08:35 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	main(void)
 		{
 			res = parsing_1(input);
 			tokenizer(token, res);
-			print_token_list(head);
+			// print_token_list(head);
+			print_token_list_type(head);
 			add_history(input);
 		}
 		printf("Vous avez tapé : %s\n", input);

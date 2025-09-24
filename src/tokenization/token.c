@@ -6,36 +6,12 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:39:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/09/23 17:47:55 by aautret          ###   ########.fr       */
+/*   Updated: 2025/09/24 18:21:00 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
-/**
- * @brief Fonction qui retourne :
- *
- * - 1 pour le type mot (on inclu les chiffres)
- *
- * - 0 pour les operateurs
- *
- * @param str
- * @return int
- */
-int	token_type1(char *res)
-{
-	int	i;
-
-	i = 0;
-	while (res[i])
-	{
-		if ((res[i] >= 'a' && res[i] <= 'z') || (res[i] >= '0' && res[i] <= '9')
-			|| (res[i] >= 'A' && res[i] <= 'Z'))
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 /**
  * @brief Set token.value et set avec appel de token_type token.type
@@ -48,7 +24,7 @@ int	token_type1(char *res)
 void	put_token(t_token **token, char *res)
 {
 	(*token)->value = res;
-	(*token)->type = token_type1(res);
+	(*token)->type = get_token_type(res);
 	(*token)->next = malloc(sizeof(t_token));
 	if (!(*token)->next)
 		return ;

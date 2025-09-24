@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/09/23 16:55:06 by aautret          ###   ########.fr       */
+/*   Updated: 2025/09/24 16:48:57 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,16 @@ typedef struct s_token
 {
 	char			*head;
 	char			*value; // le texte du token
-	int				type;    // 0 = mot, 1 = opérateur, etc.
+	char			*type;    // MOT PIPE REDIRIN REDIROUT HERDOC
 	struct s_token	*next;
 }					t_token;
+
+typedef	struct s_cmd
+{
+	char	*echo;
+	char	*pwd;
+
+}				t_cmd;
 
 
 //PARSING 1
@@ -45,11 +52,17 @@ char	*parsing_1(char *input);
 
 
 //TOKENISATION
-int		token_type1(char *res);
 void	put_token(t_token **token, char *res);
 void	tokenizer(t_token *token, char *str);
 void	print_token_list(t_token *head);
+void	print_token_list_type(t_token *head);
 void	copy_word(char *res, char *str, int end, int start);
 char	*malloc_token(int end, int start);
+//definition des types
+char	*type_mot(char *res);
+char	*type_pipe(char *res);
+char	*type_redir(char *res);
+char	*type_heredoc(char *res);
+char	*get_token_type(char *res);
 
 #endif
