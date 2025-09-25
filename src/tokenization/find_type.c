@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_type.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:18:07 by aautret           #+#    #+#             */
-/*   Updated: 2025/09/24 18:24:58 by aautret          ###   ########.fr       */
+/*   Updated: 2025/09/25 10:58:06 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*type_pipe(char *res)
 	i = 0;
 	while (res[i])
 	{
-		if (res[i] == '|')
+		if (res[i] == '|' && res[i + 1] == 0)
 			return ("PIPE");
 		i++;
 	}
@@ -67,16 +67,22 @@ char	*type_pipe(char *res)
 char	*type_redir(char *res)
 {
 	int	i;
+	int	count;
 
 	i = 0;
+	count = 0;
 	while (res[i])
 	{
-		if (res[i] == '<' && res[i + 1] == 32)
-			return ("REDIR_IN");
-		if (res[i] == '>')
-			return ("REDIR_OUT");
+		if (res[0] == '<' || res[1] == 0)
+			count++;
+		if (res[0] == '>' && res[1] == 0)
+			count++;
 		i++;
 	}
+	if (count == 1 && res[0] == '<')
+		return ("REDIR_IN");
+	else if (count == 1 && res[0] == '>')
+		return ("REDIR_OUT");
 	return (NULL);
 }
 
@@ -90,6 +96,8 @@ char	*type_heredoc(char *res)
 {
 	if (res[0] == '<' && res[1] == '<' && res[2] == '\0')
 		return ("HEREDOC");
+	if (res[0] == '>' && res[1] == '>' && res[2] == '\0')
+		return ("APPEND");
 	return (NULL);
 }
 
@@ -116,5 +124,7 @@ char	*get_token_type(char *res)
 	type = type_mot(res);
 	if (type)
 		return (type);
+	if (!type)
+		print_error(res);
 	return (NULL);
 }

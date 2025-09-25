@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/09/24 16:48:57 by aautret          ###   ########.fr       */
+/*   Updated: 2025/09/25 10:36:13 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,9 @@ char	*type_pipe(char *res);
 char	*type_redir(char *res);
 char	*type_heredoc(char *res);
 char	*get_token_type(char *res);
+int		check_error(char *res);
+void	print_error(char *res);
+
+
 
 #endif
