@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/09/25 10:36:13 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/09/25 17:48:20 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,23 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdbool.h>
 // #include <string.h>
 // #include <fcntl.h>
 // #include <limits>
+
+
+/******************************************************************************
+*								VARIABLES									  *
+******************************************************************************/
+# define REDIR_IN	1	//"<"
+// # define HEREDOC	2	//"< <"
+# define REDIR_OUT	3	//">"
+// # define APPEND		4	//">>"
+# define PIPE		5	//"|"
+# define WORD		6	//"mot"
+// # define CMD		6	//"|"
+// # define ARG		7	//"|"
 
 typedef struct s_token
 {
@@ -40,7 +54,15 @@ typedef	struct s_cmd
 }				t_cmd;
 
 
+
+/******************************************************************************
+*								FUNCTIONS									  *
+******************************************************************************/
 //PARSING 1
+
+char	*add_redir_space(char *input);
+int		count_redir(char *input);
+
 int		is_space(char c);
 int		count_words(char *str);
 int		count_space(char *str);
@@ -58,6 +80,8 @@ void	print_token_list(t_token *head);
 void	print_token_list_type(t_token *head);
 void	copy_word(char *res, char *str, int end, int start);
 char	*malloc_token(int end, int start);
+int		quote_state(char *str);
+
 //definition des types
 char	*type_mot(char *res);
 char	*type_pipe(char *res);
