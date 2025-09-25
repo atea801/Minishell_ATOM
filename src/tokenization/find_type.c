@@ -1,0 +1,130 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   find_type.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/24 14:18:07 by aautret           #+#    #+#             */
+/*   Updated: 2025/09/25 10:58:06 by tlorette         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "atom.h"
+
+/**
+ * @brief Determine si le type du token est un MOT
+ *
+ * exemples :
+ *
+ *- accepte echo file.txt -l -w grep ...
+ *
+ * @param res
+ * @return char*
+ */
+char	*type_mot(char *res)
+{
+	int	i;
+
+	i = 0;
+	while (res[i])
+	{
+		if ((res[i] >= 'a' && res[i] <= 'z') || (res[i] >= '0' && res[i] <= '9')
+			|| (res[i] >= 'A' && res[i] <= 'Z') || res[i] == '-')
+			return ("MOT");
+		i++;
+	}
+	return (NULL);
+}
+
+/**
+ * @brief Dertermine si le type du token est un PIPE
+ *
+ * @param res
+ * @return char*
+ */
+char	*type_pipe(char *res)
+{
+	int	i;
+
+	i = 0;
+	while (res[i])
+	{
+		if (res[i] == '|' && res[i + 1] == 0)
+			return ("PIPE");
+		i++;
+	}
+	return (NULL);
+}
+
+/**
+ * @brief Dertermine si le type du token est une REDIRECTION IN
+ * ou REDIRECTION OUT
+ *
+ * @param res
+ * @return char*
+ */
+char	*type_redir(char *res)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (res[i])
+	{
+		if (res[0] == '<' || res[1] == 0)
+			count++;
+		if (res[0] == '>' && res[1] == 0)
+			count++;
+		i++;
+	}
+	if (count == 1 && res[0] == '<')
+		return ("REDIR_IN");
+	else if (count == 1 && res[0] == '>')
+		return ("REDIR_OUT");
+	return (NULL);
+}
+
+/**
+ * @brief Dertermine si le type du token est un HEREDOC
+ *
+ * @param res
+ * @return char*
+ */
+char	*type_heredoc(char *res)
+{
+	if (res[0] == '<' && res[1] == '<' && res[2] == '\0')
+		return ("HEREDOC");
+	if (res[0] == '>' && res[1] == '>' && res[2] == '\0')
+		return ("APPEND");
+	return (NULL);
+}
+
+/**
+ * @brief Détermine le type du token en appelant successivement
+ * les fonctions de type (heredoc, redir, pipe, mot)
+ *
+ * @param res
+ * @return char* (nom du type ou NULL si inconnu)
+ */
+char	*get_token_type(char *res)
+{
+	char	*type;
+
+	type = type_heredoc(res);
+	if (type)
+		return (type);
+	type = type_redir(res);
+	if (type)
+		return (type);
+	type = type_pipe(res);
+	if (type)
+		return (type);
+	type = type_mot(res);
+	if (type)
+		return (type);
+	if (!type)
+		print_error(res);
+	return (NULL);
+}
