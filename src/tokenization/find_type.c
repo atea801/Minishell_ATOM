@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_type.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:18:07 by aautret           #+#    #+#             */
-/*   Updated: 2025/09/25 10:58:06 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/09/25 11:54:48 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ char	*type_mot(char *res)
 
 /**
  * @brief Dertermine si le type du token est un PIPE
+ *
+ * Ne gere pas les double pipe (||)
  *
  * @param res
  * @return char*
@@ -87,7 +89,7 @@ char	*type_redir(char *res)
 }
 
 /**
- * @brief Dertermine si le type du token est un HEREDOC
+ * @brief Dertermine si le type du token est un HEREDOC ou APPEND
  *
  * @param res
  * @return char*
@@ -104,6 +106,8 @@ char	*type_heredoc(char *res)
 /**
  * @brief Détermine le type du token en appelant successivement
  * les fonctions de type (heredoc, redir, pipe, mot)
+ * Si type return NULL dans ce cas on passe par print_error > check_error
+ * pour afficher le bon message d'erreur des REDIRECTIONS
  *
  * @param res
  * @return char* (nom du type ou NULL si inconnu)

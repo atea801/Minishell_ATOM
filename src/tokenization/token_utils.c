@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:34:48 by aautret           #+#    #+#             */
-/*   Updated: 2025/09/25 10:56:28 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/09/25 11:52:27 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,17 @@ void	print_token_list_type(t_token *head)
 	printf("\n");
 }
 
+/**
+ * @brief Vérifie la présence d'erreurs de syntaxe de redirections.
+ *
+ * Compte le nombre de caractères '<' et '>'
+ * - Si les deux types de redirections sont présents, elle retourne 0 (erreur de mélange).
+ * - Si uniquement des '<' sont présents, elle retourne leur nombre.
+ * - Si uniquement des '>' sont présents, elle retourne leur nombre.
+ *
+ * @param res
+ * @return int
+ */
 int	check_error(char *res)
 {
 	int	i;
@@ -55,6 +66,11 @@ int	check_error(char *res)
 	return (count_out);
 }
 
+/**
+ * @brief Affiche le message d'erreur lie aux nombres retournes par check_error
+ *
+ * @param res
+ */
 void	print_error(char *res)
 {
 	if (check_error(res) == 4)
