@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:39:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/09/25 11:03:34 by aautret          ###   ########.fr       */
+/*   Updated: 2025/09/25 17:56:28 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,25 +82,50 @@ void	copy_word(char *res, char *str, int end, int start)
 void	tokenizer(t_token *token, char *str)
 {
 	int		i;
-	int		start;
+	int		start_a;
+	int		start_b;
 	int		end;
 	char	*res;
 
 
 	i = -1;
-	start = 0;
+	start_a = 0;
+	start_b = 1;
 	end = 0;
 	while (str[++i])
 	{
+		if (str[i] == '"')
+		{
+			i++;
+			while (str[i] != '"')
+				i++;
+		}
+		if (str[i] == 39)
+		{
+			i++;
+			while (str[i] != 39)
+				i++;
+		}
 		if (str[i + 1] == ' ' || str[i + 1] == 0)
 		{
-			end = i;
-			res = malloc_token(end, start);
-			copy_word(res, str, end, start);
-			start = i + 2;
+			if (quote_state(str) == 1)
+			{
+				end = i - 1;
+				res = malloc_token(end, start_b);
+				copy_word(res, str, end, start_b);
+				start_b = i + 2;
+			}
+			else
+			{
+				end = i;
+				res = malloc_token(end, start_a);
+				copy_word(res, str, end, start_a);
+				start_a = i + 2;
+			}
 			put_token(&token, res);
 		}
 	}
 }
+
 
 
