@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/09/24 17:08:35 by aautret          ###   ########.fr       */
+/*   Updated: 2025/09/25 16:54:36 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,23 @@ int	main(void)
 	token = head;
 	while (1)
 	{
-		input = readline("minishell$ ");
+		input = readline("ATOM$ ");
 		if (!input || ft_strncmp(input, "exit", ft_strlen(input)) == 0)
 		{
 			printf("exit\n");
 			break ;
 		}
-		if (*input)
+		res = parsing_1(input);
+		if (res)
 		{
-			res = parsing_1(input);
+			//TOKENIZATION
 			tokenizer(token, res);
-			// print_token_list(head);
+			print_token_list(head);
 			print_token_list_type(head);
 			add_history(input);
 		}
-		printf("Vous avez tapé : %s\n", input);
+		// printf("Vous avez tapé : %s\n", input);
+		free(res);
 		free(input);
 	}
 	rl_clear_history();
