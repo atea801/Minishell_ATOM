@@ -6,12 +6,11 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:39:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/09/24 18:21:00 by aautret          ###   ########.fr       */
+/*   Updated: 2025/09/25 11:03:34 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
-
 
 /**
  * @brief Set token.value et set avec appel de token_type token.type
