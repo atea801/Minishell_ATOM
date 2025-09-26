@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/09/26 14:57:36 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/09/26 17:20:34 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ int		skip_quote(char *str, int i);
 void	handle_quote_state(t_token **token, char *str, int *start, int end);
 void	handle_quote(t_token **token, char *str, int *start, int end);
 void	handle_general(t_token **token, char *str, int *start, int end);
-void	handle_quote_general(t_token **token, char *str, int *start, int i);
 void	handle_all(t_token **token, char *str, int start, int i);
 
 //definition des types

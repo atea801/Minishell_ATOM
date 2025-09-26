@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 17:35:21 by aautret           #+#    #+#             */
-/*   Updated: 2025/09/26 17:09:10 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/09/26 18:05:02 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,22 +106,14 @@ void	handle_quote(t_token **token, char *str, int *start, int end)
  * @param start
  * @param end
  */
-void	handle_general(t_token **token, char *str, int *start, int end)
+void	handle_general(t_token **token, char *str, int *start, int i)
 {
 	char	*res;
 
-	res = malloc_token(end, *start);
-	copy_word(res, str, end, *start);
+	res = malloc_token(i, *start);
+	copy_word(res, str, i, *start);
 	put_token(token, res);
-	(*start) = end + 2;
-}
-
-void	handle_quote_general(t_token **token, char *str, int *start, int i)
-{
-	if (str[i] == '"' || str[i] == 39)
-		handle_quote(token, str, start, i - 1);
-	else
-		handle_general(token, str, start, i);
+	(*start) = i + 1;
 }
 
 /**
@@ -139,12 +131,10 @@ void	handle_quote_general(t_token **token, char *str, int *start, int i)
  */
 void	handle_all(t_token **token, char *str, int start, int i)
 {
-	int	index;
-
-	if (quote_state(str[i], str[i + 1]))
+	if ((str[start] == '"' && str[start + 1] == 39)
+		|| (str[start] == 39 && str[start + 1] == '"'))
 	{
-		index = i;
-		start = index + 1;
+		start = start + 1;
 		handle_quote_state(token, str, &start, i - 1);
 	}
 	else
