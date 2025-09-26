@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:39:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/09/25 17:56:28 by aautret          ###   ########.fr       */
+/*   Updated: 2025/09/26 14:38:06 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,50 +82,32 @@ void	copy_word(char *res, char *str, int end, int start)
 void	tokenizer(t_token *token, char *str)
 {
 	int		i;
-	int		start_a;
-	int		start_b;
+	int		start;
 	int		end;
-	char	*res;
-
+	int		index;
 
 	i = -1;
-	start_a = 0;
-	start_b = 1;
 	end = 0;
+	index = 0;
+	start = 0;
 	while (str[++i])
 	{
-		if (str[i] == '"')
+		if (quote_state(str[i], str[i + 1]) == 1)
+			index = i;
+		if (str[i] == '"' || str[i] == 39)
 		{
-			i++;
-			while (str[i] != '"')
-				i++;
-		}
-		if (str[i] == 39)
-		{
-			i++;
-			while (str[i] != 39)
-				i++;
+			start = i;
+			i = skip_quote(str, i);
 		}
 		if (str[i + 1] == ' ' || str[i + 1] == 0)
 		{
-			if (quote_state(str) == 1)
+			if (quote_state(str[i], str[i + 1]))
 			{
-				end = i - 1;
-				res = malloc_token(end, start_b);
-				copy_word(res, str, end, start_b);
-				start_b = i + 2;
+				start = index + 1;
+				handle_quote_state(&token, str, &start, i - 1);
 			}
 			else
-			{
-				end = i;
-				res = malloc_token(end, start_a);
-				copy_word(res, str, end, start_a);
-				start_a = i + 2;
-			}
-			put_token(&token, res);
+				handle_all(&token, str, &start, i);
 		}
 	}
 }
-
-
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/09/25 17:48:20 by aautret          ###   ########.fr       */
+/*   Updated: 2025/09/26 14:27:10 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,12 @@ void	print_token_list(t_token *head);
 void	print_token_list_type(t_token *head);
 void	copy_word(char *res, char *str, int end, int start);
 char	*malloc_token(int end, int start);
-int		quote_state(char *str);
+int		quote_state(char i, char next);
+int		skip_quote(char *str, int i);
+void	handle_quote_state(t_token **token, char *str, int *start, int end);
+void	handle_quote(t_token **token, char *str, int *start, int end);
+void	handle_general(t_token **token, char *str, int *start, int end);
+void	handle_all(t_token **token, char *str, int *start, int i);
 
 //definition des types
 char	*type_mot(char *res);
