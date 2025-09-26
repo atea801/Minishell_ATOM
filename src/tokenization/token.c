@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:39:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/09/26 14:38:06 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/09/26 15:11:15 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,19 +81,17 @@ void	copy_word(char *res, char *str, int end, int start)
  */
 void	tokenizer(t_token *token, char *str)
 {
-	int		i;
-	int		start;
-	int		end;
-	int		index;
+	int	i;
+	int	start;
+	int	end;
+	int	index;
 
 	i = -1;
+	start = 0;
 	end = 0;
 	index = 0;
-	start = 0;
 	while (str[++i])
 	{
-		if (quote_state(str[i], str[i + 1]) == 1)
-			index = i;
 		if (str[i] == '"' || str[i] == 39)
 		{
 			start = i;
@@ -101,13 +99,8 @@ void	tokenizer(t_token *token, char *str)
 		}
 		if (str[i + 1] == ' ' || str[i + 1] == 0)
 		{
-			if (quote_state(str[i], str[i + 1]))
-			{
-				start = index + 1;
-				handle_quote_state(&token, str, &start, i - 1);
-			}
-			else
-				handle_all(&token, str, &start, i);
+			handle_all(&token, str, start, i);
+			start = i + 1;
 		}
 	}
 }
