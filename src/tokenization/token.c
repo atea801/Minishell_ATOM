@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:39:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/09/26 15:11:15 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/09/26 17:12:26 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,9 @@ void	tokenizer(t_token *token, char *str)
 {
 	int	i;
 	int	start;
-	int	end;
-	int	index;
 
 	i = -1;
 	start = 0;
-	end = 0;
-	index = 0;
 	while (str[++i])
 	{
 		if (str[i] == '"' || str[i] == 39)

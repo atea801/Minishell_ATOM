@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   quote_gestion.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: autret <autret@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 17:35:21 by aautret           #+#    #+#             */
-/*   Updated: 2025/09/26 16:37:22 by autret           ###   ########.fr       */
+/*   Updated: 2025/09/26 17:09:10 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
 /**
- * @brief Dettecte si l'element suivant une double quote est une simple quote /
- * ou si l'element suivant une simple quote est une double quote
+ * @brief Dettecte si l'element suivant une double quote suivant une simple quote /
+ * ou si l'element suivant une simple quote suivant une double quote
  *
  * - "' ou '" => return 1
  * @param c
@@ -27,6 +27,7 @@ int	quote_state(char c, char next)
 		return (1);
 	return (0);
 }
+
 /**
  * @brief Permet de trouver la fin d'une quote apres avoir 
  * detecter le debut d'une quote
@@ -57,7 +58,7 @@ int	skip_quote(char *str, int i)
 
 /**
  * @brief Utiliser quand on detecte des cas speciaux "' ou '"
- le texte entre le quotes est copie mais pas les quotes
+ le texte entre le quotes est copie mais pas les quotes exterieurs
  *
  *
  * == extraire dans les cas speciaux "' ou '" => on copie la sous chaine avec les quotes
@@ -140,13 +141,17 @@ void	handle_all(t_token **token, char *str, int start, int i)
 {
 	int	index;
 
-	if (quote_state(str[i], str[i + 1]) == 1)
-		index = i;
 	if (quote_state(str[i], str[i + 1]))
 	{
+		index = i;
 		start = index + 1;
 		handle_quote_state(token, str, &start, i - 1);
 	}
 	else
-		handle_quote_general(token, str, &start, i);
+	{
+		if (str[i] == '"' || str[i] == 39)
+			handle_quote(token, str, &start, i - 1);
+		else
+			handle_general(token, str, &start, i);
+	}
 }
