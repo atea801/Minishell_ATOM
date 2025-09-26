@@ -3,22 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   quote_gestion.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: autret <autret@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 17:35:21 by aautret           #+#    #+#             */
-/*   Updated: 2025/09/26 15:08:55 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/09/26 16:37:22 by autret           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
+/**
+ * @brief Dettecte si l'element suivant une double quote est une simple quote /
+ * ou si l'element suivant une simple quote est une double quote
+ *
+ * - "' ou '" => return 1
+ * @param c
+ * @param next
+ * @return int
+ */
 int	quote_state(char c, char next)
 {
 	if ((c == '"' && next == 39) || (c == 39 && next == '"'))
 		return (1);
 	return (0);
 }
-
+/**
+ * @brief Permet de trouver la fin d'une quote apres avoir 
+ * detecter le debut d'une quote
+ *
+ * - si le caractere a la position i est une double quote on avance jusqu'au prochain guillemet double
+ * - si le caractere a la position i est une simple quote on avance jusqu'au prochain guillemet simple
+ *
+ * @param str
+ * @param i
+ * @return int index de la quote qui est fermante
+ */
 int	skip_quote(char *str, int i)
 {
 	if (str[i] == '"')
@@ -36,6 +55,18 @@ int	skip_quote(char *str, int i)
 	return (i);
 }
 
+/**
+ * @brief Utiliser quand on detecte des cas speciaux "' ou '"
+ le texte entre le quotes est copie mais pas les quotes
+ *
+ *
+ * == extraire dans les cas speciaux "' ou '" => on copie la sous chaine avec les quotes
+ * ("'hello'" => 'hello')
+ * @param token
+ * @param str
+ * @param start
+ * @param end
+ */
 void	handle_quote_state(t_token **token, char *str, int *start, int end)
 {
 	char	*res;
@@ -45,6 +76,17 @@ void	handle_quote_state(t_token **token, char *str, int *start, int end)
 	put_token(token, res);
 }
 
+/**
+ * @brief Permet d'isoler et de stocker le mot entre guillemets, on inclue pas les guillemets dans le token
+ *
+
+
+ * == extraire le texte situe a l'interieur des quotes simple ou double sans inclures les quotes dans le token
+ * @param token
+ * @param str
+ * @param start
+ * @param end
+ */
 void	handle_quote(t_token **token, char *str, int *start, int end)
 {
 	char	*res;
@@ -55,6 +97,14 @@ void	handle_quote(t_token **token, char *str, int *start, int end)
 	(*start) += 1;
 }
 
+/**
+ * @brief Gere les cas normaux qui ne sont pas entre des quotes
+ *
+ * @param token
+ * @param str
+ * @param start
+ * @param end
+ */
 void	handle_general(t_token **token, char *str, int *start, int end)
 {
 	char	*res;
@@ -73,6 +123,19 @@ void	handle_quote_general(t_token **token, char *str, int *start, int i)
 		handle_general(token, str, start, i);
 }
 
+/**
+ * @brief Permet de choisir comment tokeniser en fonction de si o
+ *
+ * - cas special "' ou '" == handle_quote_state
+ * - cas mots entre quotes similaires simple ou double == handle_quote
+ * - cas mots normaux == handle_general
+ * 
+ *
+ * @param token
+ * @param str
+ * @param start
+ * @param end
+ */
 void	handle_all(t_token **token, char *str, int start, int i)
 {
 	int	index;
