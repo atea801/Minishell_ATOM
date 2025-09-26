@@ -6,16 +6,18 @@
 #    By: aautret <aautret@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/09/24 14:54:59 by aautret          ###   ########.fr        #
+#    Updated: 2025/09/25 17:47:59 by aautret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 SRC = src/parsing_1/parsing_1.c \
+		src/parsing_1/add_redir_space.c \
 		src/parsing_1/clear_input/clear_input_utils.c \
 		src/parsing_1/clear_input/clear_input.c \
 		src/tokenization/token.c \
+		src/tokenization/quote_gestion.c \
 		src/tokenization/token_utils.c \
 		src/tokenization/find_type.c \
 		src/main.c

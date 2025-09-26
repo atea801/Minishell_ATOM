@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:39:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/09/25 11:03:34 by aautret          ###   ########.fr       */
+/*   Updated: 2025/09/26 15:11:15 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,26 +81,26 @@ void	copy_word(char *res, char *str, int end, int start)
  */
 void	tokenizer(t_token *token, char *str)
 {
-	int		i;
-	int		start;
-	int		end;
-	char	*res;
-
+	int	i;
+	int	start;
+	int	end;
+	int	index;
 
 	i = -1;
 	start = 0;
 	end = 0;
+	index = 0;
 	while (str[++i])
 	{
+		if (str[i] == '"' || str[i] == 39)
+		{
+			start = i;
+			i = skip_quote(str, i);
+		}
 		if (str[i + 1] == ' ' || str[i + 1] == 0)
 		{
-			end = i;
-			res = malloc_token(end, start);
-			copy_word(res, str, end, start);
-			start = i + 2;
-			put_token(&token, res);
+			handle_all(&token, str, start, i);
+			start = i + 1;
 		}
 	}
 }
-
-
