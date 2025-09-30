@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/09/26 14:57:36 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/09/30 15:01:21 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,16 @@ typedef	struct s_cmd
 
 }				t_cmd;
 
-
+typedef	struct s_atom_env
+{
+	char		*env_head;
+	char		*value;
+	char		*key;
+	bool		has_value;
+	bool		has_twin;
+	int			size;
+	struct	s_atom_env	*next;
+}					t_atom_env;
 
 /******************************************************************************
 *								FUNCTIONS									  *
@@ -97,6 +106,8 @@ char	*get_token_type(char *res);
 int		check_error(char *res);
 void	print_error(char *res);
 
-
+//ENVIRONNEMENT
+ char   *get_key(char *env_line)
+ char   *get_value(char *env_line)
 
 #endif

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aautret <aautret@student.42.fr>            +#+  +:+       +#+         #
+#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/09/25 17:47:59 by aautret          ###   ########.fr        #
+#    Updated: 2025/09/30 10:53:28 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRC = src/parsing_1/parsing_1.c \
 		src/tokenization/quote_gestion.c \
 		src/tokenization/token_utils.c \
 		src/tokenization/find_type.c \
+		src/atom_env/parse_env.c \
 		src/main.c
 
 OBJ = $(SRC:.c=.o)
@@ -36,7 +37,7 @@ $(LIBFT):
 $(NAME): $(OBJ) $(LIBFT)
 	cc $(CFLAGS) $(OBJ) $(LIBFT) $(LDFLAGS) -o $@
 
-%.o: %.c Atom.h
+%.o: %.c atom.h
 	cc $(CFLAGS) -c $< -o $@
 
 # Règles pour Valgrind avec suppression des leaks readline
