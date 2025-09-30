@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:39:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/09/26 15:17:54 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/09/30 09:53:10 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,9 @@ void	tokenizer(t_token *token, char *str)
 {
 	int	i;
 	int	start;
-	int	end;
 
 	i = -1;
 	start = 0;
-	end = 0;
 	while (str[++i])
 	{
 		if (str[i] == '"' || str[i] == 39)
