@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 12:10:28 by aautret           #+#    #+#             */
-/*   Updated: 2025/09/25 18:00:36 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/03 16:56:41 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ char	*parsing_1(char *input)
 	res_1 = add_redir_space(input);
 	printf("%s\n", res_1);
 	res_2 = clear_input(res_1);
+	free(res_1);
 	if (valide_quote(res_2))
 	{
 		printf("unclosed quotes\n");
