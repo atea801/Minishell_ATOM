@@ -6,7 +6,7 @@
 #    By: aautret <aautret@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/10/03 16:50:36 by aautret          ###   ########.fr        #
+#    Updated: 2025/10/03 17:29:03 by aautret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRC = src/parsing_1/parsing_1.c \
 		src/tokenization/quote_gestion.c \
 		src/tokenization/token_utils.c \
 		src/tokenization/find_type.c \
-		src/atom_env/parse_env.c \
+		src/atom_env/atom_env_parse.c \
 		src/atom_env/atom_env.c \
 		src/init.c\
 		src/src_utils.c \
