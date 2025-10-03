@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 16:35:16 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/03 17:07:03 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/03 17:44:41 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ void	free_token_list(t_token *head)
 		tmp = head->next;
 		if (head->value)
 			free(head->value);
-		// if (head->type)
-		// 	free(head->type);
 		free(head);
 		head = tmp;
 	}
