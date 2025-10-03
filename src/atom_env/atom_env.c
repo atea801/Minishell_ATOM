@@ -6,67 +6,11 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:47:58 by codespace         #+#    #+#             */
-/*   Updated: 2025/10/03 17:42:11 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/03 18:15:42 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
-
-/**
- * @brief Recupere la cle dans l'environnement, 
- * une cle correspond a la partie avant le "="
- * 
- * @param env_line 
- * @return char* 
- */
-char	*get_key(char *env_line)
-{
-	int		j;
-	int		key_len;
-	char	*key;
-
-	j = 0;
-	while (env_line[j] && env_line[j] != '=')
-		j++;
-	if (j == 0)
-		return (NULL);
-	key_len = j;
-	key = malloc(sizeof(char) * key_len + 1);
-	if (!key)
-		return (NULL);
-	j = 0;
-	while (j < key_len)
-	{
-		key[j] = env_line[j];
-		j++;
-	}
-	key[j] = 0;
-	return (key);
-}
-
-/**
- * @brief Recupere la valeur correspondante a la cle indique avant,
- * la valeur est le contenu assigne a une cle 
- * (tout ce qu'il y a apres le premier "=")
- * 
- * @param env_line 
- * @return char* 
- */
-char	*get_value(char *env_line)
-{
-	int		i;
-	char	*equal_pos;
-	char	*value;
-
-	i = 0;
-	equal_pos = ft_strchr(env_line, '=');
-	if (equal_pos == 0)
-		return (NULL);
-	value = ft_strdup(equal_pos + 1);
-	if (!value)
-		return (NULL);
-	return (value);
-}
 
 /**
  * @brief Assigne la structure d'environnement et la rempli au fur et a mesure
@@ -106,6 +50,44 @@ void	my_getenv(t_atom_env **my_env, char **env)
 	while (env[++i])
 		put_key_and_value(my_env, env[i]);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // int	check_special_case(char *env_line)
 // {
