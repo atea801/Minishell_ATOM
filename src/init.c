@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 16:00:00 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/03 17:17:12 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/03 17:44:27 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,17 @@ int	init_env_struct(t_atom_env **env_head)
 	return (0);
 }
 
+/**
+ * @brief initalisation principale, avec appels sous fonctions pour 
+ * initialiser la structure de l'environnement et la structure du token
+ * 
+ * 
+ * POSSIBILITE D'AFFICHER L'ENVIRONNEMENT ICI = FONCTION A DECOMMENTER
+ * 
+ * @param env_head 
+ * @param token_head 
+ * @param env 
+ */
 void	init_all(t_atom_env **env_head, t_token **token_head, char **env)
 {
 	t_atom_env	*env_struct;
