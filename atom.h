@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/04 15:42:41 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/04 17:14:11 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,15 @@ typedef struct s_token
 
 typedef struct s_cmd
 {
-	char				*echo;
-	char				*pwd;
-
+	char				*cmd;
+	char				**args;
+	char				*infile;
+	char				*outfile;
+	//char				*append;
+	char				*here_doc;
+	int					ac;
+	
+	struct s_cmd		*next;
 }						t_cmd;
 
 typedef struct s_atom_env
