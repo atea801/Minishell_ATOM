@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:39:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/03 16:55:09 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/04 16:46:04 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ void	tokenizer(t_token *token, char *str)
 		{
 			handle_all(&token, str, start, i);
 			start = i + 1;
+			while (str[start] && str[start] == ' ')
+				start++;
 		}
 	}
 }
