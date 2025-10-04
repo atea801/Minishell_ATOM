@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   env_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 13:51:19 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/04 15:07:42 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/04 16:10:46 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
+/**
+ * @brief Creation mini environnement impermeable au -i env
+ * 
+ * @param env 
+ */
 void	create_minimal_env(t_atom_env **env)
 {
 	char	*cwd;
@@ -31,6 +36,12 @@ void	create_minimal_env(t_atom_env **env)
 	free(path_home);
 }
 
+/**
+ * @brief Permet de recuperer le path home
+ * 
+ * @param cwd 
+ * @return char* /home/username
+ */
 char	*get_home(char *cwd)
 {
 	int		i;
@@ -49,6 +60,12 @@ char	*get_home(char *cwd)
 	return (NULL);
 }
 
+/**
+ * @brief Permet de recuperer le username
+ * 
+ * @param cwd 
+ * @return char* username
+ */
 char	*get_username(char *cwd)
 {
 	int	i;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   atom_env_utils.c                                   :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 11:23:05 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/04 12:56:17 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/04 16:03:00 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,14 @@ char	*get_value(char *env_line)
 	return (value);
 }
 
+/**
+ * @brief Cherche une fonction dans l'env par nom de variable
+
+ * 
+ * @param env 
+ * @param key 
+ * @return char* search_key->value
+ */
 char	*search_in_list(t_atom_env **env, char *key)
 {
 	t_atom_env	*searched_key;

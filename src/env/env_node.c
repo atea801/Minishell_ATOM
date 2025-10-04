@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_node.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 18:18:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/04 15:44:09 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/04 16:07:49 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,13 @@ void	add_node_to_end(t_atom_env **env_head, char *key, char *value)
 	current->next = new_node;
 }
 
+/**
+ * @brief Creation d'un nouveau noeud
+ * 
+ * @param key 
+ * @param value 
+ * @return t_atom_env* new node
+ */
 t_atom_env	*init_new_node(char *key, char *value)
 {
 	t_atom_env	*new_node;
@@ -90,6 +97,23 @@ void	valide_key(t_atom_env **env_head, char *env_line)
 	return ;
 }
 
+/**
+ * @brief Ajoute ou modifie une variable
+ * 
+ * Si elle existe : libérer l'ancienne valeur et assigner la nouvelle
+ * 
+ * Si elle n'existe pas : créer un nouveau nœud et l'ajouter à la liste
+ * 
+ * @param env 
+ * @param key 
+ * @param value 
+ * @return int 
+ * 0 = erreur malloc
+ * 
+ * 1 = modification
+ * 
+ * 2 = ajout en fin de lsite
+ */
 int	change_node_list(t_atom_env **env, char *key, char *value)
 {
 	t_atom_env	*current;
@@ -113,6 +137,14 @@ int	change_node_list(t_atom_env **env, char *key, char *value)
 	return (2);
 }
 
+/**
+ * @brief Fonction de suppression de variable
+ * 
+ * Rechercher la variable dans la liste
+ * 
+ * @param env 
+ * @param key 
+ */
 void	delete_node_list(t_atom_env **env, char *key)
 {
 	t_atom_env	*current;
