@@ -30,6 +30,8 @@ SRC  = ft_isalpha.c \
 	ft_striteri.c \
 	ft_strjoin.c \
 	ft_split.c \
+	ft_strcmp.c \
+	ft_substr.c \
 
 SRCS_BONUS = ft_lstadd_back_bonus.c \
 	ft_lstadd_front_bonus.c \
