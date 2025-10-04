@@ -1,0 +1,67 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/03 16:00:00 by aautret           #+#    #+#             */
+/*   Updated: 2025/10/03 17:17:12 by aautret          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "atom.h"
+
+/**
+ * @brief Initialise une structure t_token
+ * 
+ * @param token_head Pointeur vers le head de la liste de tokens
+ * @return int 0 si succès, 1 si erreur
+ */
+int	init_token_struct(t_token **token_head)
+{
+	*token_head = malloc(sizeof(t_token));
+	if (!*token_head)
+		return (1);
+	(*token_head)->value = NULL;
+	(*token_head)->type = NULL;
+	(*token_head)->next = NULL;
+	return (0);
+}
+
+/**
+ * @brief Initialise une structure t_atom_env
+ * 
+ * @param env_head Pointeur vers le head de la liste d'environnement
+ * @return int 0 si succès, 1 si erreur
+ */
+int	init_env_struct(t_atom_env **env_head)
+{
+	*env_head = malloc(sizeof(t_atom_env));
+	if (!*env_head)
+		return (1);
+	(*env_head)->key = NULL;
+	(*env_head)->value = NULL;
+	(*env_head)->next = NULL;
+	(*env_head)->has_value = false;
+	(*env_head)->has_twin = false;
+	(*env_head)->size = 0;
+	return (0);
+}
+
+void	init_all(t_atom_env **env_head, t_token **token_head, char **env)
+{
+	t_atom_env	*env_struct;
+
+	if (init_token_struct(token_head) != 0)
+		return ;
+	if (init_env_struct(env_head) != 0)
+	{
+		free(*token_head);
+		return ;
+	}
+	env_struct = *env_head;
+	my_getenv(env_head, env);
+	*env_head = env_struct;
+	// print_env_list(*env_head);
+}

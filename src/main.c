@@ -6,21 +6,26 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/09/25 16:54:36 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/03 16:55:48 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
-int	main(void)
+int	main(int ac, char **av, char **env)
 {
-	char	*input;
-	char	*res;
-	t_token	*token;
-	t_token	*head;
+	char		*input;
+	char		*res;
+	t_token		*token_head;
+	t_atom_env	*env_head;
 
-	head = malloc(sizeof(t_token));
-	token = head;
+	token_head = NULL;
+	env_head = NULL;
+	(void)ac;
+	(void)av;
+	// ENV
+	init_all(&env_head, &token_head, env);
+	// print_env_list(env_head);
 	while (1)
 	{
 		input = readline("ATOM$ ");
@@ -32,10 +37,10 @@ int	main(void)
 		res = parsing_1(input);
 		if (res)
 		{
-			//TOKENIZATION
-			tokenizer(token, res);
-			print_token_list(head);
-			print_token_list_type(head);
+			// TOKENIZATION
+			tokenizer(token_head, res);
+			print_token_list(token_head);
+			print_token_list_type(token_head);
 			add_history(input);
 		}
 		// printf("Vous avez tapé : %s\n", input);
@@ -43,6 +48,7 @@ int	main(void)
 		free(input);
 	}
 	rl_clear_history();
+	if (env_head || token_head)
+		free_all(token_head, env_head);
 	return (0);
 }
-

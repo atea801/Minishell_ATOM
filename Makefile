@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
+#    By: aautret <aautret@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/09/30 10:53:28 by codespace        ###   ########.fr        #
+#    Updated: 2025/10/03 17:31:26 by aautret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,10 @@ SRC = src/parsing_1/parsing_1.c \
 		src/tokenization/quote_gestion.c \
 		src/tokenization/token_utils.c \
 		src/tokenization/find_type.c \
-		src/atom_env/parse_env.c \
+		src/atom_env/atom_env.c \
+		src/atom_env/atom_env_utils.c \
+		src/init.c\
+		src/src_utils.c \
 		src/main.c
 
 OBJ = $(SRC:.c=.o)
