@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/03 16:55:48 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/04 14:24:14 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,13 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	// ENV
-	init_all(&env_head, &token_head, env);
-	// print_env_list(env_head);
+	if (!env || !env[0])
+	{
+		create_minimal_env(&env_head);
+		print_env_list(env_head);
+	}
+	else
+		init_all(&env_head, &token_head, env);
 	while (1)
 	{
 		input = readline("ATOM$ ");
