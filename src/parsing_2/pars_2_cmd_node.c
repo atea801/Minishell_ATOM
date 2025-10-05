@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_node.c                                         :+:      :+:    :+:   */
+/*   pars_2_cmd_node.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 18:18:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/05 11:46:20 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/05 15:18:47 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@
  * @param key
  * @param value
  */
-void	add_node_to_end(t_cmd **cmd_head, char *cmd, char *args)
+void	add_node_to_end_cmd(t_cmd **cmd_head, char *cmd, char *args)
 {
-	t_atom_env	*new_node;
-	t_atom_env	*current;
+	t_cmd	*new_node;
+	t_cmd	*current;
 
-	new_node = init_new_node(cmd, args);
+	new_node = init_new_node_cmd(cmd, args);
 	if (!new_node)
 		return ;
 	if (!*cmd_head)
@@ -44,9 +44,9 @@ void	add_node_to_end(t_cmd **cmd_head, char *cmd, char *args)
  * 
  * @param key 
  * @param value 
- * @return t_atom_env* new node
+ * @return t_cmd* new node
  */
-t_atom_env	*init_new_node(char *cmd, char *args)
+t_cmd	*init_new_node_cmd(char *cmd, char *args)
 {
 	t_cmd	*new_node;
 
@@ -116,7 +116,7 @@ void	valide_cmd(t_cmd **cmd_head, char *input)
  * 
  * 2 = ajout en fin de lsite
  */
-int	change_node_list(t_cmd **cmd_list, char *cmd, char *args)
+int	change_node_list_cmd(t_cmd **cmd_list, char *cmd, char *args)
 {
 	t_cmd	*current;
 
@@ -147,7 +147,7 @@ int	change_node_list(t_cmd **cmd_list, char *cmd, char *args)
  * @param env 
  * @param key 
  */
-void	delete_node_list(t_atom_env **cmd_list, char *cmd)
+void	delete_node_list_cmd(t_atom_env **cmd_list, char *cmd)
 {
 	t_cmd	*current;
 	t_cmd	*previous;
