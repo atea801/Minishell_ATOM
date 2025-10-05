@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/05 15:17:29 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/05 16:04:19 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_cmd
 {
 	// char				*cmd_head;
 	char				*cmd;
-	char				**args;
+	char				*args;
 	char				*infile;
 	char				*outfile;
 	char				*append;
@@ -175,7 +175,7 @@ t_cmd					*init_new_node_cmd(char *cmd, char *args);
 void					valide_cmd(t_cmd **cmd_head, char *input);
 int						change_node_list_cmd(t_cmd **cmd_list, char *cmd,
 							char *args);
-void					delete_node_list_cmd(t_atom_env **cmd_list, char *cmd);
+void					delete_node_list_cmd(t_cmd **cmd_list, char *cmd);
 
 // pars_2_utils.c
 int						count_cmd(t_token *token_head);
