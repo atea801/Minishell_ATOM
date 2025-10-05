@@ -3,25 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   src_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 16:35:16 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/03 17:44:41 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/05 13:58:08 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
-void	free_all(t_token *token_head, t_atom_env *env_head)
+void	free_all(t_token *token_head, t_atom_env *env_head, t_cmd *cmd_list)
 {
-	free_token_list(token_head);
-	free_env_list(env_head);
+	if (token_head)
+		free_token_list(token_head);
+	if (env_head)
+		free_env_list(env_head);
+	if (cmd_list)
+		free_cmd_list(cmd_list);
 }
 
 void	free_token_list(t_token *head)
 {
 	t_token	*tmp;
 
+	if (!head)
+		return ;
 	while (head)
 	{
 		tmp = head->next;
@@ -36,6 +42,8 @@ void	free_env_list(t_atom_env *head)
 {
 	t_atom_env	*tmp;
 
+	if (!head)
+		return ;
 	while (head)
 	{
 		tmp = head->next;
@@ -45,5 +53,31 @@ void	free_env_list(t_atom_env *head)
 			free(head->key);
 		free(head);
 		head = tmp;
+	}
+}
+
+void	free_cmd_list(t_cmd *cmd_list)
+{
+	t_cmd	*tmp;
+
+	if (!cmd_list)
+		return ;
+	while (cmd_list)
+	{
+		tmp = cmd_list->next;
+		if (cmd_list->cmd)
+			free(cmd_list->cmd);
+		if (cmd_list->args)
+			free(cmd_list->args);
+		if (cmd_list->infile)
+			free(cmd_list->infile);
+		if (cmd_list->outfile)
+			free(cmd_list->outfile);
+		if (cmd_list->append)
+			free(cmd_list->append);
+		if (cmd_list->here_doc)
+			free(cmd_list->here_doc);
+		free(cmd_list);
+		cmd_list = tmp;
 	}
 }
