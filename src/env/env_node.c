@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 18:18:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/04 16:07:49 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/05 15:11:25 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	add_node_to_end(t_atom_env **env_head, char *key, char *value)
 	t_atom_env	*new_node;
 	t_atom_env	*current;
 
-	new_node = init_new_node(key, value);
+	new_node = init_new_node_env(key, value);
 	if (!new_node)
 		return ;
 	if (!*env_head)
@@ -46,7 +46,7 @@ void	add_node_to_end(t_atom_env **env_head, char *key, char *value)
  * @param value 
  * @return t_atom_env* new node
  */
-t_atom_env	*init_new_node(char *key, char *value)
+t_atom_env	*init_new_node_env(char *key, char *value)
 {
 	t_atom_env	*new_node;
 
