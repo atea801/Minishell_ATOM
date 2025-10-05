@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/05 16:04:19 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/05 18:10:55 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,11 @@ typedef struct s_atom_env
 /***************************************************************************
  *								EVIRONNEMENT								*
  ****************************************************************************/
+// env_list_to_tabs.c
+void					print_env_tab(char **tab_env);
+int						count_var_env(t_atom_env *env_list);
+char					**env_list_to_tab(t_atom_env *env_list);
+
 // env_node.c
 void					add_node_to_end(t_atom_env **env_head, char *key,
 							char *value);
@@ -195,10 +200,12 @@ int						init_cmd_struct(t_cmd **cmd_list);
 
 // src_utils.c
 void					free_all(t_token *token_head, t_atom_env *env_head,
-							t_cmd *cmd_list);
+							t_cmd *cmd_list, char **tab_env);
 void					free_token_list(t_token *head);
 void					free_env_list(t_atom_env *head);
 void					free_cmd_list(t_cmd *cmd_list);
+void					free_env_tab(char **tab_env);
+
 
 // main.c
 
