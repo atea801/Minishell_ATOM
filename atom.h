@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/05 13:54:40 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/05 15:17:29 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,11 @@ typedef struct s_atom_env
 }						t_atom_env;
 
 /****************************************************************************
+ ****************************************************************************
 
 *								FUNCTIONS									*
 
+****************************************************************************
 ****************************************************************************/
 
 /***************************************************************************
@@ -82,7 +84,7 @@ typedef struct s_atom_env
 // env_node.c
 void					add_node_to_end(t_atom_env **env_head, char *key,
 							char *value);
-t_atom_env				*init_new_node(char *key, char *value);
+t_atom_env				*init_new_node_env(char *key, char *value);
 void					valide_key(t_atom_env **env_head, char *env_line);
 int						change_node_list(t_atom_env **env, char *key,
 							char *value);
@@ -162,6 +164,24 @@ void					put_token(t_token **token, char *res);
 char					*malloc_token(int end, int start);
 void					copy_word(char *res, char *str, int end, int start);
 void					tokenizer(t_token *token, char *str);
+
+/************************************************************************
+ *								PARSING 2								*
+ ************************************************************************/
+// pars_2_cmd_node.c
+void					add_node_to_end_cmd(t_cmd **cmd_head, char *cmd,
+							char *args);
+t_cmd					*init_new_node_cmd(char *cmd, char *args);
+void					valide_cmd(t_cmd **cmd_head, char *input);
+int						change_node_list_cmd(t_cmd **cmd_list, char *cmd,
+							char *args);
+void					delete_node_list_cmd(t_atom_env **cmd_list, char *cmd);
+
+// pars_2_utils.c
+int						count_cmd(t_token *token_head);
+
+// pars_2.c
+void					parsing_2(t_token *token_head);
 
 /************************************************************************
  *								SRC										*
