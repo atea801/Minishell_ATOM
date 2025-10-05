@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 18:18:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/05 15:18:47 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/05 16:00:27 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,22 +82,22 @@ t_cmd	*init_new_node_cmd(char *cmd, char *args)
  * @param env_head
  * @param env_line
  */
-void	valide_cmd(t_cmd **cmd_head, char *input)
-{
-	char	*cmd;
-	char	*args;
+// void	valide_cmd(t_cmd **cmd_head, char *input)
+// {
+// 	char	*cmd;
+// 	char	*args;
 
-	cmd = get_cmd(input);//A FAIRE
-	args = get_args(input); // A FAIRE
-	if (cmd)
-	{
-		add_node_to_end(cmd_head, cmd, args);
-		free(cmd);
-		if (args)
-			free(args);
-	}
-	return ;
-}
+// 	cmd = get_cmd(input);//A FAIRE
+// 	args = get_args(input); // A FAIRE
+// 	if (cmd)
+// 	{
+// 		add_node_to_end(cmd_head, cmd, args);
+// 		free(cmd);
+// 		if (args)
+// 			free(args);
+// 	}
+// 	return ;
+// }
 
 /**
  * @brief Ajoute ou modifie une variable
@@ -135,7 +135,7 @@ int	change_node_list_cmd(t_cmd **cmd_list, char *cmd, char *args)
 		}
 		current = current->next;
 	}
-	add_node_to_end(cmd_list, cmd, args);
+	add_node_to_end_cmd(cmd_list, cmd, args);
 	return (2);
 }
 
@@ -147,7 +147,7 @@ int	change_node_list_cmd(t_cmd **cmd_list, char *cmd, char *args)
  * @param env 
  * @param key 
  */
-void	delete_node_list_cmd(t_atom_env **cmd_list, char *cmd)
+void	delete_node_list_cmd(t_cmd **cmd_list, char *cmd)
 {
 	t_cmd	*current;
 	t_cmd	*previous;
