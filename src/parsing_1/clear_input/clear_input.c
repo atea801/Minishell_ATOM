@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 14:21:03 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/04 16:33:04 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/05 13:40:17 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*clear_input(char *input)
 
 	i = skip_space(input);
 	res = malloc(sizeof(char) * (ft_strlen(input)
-				- (count_space(input) - count_words(input))));
+				- (count_space(input) - count_words(input)) + 1));
 	if (!res)
 		return (NULL);
 	res = epur(input, res, i);
