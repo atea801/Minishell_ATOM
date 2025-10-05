@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/04 17:14:11 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/05 13:54:40 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 // #include <fcntl.h>
 
 /****************************************************************************
-*								VARIABLES									*
+ *								VARIABLES									*
  ****************************************************************************/
 # define REDIR_IN 1 //"<"
 // # define HEREDOC	2	//"< <"
@@ -47,14 +47,15 @@ typedef struct s_token
 
 typedef struct s_cmd
 {
+	// char				*cmd_head;
 	char				*cmd;
 	char				**args;
 	char				*infile;
 	char				*outfile;
-	//char				*append;
+	char				*append;
 	char				*here_doc;
 	int					ac;
-	
+
 	struct s_cmd		*next;
 }						t_cmd;
 
@@ -118,6 +119,9 @@ char					*clear_input(char *input);
 // add_redir_space.c
 int						count_redir(char *input);
 char					*add_redir_space(char *input);
+char					*add_pipe_space(char *input);
+int						count_pipe(char *input);
+char					*add_space_to_operator(char *input);
 
 // parsing_1.c
 int						valide_quote(char *str);
@@ -166,12 +170,15 @@ void					tokenizer(t_token *token, char *str);
 int						init_token_struct(t_token **token_head);
 int						init_env_struct(t_atom_env **env_head);
 void					init_all(t_atom_env **env_head, t_token **token_head,
-							char **env);
+							t_cmd **cmd_list, char **env);
+int						init_cmd_struct(t_cmd **cmd_list);
 
 // src_utils.c
-void					free_all(t_token *token_head, t_atom_env *env_head);
+void					free_all(t_token *token_head, t_atom_env *env_head,
+							t_cmd *cmd_list);
 void					free_token_list(t_token *head);
 void					free_env_list(t_atom_env *head);
+void					free_cmd_list(t_cmd *cmd_list);
 
 // main.c
 
