@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/05 14:03:24 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/05 15:02:50 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	main(int ac, char **av, char **env)
 			printf("exit\n");
 			break ;
 		}
+		//PARSING 1
 		res = parsing_1(input);
 		if (res)
 		{
@@ -54,6 +55,8 @@ int	main(int ac, char **av, char **env)
 			tokenizer(token_head, res);
 			print_token_list(token_head);
 			print_token_list_type(token_head);
+			//PARSING 2
+			parsing_2(token_head);
 			add_history(input);
 		}
 		// printf("Vous avez tapé : %s\n", input);
