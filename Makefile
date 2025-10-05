@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+         #
+#    By: aautret <aautret@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/09/26 17:51:54 by tlorette         ###   ########.fr        #
+#    Updated: 2025/10/05 15:04:08 by aautret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,15 +16,24 @@ SRC = src/parsing_1/parsing_1.c \
 		src/parsing_1/add_redir_space.c \
 		src/parsing_1/clear_input/clear_input_utils.c \
 		src/parsing_1/clear_input/clear_input.c \
-		src/tokenization/token.c \
-		src/tokenization/quote_gestion.c \
-		src/tokenization/token_utils.c \
-		src/tokenization/find_type.c \
+		src/parsing_2/pars_2_cmd_node.c \
+		src/parsing_2/pars_2_utils.c \
+		src/parsing_2/pars_2.c \
+		src/tokenizer_1/token.c \
+		src/tokenizer_1/quote_gestion.c \
+		src/tokenizer_1/token_utils.c \
+		src/tokenizer_1/find_type.c \
+		src/env/env_path.c \
+		src/env/env_node.c \
+		src/env/env_utils.c \
+		src/env/env.c \
+		src/init.c\
+		src/src_utils.c \
 		src/main.c
 
 OBJ = $(SRC:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror -I. -g
+CFLAGS = -Wall -Wextra -Werror -I.
 LDFLAGS = -lreadline
 LIBFT = ./libft/libft.a
 
@@ -36,7 +45,7 @@ $(LIBFT):
 $(NAME): $(OBJ) $(LIBFT)
 	cc $(CFLAGS) $(OBJ) $(LIBFT) $(LDFLAGS) -o $@
 
-%.o: %.c Atom.h
+%.o: %.c atom.h
 	cc $(CFLAGS) -c $< -o $@
 
 # Règles pour Valgrind avec suppression des leaks readline

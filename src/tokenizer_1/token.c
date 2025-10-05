@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:39:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/09/26 17:56:53 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/04 16:46:04 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	put_token(t_token **token, char *res)
 	(*token)->next = NULL;
 	(*token)->value = NULL;
 	(*token)->head = NULL;
+	(*token)->type = NULL;
 }
 
 /**
@@ -88,11 +89,6 @@ void	tokenizer(t_token *token, char *str)
 	start = 0;
 	while (str[++i])
 	{
-		if (str[i] == ' ')
-		{
-			start = i + 1;
-			continue ;
-		}
 		if (str[i] == '"' || str[i] == 39)
 		{
 			start = i;
@@ -102,6 +98,8 @@ void	tokenizer(t_token *token, char *str)
 		{
 			handle_all(&token, str, start, i);
 			start = i + 1;
+			while (str[start] && str[start] == ' ')
+				start++;
 		}
 	}
 }
