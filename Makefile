@@ -6,7 +6,7 @@
 #    By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/10/04 13:53:07 by tlorette         ###   ########.fr        #
+#    Updated: 2025/10/05 11:57:14 by tlorette         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,10 +16,10 @@ SRC = src/parsing_1/parsing_1.c \
 		src/parsing_1/add_redir_space.c \
 		src/parsing_1/clear_input/clear_input_utils.c \
 		src/parsing_1/clear_input/clear_input.c \
-		src/tokenization/token.c \
-		src/tokenization/quote_gestion.c \
-		src/tokenization/token_utils.c \
-		src/tokenization/find_type.c \
+		src/tokenizer_1/token.c \
+		src/tokenizer_1/quote_gestion.c \
+		src/tokenizer_1/token_utils.c \
+		src/tokenizer_1/find_type.c \
 		src/env/env_path.c \
 		src/env/env_node.c \
 		src/env/env_utils.c \
