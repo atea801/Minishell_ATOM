@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/04 14:24:14 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/05 14:03:24 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@ int	main(int ac, char **av, char **env)
 	char		*res;
 	t_token		*token_head;
 	t_atom_env	*env_head;
+	t_cmd		*cmd_list;
 
 	token_head = NULL;
 	env_head = NULL;
+	cmd_list = NULL;
 	(void)ac;
 	(void)av;
 	// ENV
@@ -30,7 +32,7 @@ int	main(int ac, char **av, char **env)
 		print_env_list(env_head);
 	}
 	else
-		init_all(&env_head, &token_head, env);
+		init_all(&env_head, &token_head, &cmd_list, env);
 	while (1)
 	{
 		input = readline("ATOM$ ");
@@ -42,6 +44,12 @@ int	main(int ac, char **av, char **env)
 		res = parsing_1(input);
 		if (res)
 		{
+			if (token_head)
+			{
+				free_token_list(token_head);
+				token_head = NULL;
+			}
+			init_token_struct(&token_head);
 			// TOKENIZATION
 			tokenizer(token_head, res);
 			print_token_list(token_head);
@@ -53,7 +61,7 @@ int	main(int ac, char **av, char **env)
 		free(input);
 	}
 	rl_clear_history();
-	if (env_head || token_head)
-		free_all(token_head, env_head);
+	if (env_head && token_head && cmd_list)
+		free_all(token_head, env_head, cmd_list);
 	return (0);
 }
