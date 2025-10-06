@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 16:00:00 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/05 13:59:56 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/06 18:09:18 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @param token_head Pointeur vers le head de la liste de tokens
  * @return int 0 si succès, 1 si erreur
  */
-int	init_token_struct(t_token **token_head)
+int	init_token_struct(t_token **token_head, t_token_2 **token_2)
 {
 	*token_head = malloc(sizeof(t_token));
 	if (!*token_head)
@@ -26,8 +26,15 @@ int	init_token_struct(t_token **token_head)
 	(*token_head)->value = NULL;
 	(*token_head)->type = NULL;
 	(*token_head)->next = NULL;
+	*token_2 = malloc(sizeof(t_token_2));
+	if (!*token_2)
+		return (1);
+	(*token_2)->value = NULL;
+	(*token_2)->type = NULL;
+	(*token_2)->next = NULL;
 	return (0);
 }
+
 
 /**
  * @brief Initialise une structure t_atom_env
@@ -83,11 +90,11 @@ int	init_cmd_struct(t_cmd **cmd_list)
  * @param env 
  */
 void	init_all(t_atom_env **env_head, t_token **token_head,
-	t_cmd **cmd_list, char **env)
+	t_cmd **cmd_list, char **env, t_token_2 **token_2)
 {
 	t_atom_env	*env_struct;
 
-	if (init_token_struct(token_head) != 0)
+	if (init_token_struct(token_head, token_2) != 0)
 		return ;
 	if (init_env_struct(env_head) != 0)
 	{
