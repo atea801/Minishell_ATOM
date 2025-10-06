@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/06 10:54:00 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/06 18:45:40 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@ int	main(int ac, char **av, char **env)
 	char		*res;
 	// char		**tab_env;
 	t_token		*token_head;
+	t_token_2	*token_2;
 	t_atom_env	*env_head;
 	t_cmd		*cmd_list;
 
 	token_head = NULL;
+	token_2 = NULL ;
 	env_head = NULL;
 	cmd_list = NULL;
 	(void)ac;
@@ -33,7 +35,7 @@ int	main(int ac, char **av, char **env)
 		print_env_list(env_head);
 	}
 	else
-		init_all(&env_head, &token_head, &cmd_list, env);
+		init_all(&env_head, &token_head, &cmd_list, env, &token_2);
 	// tab_env = env_list_to_tab(env_head);
 	// print_env_tab(tab_env);
 	while (1)
@@ -50,16 +52,16 @@ int	main(int ac, char **av, char **env)
 		{
 			if (token_head)
 			{
-				free_token_list(token_head);
+				free_token_list(token_head, token_2);
 				token_head = NULL;
 			}
-			init_token_struct(&token_head);
+			init_token_struct(&token_head, &token_2);
 			// TOKENIZATION
 			tokenizer(token_head, res);
 			print_token_list(token_head);
 			print_token_list_type(token_head);
 			//PARSING 2
-			parsing_2(token_head);
+			parsing_2(token_head, token_2);
 			add_history(input);
 		}
 		// printf("Vous avez tapé : %s\n", input);
@@ -69,6 +71,6 @@ int	main(int ac, char **av, char **env)
 	rl_clear_history();
 	if (env_head && token_head && cmd_list)
 		// free_all(token_head, env_head, cmd_list, tab_env);
-		free_all(token_head, env_head, cmd_list);
+		free_all(token_head, env_head, cmd_list, token_2);
 	return (0);
 }
