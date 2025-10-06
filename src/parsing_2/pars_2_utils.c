@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_2_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 12:42:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/05 14:54:55 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/06 10:19:21 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 
 int	count_cmd(t_token *token_head)
 {
-	int	count;
+	int		count;
+	t_token	*current;
 
 	count = 0;
-	while(token_head)
+	current = token_head;
+	while (current)
 	{
-		if (token_head->type)
+		if (current->type)
 			count++;
-		token_head = token_head->next;
+		current = current->next;
 	}
 	return (count);
 }
