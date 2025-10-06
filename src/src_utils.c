@@ -6,13 +6,14 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 16:35:16 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/05 13:58:08 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/06 10:55:40 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
-void	free_all(t_token *token_head, t_atom_env *env_head, t_cmd *cmd_list)
+void	free_all(t_token *token_head, t_atom_env *env_head,
+			t_cmd *cmd_list)
 {
 	if (token_head)
 		free_token_list(token_head);
@@ -20,6 +21,8 @@ void	free_all(t_token *token_head, t_atom_env *env_head, t_cmd *cmd_list)
 		free_env_list(env_head);
 	if (cmd_list)
 		free_cmd_list(cmd_list);
+	// if (tab_env)
+	// 	free_env_tab(tab_env);
 }
 
 void	free_token_list(t_token *head)
@@ -80,4 +83,19 @@ void	free_cmd_list(t_cmd *cmd_list)
 		free(cmd_list);
 		cmd_list = tmp;
 	}
+}
+
+void	free_env_tab(char **tab_env)
+{
+	int	i;
+
+	i = 0;
+	if (!tab_env)
+		return ;
+	while (tab_env[i])
+	{
+		free(tab_env[i]);
+		i++;
+	}
+	free(tab_env);
 }

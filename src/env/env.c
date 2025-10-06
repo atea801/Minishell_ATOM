@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   atom_env.c                                         :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:47:58 by codespace         #+#    #+#             */
-/*   Updated: 2025/10/03 18:15:42 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/05 18:03:22 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@ void	put_key_and_value(t_atom_env **env, char *env_line)
 {
 	(*env)->key = get_key(env_line);
 	(*env)->value = get_value(env_line);
+	if (ft_strchr(env_line, '='))
+		(*env)->has_value = true;
+	else
+		(*env)->has_value = false;
 	(*env)->next = malloc(sizeof(t_atom_env));
 	if (!(*env)->next)
 		return ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/05 15:02:50 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/06 10:54:00 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	main(int ac, char **av, char **env)
 {
 	char		*input;
 	char		*res;
+	// char		**tab_env;
 	t_token		*token_head;
 	t_atom_env	*env_head;
 	t_cmd		*cmd_list;
@@ -33,6 +34,8 @@ int	main(int ac, char **av, char **env)
 	}
 	else
 		init_all(&env_head, &token_head, &cmd_list, env);
+	// tab_env = env_list_to_tab(env_head);
+	// print_env_tab(tab_env);
 	while (1)
 	{
 		input = readline("ATOM$ ");
@@ -65,6 +68,7 @@ int	main(int ac, char **av, char **env)
 	}
 	rl_clear_history();
 	if (env_head && token_head && cmd_list)
+		// free_all(token_head, env_head, cmd_list, tab_env);
 		free_all(token_head, env_head, cmd_list);
 	return (0);
 }
