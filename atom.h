@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/05 18:10:55 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/06 10:55:15 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@
 typedef struct s_token
 {
 	char				*head;
-	char *value; // le texte du token
-	char *type;  // MOT PIPE REDIRIN REDIROUT HERDOC
+	char				*value; // le texte du token
+	char				*type;  // MOT PIPE REDIRIN REDIROUT HERDOC
 	struct s_token		*next;
 }						t_token;
 
@@ -49,7 +49,7 @@ typedef struct s_cmd
 {
 	// char				*cmd_head;
 	char				*cmd;
-	char				*args;
+	char				**args;
 	char				*infile;
 	char				*outfile;
 	char				*append;
@@ -200,7 +200,7 @@ int						init_cmd_struct(t_cmd **cmd_list);
 
 // src_utils.c
 void					free_all(t_token *token_head, t_atom_env *env_head,
-							t_cmd *cmd_list, char **tab_env);
+							t_cmd *cmd_list);
 void					free_token_list(t_token *head);
 void					free_env_list(t_atom_env *head);
 void					free_cmd_list(t_cmd *cmd_list);
