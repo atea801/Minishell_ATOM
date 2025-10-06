@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 12:42:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/06 11:08:00 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/06 18:18:11 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,3 +27,49 @@ int	count_cmd(t_token *token_head)
 	}
 	return (count);
 }
+
+void	print_token_2_list(t_token_2 *token_2)
+{
+	t_token_2	*t_head_2;
+
+	t_head_2 = token_2;
+	while (t_head_2 && t_head_2->value)
+	{
+		printf("value:%s | type:%s\n", t_head_2->value, t_head_2->type);
+		t_head_2 = t_head_2->next;
+	}
+}
+
+void	print_token_2_list_type(t_token_2 *token_2)
+{
+	t_token_2	*t_head_2;
+
+	t_head_2 = token_2;
+	printf("T_TOKEN_2 :");
+	while (t_head_2 && t_head_2->value)
+	{
+		printf("%s ", t_head_2->type);
+		t_head_2 = t_head_2->next;
+	}
+	printf("\n");
+}
+
+// void	print_cmd_list(t_cmd *cmd_list)
+// {
+// 	int	i;
+
+// 	while (cmd_list)
+// 	{
+// 		printf("cmd: %s | ac: %d\n", cmd_list->cmd, cmd_list->ac);
+// 		if (cmd_list->args)
+// 		{
+// 			i = 0;
+// 			while (cmd_list->args[i])
+// 			{
+// 				printf("  arg[%d]: %s\n", i, cmd_list->args[i]);
+// 				i++;
+// 			}
+// 		}
+// 		cmd_list = cmd_list->next;
+// 	}
+// }
