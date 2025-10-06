@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 12:10:28 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/05 13:31:43 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/06 18:37:22 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ char	*parsing_1(char *input)
 	{
 		printf("unclosed quotes\n");
 		add_history(input);
+		free(res_2);
 		return (NULL);
 	}
 	return (res_2);
