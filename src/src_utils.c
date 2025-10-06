@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   src_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 16:35:16 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/05 18:11:03 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/06 10:55:40 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
 void	free_all(t_token *token_head, t_atom_env *env_head,
-			t_cmd *cmd_list, char **tab_env)
+			t_cmd *cmd_list)
 {
 	if (token_head)
 		free_token_list(token_head);
@@ -21,8 +21,8 @@ void	free_all(t_token *token_head, t_atom_env *env_head,
 		free_env_list(env_head);
 	if (cmd_list)
 		free_cmd_list(cmd_list);
-	if (tab_env)
-		free_env_tab(tab_env);
+	// if (tab_env)
+	// 	free_env_tab(tab_env);
 }
 
 void	free_token_list(t_token *head)
