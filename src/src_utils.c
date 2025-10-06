@@ -6,17 +6,16 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 16:35:16 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/06 10:55:40 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/06 18:44:43 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
-void	free_all(t_token *token_head, t_atom_env *env_head,
-			t_cmd *cmd_list)
+void	free_all(t_token *token_head, t_atom_env *env_head, t_cmd *cmd_list, t_token_2 *token_2)
 {
 	if (token_head)
-		free_token_list(token_head);
+		free_token_list(token_head, token_2);
 	if (env_head)
 		free_env_list(env_head);
 	if (cmd_list)
@@ -25,9 +24,10 @@ void	free_all(t_token *token_head, t_atom_env *env_head,
 	// 	free_env_tab(tab_env);
 }
 
-void	free_token_list(t_token *head)
+void	free_token_list(t_token *head, t_token_2 *head_2)
 {
-	t_token	*tmp;
+	t_token		*tmp;
+	t_token_2	*tmp_2;
 
 	if (!head)
 		return ;
@@ -38,6 +38,18 @@ void	free_token_list(t_token *head)
 			free(head->value);
 		free(head);
 		head = tmp;
+	}
+	if (!head_2)
+		return ;
+	while (head_2)
+	{
+		tmp_2 = head_2->next;
+		if (head_2->value)
+			free(head_2->value);
+		if (head_2->type)
+			free(head_2->type);
+		free(head_2);
+		head_2 = tmp_2;
 	}
 }
 
