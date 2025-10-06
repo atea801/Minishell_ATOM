@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aautret <aautret@student.42.fr>            +#+  +:+       +#+         #
+#    By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/10/05 17:38:02 by aautret          ###   ########.fr        #
+#    Updated: 2025/10/06 17:57:39 by tlorette         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,10 @@ SRC = src/parsing_1/parsing_1.c \
 		src/tokenizer_1/quote_gestion.c \
 		src/tokenizer_1/token_utils.c \
 		src/tokenizer_1/find_type.c \
+		src/tokenizer_2/token_cmd.c \
+		src/tokenizer_2/token_2_find_type.c \
+		src/tokenizer_2/token_2_type.c \
+		src/env/env_list_to_tabs_utils.c \
 		src/env/env_list_to_tabs.c \
 		src/env/env_path.c \
 		src/env/env_node.c \
@@ -34,7 +38,7 @@ SRC = src/parsing_1/parsing_1.c \
 
 OBJ = $(SRC:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror -I.
+CFLAGS = -Wall -Wextra -Werror -g -I.
 LDFLAGS = -lreadline
 LIBFT = ./libft/libft.a
 

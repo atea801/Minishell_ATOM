@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/06 10:55:15 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/06 18:45:06 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,18 @@
 typedef struct s_token
 {
 	char				*head;
-	char				*value; // le texte du token
-	char				*type;  // MOT PIPE REDIRIN REDIROUT HERDOC
+	char *value; // le texte du token
+	char *type;  // MOT PIPE REDIRIN REDIROUT HERDOC
 	struct s_token		*next;
 }						t_token;
+
+typedef struct s_token_2
+{
+	char				*head;
+	char *value; // le texte du token
+	char *type;  // CMD ARG INFILE OUTFILE HERE_DOC APPEND
+	struct s_token_2	*next;
+}						t_token_2;
 
 typedef struct s_cmd
 {
@@ -81,9 +89,17 @@ typedef struct s_atom_env
 /***************************************************************************
  *								EVIRONNEMENT								*
  ****************************************************************************/
-// env_list_to_tabs.c
+// env_list_to_tabs_utils.c
 void					print_env_tab(char **tab_env);
 int						count_var_env(t_atom_env *env_list);
+char					**create_box_tab_env(int count);
+void					free_for_env_list_to_tab(char **tab, int i);
+void					allocate_content_box_tabs(t_atom_env *env_list,
+							char **tab, int count);
+
+// env_list_to_tabs.c
+void					fill_up_box_tabs(t_atom_env *env_list, char **tab,
+							int count);
 char					**env_list_to_tab(t_atom_env *env_list);
 
 // env_node.c
@@ -135,7 +151,7 @@ int						valide_quote(char *str);
 char					*parsing_1(char *input);
 
 /************************************************************************
- *								TOKENIZATION							*
+ *								TOKENIZER 1							*
  ************************************************************************/
 // find_type.c
 char					*type_mot(char *res);
@@ -169,6 +185,7 @@ void					put_token(t_token **token, char *res);
 char					*malloc_token(int end, int start);
 void					copy_word(char *res, char *str, int end, int start);
 void					tokenizer(t_token *token, char *str);
+int						malloc_args(t_token **token);
 
 /************************************************************************
  *								PARSING 2								*
@@ -184,28 +201,46 @@ void					delete_node_list_cmd(t_cmd **cmd_list, char *cmd);
 
 // pars_2_utils.c
 int						count_cmd(t_token *token_head);
+void					print_token_2_list(t_token_2 *token_2);
+void					print_token_2_list_type(t_token_2 *token_2);
+void					print_cmd_list(t_cmd *cmd_list);
 
 // pars_2.c
-void					parsing_2(t_token *token_head);
+void					parsing_2(t_token *token_head, t_token_2 *token_2);
+
+/************************************************************************
+ *								TOKENIZER 2								*
+ ************************************************************************/
+// token_2_find_type.c
+void					fill_cmd_or_args(t_token **token_1,
+							t_token_2 **token_2);
+void					fill_redirin_redirout(t_token **token_1,
+							t_token_2 **token_2);
+
+// token_2_type.c
+char					*malloc_cmd(char *str);
+char					*copy_token_value(char *str);
+t_token_2				*get_input_pos(t_token **token_1, t_token_2 **token_2);
 
 /************************************************************************
  *								SRC										*
  ************************************************************************/
 // init.c
-int						init_token_struct(t_token **token_head);
+int						init_token_struct(t_token **token_head,
+							t_token_2 **token_2);
 int						init_env_struct(t_atom_env **env_head);
-void					init_all(t_atom_env **env_head, t_token **token_head,
-							t_cmd **cmd_list, char **env);
 int						init_cmd_struct(t_cmd **cmd_list);
+void					init_all(t_atom_env **env_head, t_token **token_head,
+							t_cmd **cmd_list, char **env, t_token_2 **token_2);
 
 // src_utils.c
 void					free_all(t_token *token_head, t_atom_env *env_head,
-							t_cmd *cmd_list);
-void					free_token_list(t_token *head);
+							t_cmd *cmd_list, t_token_2 *token_2);
+
+void					free_token_list(t_token *head, t_token_2 *head_2);
 void					free_env_list(t_atom_env *head);
 void					free_cmd_list(t_cmd *cmd_list);
 void					free_env_tab(char **tab_env);
-
 
 // main.c
 
