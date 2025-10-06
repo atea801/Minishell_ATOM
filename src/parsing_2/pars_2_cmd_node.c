@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_2_cmd_node.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 18:18:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/05 16:00:27 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/06 10:45:30 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,14 @@ void	add_node_to_end_cmd(t_cmd **cmd_head, char *cmd, char *args)
 t_cmd	*init_new_node_cmd(char *cmd, char *args)
 {
 	t_cmd	*new_node;
+	int		i;
 
+	i = 0;
 	new_node = malloc(sizeof(t_cmd));
 	if (!new_node)
 		return (NULL);
 	new_node->cmd = ft_strdup(cmd);
-	new_node->args = ft_strdup(args);
+	new_node->args[i++] = ft_strdup(args);
 	if (!new_node->cmd || !new_node->args)
 	{
 		free(new_node->cmd);
@@ -119,7 +121,9 @@ t_cmd	*init_new_node_cmd(char *cmd, char *args)
 int	change_node_list_cmd(t_cmd **cmd_list, char *cmd, char *args)
 {
 	t_cmd	*current;
+	int		i;
 
+	i = 0;
 	if (!cmd_list || !*cmd_list)
 		return (0);
 	current = *cmd_list;
@@ -128,7 +132,7 @@ int	change_node_list_cmd(t_cmd **cmd_list, char *cmd, char *args)
 		if (ft_strcmp(current->cmd, cmd) == 0)
 		{
 			free(current->args);
-			current->args = ft_strdup(args);
+			current->args[i++] = ft_strdup(args);
 			if (!current->args)
 				return (0);
 			return (1);
