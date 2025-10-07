@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/07 15:26:44 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/07 17:15:54 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,10 +145,19 @@ char					*add_redir_space(char *input);
 char					*add_pipe_space(char *input);
 int						count_pipe(char *input);
 char					*add_space_to_operator(char *input);
+int						is_redir(char c);
 
 // parsing_1.c
 int						valide_quote(char *str);
 char					*parsing_1(char *input);
+
+// parse_1_utils.c
+int						is_triple_redir(char *input, int i);
+int						is_double_redir(char *input, int i);
+int						handle_double_redir(char *input, char *res, int *i,
+							int *j);
+int						handle_single_redir(char *input, char *res, int *i,
+							int *j);
 
 /************************************************************************
  *								TOKENIZER 1							*
@@ -223,6 +232,9 @@ void					fill_redirin_redirout(t_token **token_1,
 void					put_token_2(t_token_2 **token_2);
 char					*malloc_cmd(char *str);
 char					*copy_token_value(char *str);
+int						get_pos(t_token *token_head_1, t_token_2 *token_head_2,
+							int first_word);
+
 t_token_2				*get_input_pos(t_token **token_1, t_token_2 **token_2);
 
 /************************************************************************

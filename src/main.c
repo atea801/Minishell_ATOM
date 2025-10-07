@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/07 15:33:09 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/07 16:45:06 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ int	main(int ac, char **av, char **env)
 {
 	char		*input;
 	char		*res;
-	// char		**tab_env;
 	t_token		*token_head;
 	t_token_2	*token_2;
 	t_atom_env	*env_head;
 	t_cmd		*cmd_list;
 
+	// char		**tab_env;
 	token_head = NULL;
-	token_2 = NULL ;
+	token_2 = NULL;
 	env_head = NULL;
 	cmd_list = NULL;
 	(void)ac;
@@ -46,7 +46,7 @@ int	main(int ac, char **av, char **env)
 			printf("exit\n");
 			break ;
 		}
-		//PARSING 1
+		// PARSING 1
 		res = parsing_1(input);
 		if (res)
 		{
@@ -60,7 +60,7 @@ int	main(int ac, char **av, char **env)
 			tokenizer(token_head, res);
 			print_token_list(token_head);
 			print_token_list_type(token_head);
-			//PARSING 2
+			// PARSING 2
 			parsing_2(token_head, token_2);
 			// print_token_2_list(token_2);
 			print_token_2_list_type(token_2);

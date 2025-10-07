@@ -6,7 +6,7 @@
 #    By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/10/06 17:57:39 by tlorette         ###   ########.fr        #
+#    Updated: 2025/10/07 17:16:56 by tlorette         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRC = src/parsing_1/parsing_1.c \
 		src/parsing_1/add_redir_space.c \
 		src/parsing_1/clear_input/clear_input_utils.c \
 		src/parsing_1/clear_input/clear_input.c \
+		src/parsing_1/parse_1_utils.c \
 		src/parsing_2/pars_2_cmd_node.c \
 		src/parsing_2/pars_2_utils.c \
 		src/parsing_2/pars_2.c \
