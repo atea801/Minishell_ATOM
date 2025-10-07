@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/06 18:45:40 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/07 15:33:09 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int ac, char **av, char **env)
 		res = parsing_1(input);
 		if (res)
 		{
-			if (token_head)
+			if (token_head && token_2)
 			{
 				free_token_list(token_head, token_2);
 				token_head = NULL;
@@ -62,6 +62,8 @@ int	main(int ac, char **av, char **env)
 			print_token_list_type(token_head);
 			//PARSING 2
 			parsing_2(token_head, token_2);
+			// print_token_2_list(token_2);
+			print_token_2_list_type(token_2);
 			add_history(input);
 		}
 		// printf("Vous avez tapé : %s\n", input);
