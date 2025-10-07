@@ -6,11 +6,30 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 17:06:04 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/06 19:02:14 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/07 15:32:15 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
+
+/**
+ * 
+ */
+void	put_token_2(t_token_2 **token_2)
+{
+	t_token_2	*token_head_2;
+
+	token_head_2 = *token_2;
+	if (!token_head_2->next)
+	{
+		token_head_2->next = malloc(sizeof(t_token_2));
+		if (!token_head_2->next)
+			return ;
+		token_head_2->next->value = NULL;
+		token_head_2->next->type = NULL;
+		token_head_2->next->next = NULL;
+	}
+}
 
 char	*malloc_cmd(char *str)
 {
@@ -44,28 +63,34 @@ t_token_2	*get_input_pos(t_token **token_1, t_token_2 **token_2)
 {
 	t_token_2	*token_head_2;
 	t_token		*token_head_1;
-	t_token_2	*prev;
+	int			first_word;
 
 	token_head_1 = *token_1;
 	token_head_2 = *token_2;
-	prev = NULL;
+	first_word = 0;
 	if (!token_head_1)
 		return (NULL);
-	while (token_head_1)
+	while (token_head_1 && token_head_1->type)
 	{
-		if (!token_head_2->next)
+		put_token_2(&token_head_2);
+		if (first_word == 0 && ft_strcmp(token_head_1->type, "MOT") == 0)
 		{
-			token_head_2->next = malloc(sizeof(t_token_2));
-			if (!token_head_2->next)
-				break ;
-			token_head_2->next->value = NULL;
-			token_head_2->next->type = NULL;
-			token_head_2->next->next = NULL;
+			fill_cmd(&token_head_1, &token_head_2);
+			token_head_2 = token_head_2->next;
+			first_word = 1;
 		}
-		fill_cmd_or_args(&token_head_1, &token_head_2);
-		fill_redirin_redirout(&token_head_1, &token_head_2);
-		prev = token_head_2;
-		token_head_2 = token_head_2->next;
+		else if (first_word == 1 && ft_strcmp(token_head_1->type, "MOT") == 0)
+		{
+			fill_args(&token_head_1, &token_head_2);
+			token_head_2 = token_head_2->next;
+		}
+		else
+		{
+			fill_heredoc_append(&token_head_1, &token_head_2);
+			fill_redirin_redirout(&token_head_1, &token_head_2);
+			token_head_2 = token_head_2->next;
+			first_word = 0;
+		}
 		token_head_1 = token_head_1->next;
 	}
 	return (token_head_2);
