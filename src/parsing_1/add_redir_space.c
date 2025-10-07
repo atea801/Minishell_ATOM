@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_redir_space.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:30:07 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/07 15:52:53 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/07 17:11:26 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,43 +88,25 @@ int	is_redir(char c)
 
 char	*add_redir_space(char *input)
 {
-	int		i = 0, j;
+	int		i;
+	int		j;
 	char	*res;
+	int		len;
 
-	i = 0, j = 0;
-	int len = ft_strlen(input) * 3 + 1; // Large, mais on réduit après si besoin
+	i = 0;
+	j = 0;
+	len = ft_strlen(input) * 3 + 1;
 	res = malloc(len);
 	if (!res)
 		return (NULL);
 	while (input[i])
 	{
-		// Détection séquence invalide
-		if ((input[i] == '>' || input[i] == '<')
-			&& ((input[i] == '>' && input[i + 1] == '>'
-					&& (input[i + 2] == '>')) || ((input[i] == '<')
-					&& input[i + 1] == '<' && input[i + 2] == '<')))
-		{
-			free(res);
-			return (ft_strdup(input));
-		}
-		// Double redirection
-		if ((input[i] == '>' && input[i + 1] == '>') || (input[i] == '<'
-				&& input[i + 1] == '<'))
-		{
-			res[j++] = input[i++];
-			res[j++] = input[i++];
-			// Ajoute espace si collé à un mot
-			if (input[i] && input[i] != ' ' && !is_redir(input[i]))
-				res[j++] = ' ';
-		}
-		// Simple redirection
+		if (is_triple_redir(input, i))
+			return (free(res), ft_strdup(input));
+		else if (is_double_redir(input, i))
+			handle_double_redir(input, res, &i, &j);
 		else if (is_redir(input[i]))
-		{
-			res[j++] = input[i++];
-			// Ajoute espace si collé à un mot
-			if (input[i] && input[i] != ' ' && !is_redir(input[i]))
-				res[j++] = ' ';
-		}
+			handle_single_redir(input, res, &i, &j);
 		else
 			res[j++] = input[i++];
 	}
