@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/06 18:45:06 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/07 15:26:44 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,12 +212,15 @@ void					parsing_2(t_token *token_head, t_token_2 *token_2);
  *								TOKENIZER 2								*
  ************************************************************************/
 // token_2_find_type.c
-void					fill_cmd_or_args(t_token **token_1,
+void					fill_cmd(t_token **token_1, t_token_2 **token_2);
+void					fill_args(t_token **token_1, t_token_2 **token_2);
+void					fill_heredoc_append(t_token **token_1,
 							t_token_2 **token_2);
 void					fill_redirin_redirout(t_token **token_1,
 							t_token_2 **token_2);
 
 // token_2_type.c
+void					put_token_2(t_token_2 **token_2);
 char					*malloc_cmd(char *str);
 char					*copy_token_value(char *str);
 t_token_2				*get_input_pos(t_token **token_1, t_token_2 **token_2);
