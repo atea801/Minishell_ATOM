@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_type.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:18:07 by aautret           #+#    #+#             */
-/*   Updated: 2025/09/25 16:53:03 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/07 15:22:38 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,14 +94,14 @@ char	*type_redir(char *res)
  * @param res
  * @return char*
  */
-// char	*type_heredoc(char *res)
-// {
-// 	if (res[0] == '<' && res[1] == '<' && res[2] == '\0')
-// 		return ("HEREDOC");
-// 	if (res[0] == '>' && res[1] == '>' && res[2] == '\0')
-// 		return ("APPEND");
-// 	return (NULL);
-// }
+char	*type_heredoc(char *res)
+{
+	if (res[0] == '<' && res[1] == '<' && res[2] == '\0')
+		return ("HEREDOC");
+	if (res[0] == '>' && res[1] == '>' && res[2] == '\0')
+		return ("APPEND");
+	return (NULL);
+}
 
 /**
  * @brief Détermine le type du token en appelant successivement
@@ -118,6 +118,9 @@ char	*get_token_type(char *res)
 	// if (type)
 	// 	return (type);
 	type = type_redir(res);
+	if (type)
+		return (type);
+	type = type_heredoc(res);
 	if (type)
 		return (type);
 	type = type_pipe(res);
