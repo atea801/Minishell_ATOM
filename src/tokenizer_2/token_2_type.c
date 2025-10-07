@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   token_2_type.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 17:06:04 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/07 15:32:15 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/07 15:50:28 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
 /**
+ * @brief Alloue l'espace necessaire pour la structure token_2->next
  * 
+ * @param token_2 
  */
 void	put_token_2(t_token_2 **token_2)
 {
@@ -31,6 +33,12 @@ void	put_token_2(t_token_2 **token_2)
 	}
 }
 
+/**
+ * @brief Alloue la taille de l'input CMD
+ * 
+ * @param str 
+ * @return char* 
+ */
 char	*malloc_cmd(char *str)
 {
 	int		count;
@@ -43,6 +51,12 @@ char	*malloc_cmd(char *str)
 	return (cmd);
 }
 
+/**
+ * @brief Copie et alloue le contenu de token (token->value)
+ * 
+ * @param str 
+ * @return char* 
+ */
 char	*copy_token_value(char *str)
 {
 	int		i;

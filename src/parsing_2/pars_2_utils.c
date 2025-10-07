@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   pars_2_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 12:42:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/07 14:06:10 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/07 15:51:50 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
+/**
+ * @brief Compte de nombre de commande
+ * 
+ * @param token_head 
+ * @return int 
+ */
 int	count_cmd(t_token *token_head)
 {
 	int		count;

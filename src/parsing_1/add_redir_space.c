@@ -3,47 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   add_redir_space.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:30:07 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/07 15:19:24 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/07 15:52:53 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
-int	count_double(char *input)
-{
-	int	count;
-	int	i;
+// int	count_double(char *input)
+// {
+// 	int	count;
+// 	int	i;
 
-	i = 0;
-	count = 0;
-	while (input[i])
-	{
-		if ((input[i] == '>' && input[i + 1] == '>') || (input[i] == '<'
-				&& input[i + 1] == '<'))
-			count++;
-		i++;
-	}
-	return (count);
-}
+// 	i = 0;
+// 	count = 0;
+// 	while (input[i])
+// 	{
+// 		if ((input[i] == '>' && input[i + 1] == '>') || (input[i] == '<'
+// 				&& input[i + 1] == '<'))
+// 			count++;
+// 		i++;
+// 	}
+// 	return (count);
+// }
 
-int	count_redir(char *input)
-{
-	int	i;
-	int	count;
+// int	count_redir(char *input)
+// {
+// 	int	i;
+// 	int	count;
 
-	count = 0;
-	i = 0;
-	while (input[i])
-	{
-		if (input[i] == '>' || input[i] == '<')
-			count++;
-		i++;
-	}
-	return (count);
-}
+// 	count = 0;
+// 	i = 0;
+// 	while (input[i])
+// 	{
+// 		if (input[i] == '>' || input[i] == '<')
+// 			count++;
+// 		i++;
+// 	}
+// 	return (count);
+// }
 
 // char	*add_redir_space(char *input)
 // {
