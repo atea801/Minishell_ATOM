@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_2_type.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 17:06:04 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/07 16:46:16 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/08 13:24:20 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,26 +73,20 @@ char	*copy_token_value(char *str)
 	return (cmd);
 }
 
-t_token_2	*get_input_pos(t_token **token_1, t_token_2 **token_2)
-{
-	t_token_2	*token_head_2;
-	t_token		*token_head_1;
-	int			first_word;
+/**
+ * @brief Analyse le type du token et met à jour la structure token_2.
+ *
+ * - Si le type ==> "MOT" + premier mot == CMD
+ * 
+ * - Si le type ==> "MOT" mais pas le premier == ARGS
 
-	token_head_1 = *token_1;
-	token_head_2 = *token_2;
-	first_word = 0;
-	if (!token_head_1)
-		return (NULL);
-	while (token_head_1 && token_head_1->type)
-	{
-		first_word = get_pos(token_head_1, token_head_2, first_word);
-		token_head_2 = token_head_2->next;
-		token_head_1 = token_head_1->next;
-	}
-	return (token_head_2);
-}
-
+ * - Sinon gère les redirections (heredoc, append, redirin, redirout).
+ * 
+ * @param token_head_1 
+ * @param token_head_2 
+ * @param first_word 
+ * @return int retourne la nouvelle valeur de first_word (0 ou 1)
+ */
 int	get_pos(t_token *token_head_1, t_token_2 *token_head_2, int first_word)
 {
 	put_token_2(&token_head_2);
@@ -110,4 +104,36 @@ int	get_pos(t_token *token_head_1, t_token_2 *token_head_2, int first_word)
 		first_word = 0;
 	}
 	return (first_word);
+}
+
+/**
+ * @brief Parcourt la liste des tokens et met à jour leur type 
+ * dans la structure token_2
+ *
+ * - utilise get_pos pour analyser chaque token +
+ *  mettre à jour la structure token_2
+ * 
+ * - Distingue les CMD, ARGS, REDIR_INT, REDIR_OUT 
+ * selon le type de chaque token.
+ * 
+ * @param token_1 
+ * @param token_2 
+ */
+void	get_input_pos(t_token **token_1, t_token_2 **token_2)
+{
+	t_token_2	*token_head_2;
+	t_token		*token_head_1;
+	int			first_word;
+
+	token_head_1 = *token_1;
+	token_head_2 = *token_2;
+	first_word = 0;
+	if (!token_head_1)
+		return ;
+	while (token_head_1 && token_head_1->type)
+	{
+		first_word = get_pos(token_head_1, token_head_2, first_word);
+		token_head_2 = token_head_2->next;
+		token_head_1 = token_head_1->next;
+	}
 }

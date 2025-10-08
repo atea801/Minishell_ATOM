@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 17:36:06 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/07 15:48:57 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/08 13:05:40 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ void	fill_cmd(t_token **token_1, t_token_2 **token_2)
 
 	t_head_1 = *token_1;
 	t_head_2 = *token_2;
-	// if (!token_1)
-	// 	return ;
 	t_head_2->type = "CMD";
 	t_head_2->value = copy_token_value(t_head_1->value);
 }
