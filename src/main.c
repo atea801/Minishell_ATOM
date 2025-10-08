@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/07 16:45:06 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/08 14:10:41 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,11 @@ int	main(int ac, char **av, char **env)
 			print_token_list(token_head);
 			print_token_list_type(token_head);
 			// PARSING 2
-			parsing_2(token_head, token_2);
-			// print_token_2_list(token_2);
+			if (parsing_2(token_head, token_2) > 0)
+			{
+				printf("Parse 2 as break\n");
+				break ;
+			}
 			print_token_2_list_type(token_2);
 			add_history(input);
 		}
