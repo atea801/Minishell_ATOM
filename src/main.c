@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/08 14:10:41 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/08 18:26:07 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	main(int ac, char **av, char **env)
 				break ;
 			}
 			print_token_2_list_type(token_2);
+			check_expendable(res, token_2);
 			add_history(input);
 		}
 		// printf("Vous avez tapé : %s\n", input);

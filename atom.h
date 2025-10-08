@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/08 16:47:20 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/08 18:44:29 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_token_2
 	char				*head;
 	char *value; // le texte du token
 	char *type;  // CMD ARG INFILE OUTFILE HERE_DOC APPEND
+	int					is_expand;
 	struct s_token_2	*next;
 }						t_token_2;
 
@@ -230,6 +231,9 @@ void					print_cmd_list(t_cmd *cmd_list);
 
 // pars_2.c
 int						parsing_2(t_token *token_head, t_token_2 *token_2);
+int						in_single_quote(char *res, int pos);
+int						in_double_quote(char *res, int pos);
+void					check_expendable(char *res, t_token_2 *token_2);
 
 /************************************************************************
  *								TOKENIZER 2								*
