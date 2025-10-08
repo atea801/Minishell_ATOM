@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/08 10:49:04 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/08 16:47:20 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,10 +133,14 @@ void					my_getenv(t_atom_env **my_env, char **env);
 int						is_space(char c);
 int						count_space(char *str);
 int						count_words(char *str);
-int						skip_space(char *str);
-char					*epur(char *str, char *res, int i);
+int						copy_quote(char *str, char *res, int i, int *j);
+int						skip_and_flag_space(char *str, int i, int *flag);
 
 // clear_input.c
+int						skip_space(char *str);
+int						calc_res_len_quote(char *str, int i, int *len);
+int						calc_res_len(char *str, int i);
+char					*epur(char *str, char *res, int i);
 char					*clear_input(char *input);
 
 // add_redir_space.c
@@ -201,6 +205,14 @@ int						malloc_args(t_token **token);
 /************************************************************************
  *								PARSING 2								*
  ************************************************************************/
+// checker.c
+int						check_pipe(t_token_2 **token_2);
+int						check_all(t_token_2 **token_2);
+
+// pars_2_cmd_node_utils.c
+void					free_delete_node_list(t_cmd *node);
+void					free_init_new_node_cmd(t_cmd *new_node);
+
 // pars_2_cmd_node.c
 void					add_node_to_end_cmd(t_cmd **cmd_head, char *cmd,
 							char *args);
@@ -217,7 +229,7 @@ void					print_token_2_list_type(t_token_2 *token_2);
 void					print_cmd_list(t_cmd *cmd_list);
 
 // pars_2.c
-void					parsing_2(t_token *token_head, t_token_2 *token_2);
+int						parsing_2(t_token *token_head, t_token_2 *token_2);
 
 /************************************************************************
  *								TOKENIZER 2								*
@@ -236,8 +248,11 @@ char					*malloc_cmd(char *str);
 char					*copy_token_value(char *str);
 int						get_pos(t_token *token_head_1, t_token_2 *token_head_2,
 							int first_word);
+void					get_input_pos(t_token **token_1, t_token_2 **token_2);
 
-t_token_2				*get_input_pos(t_token **token_1, t_token_2 **token_2);
+// tokenizer_2.c
+void					set_infile_outfile(t_token_2 **token_2);
+void					tokenizer_2(t_token *token_head, t_token_2 *token_2);
 
 /************************************************************************
  *								SRC										*

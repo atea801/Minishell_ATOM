@@ -6,7 +6,7 @@
 #    By: aautret <aautret@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/10/08 10:37:53 by aautret          ###   ########.fr        #
+#    Updated: 2025/10/08 13:42:08 by aautret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,8 @@ SRC = src/parsing_1/parsing_1.c \
 		src/parsing_1/clear_input/clear_input_utils.c \
 		src/parsing_1/clear_input/clear_input.c \
 		src/parsing_1/parse_1_utils.c \
+		src/parsing_2/checker.c \
+		src/parsing_2/pars_2_cmd_node_utils.c \
 		src/parsing_2/pars_2_cmd_node.c \
 		src/parsing_2/pars_2_utils.c \
 		src/parsing_2/pars_2.c \
@@ -26,6 +28,7 @@ SRC = src/parsing_1/parsing_1.c \
 		src/tokenizer_1/find_type.c \
 		src/tokenizer_2/token_2_find_type.c \
 		src/tokenizer_2/token_2_type.c \
+		src/tokenizer_2/tokenizer_2.c \
 		src/env/env_list_to_tabs_utils.c \
 		src/env/env_list_to_tabs.c \
 		src/env/env_path.c \
