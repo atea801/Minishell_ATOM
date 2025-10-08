@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_1_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 16:58:21 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/07 17:09:39 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/08 10:47:25 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,9 @@ int	handle_single_redir(char *input, char *res, int *i, int *j)
 	if (input[*i] && input[*i] != ' ' && !is_redir(input[*i]))
 		res[(*j)++] = ' ';
 	return (1);
+}
+
+int	is_redir(char c)
+{
+	return (c == '>' || c == '<');
 }

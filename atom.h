@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/07 17:15:54 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/08 10:49:04 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,8 @@ char					*add_redir_space(char *input);
 char					*add_pipe_space(char *input);
 int						count_pipe(char *input);
 char					*add_space_to_operator(char *input);
-int						is_redir(char c);
+void					add_space_before_redir(char *input, char *res, int i,
+							int *j);
 
 // parsing_1.c
 int						valide_quote(char *str);
@@ -158,6 +159,7 @@ int						handle_double_redir(char *input, char *res, int *i,
 							int *j);
 int						handle_single_redir(char *input, char *res, int *i,
 							int *j);
+int						is_redir(char c);
 
 /************************************************************************
  *								TOKENIZER 1							*

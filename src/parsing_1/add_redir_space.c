@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_redir_space.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:30:07 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/07 17:11:26 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/08 10:51:02 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,11 @@
 // 	return (res);
 // }
 
-int	is_redir(char c)
+void	add_space_before_redir(char *input, char *res, int i, int *j)
 {
-	return (c == '>' || c == '<');
+	if ((is_double_redir(input, i) || is_redir(input[i]))
+		&& i > 0 && input[i - 1] != ' ' && !is_redir(input[i - 1]))
+		res[(*j)++] = ' ';
 }
 
 char	*add_redir_space(char *input)
@@ -101,6 +103,7 @@ char	*add_redir_space(char *input)
 		return (NULL);
 	while (input[i])
 	{
+		add_space_before_redir(input, res, i, &j);
 		if (is_triple_redir(input, i))
 			return (free(res), ft_strdup(input));
 		else if (is_double_redir(input, i))
