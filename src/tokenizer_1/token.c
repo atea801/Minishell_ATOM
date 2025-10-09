@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:39:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/08 14:40:24 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/09 16:33:48 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,18 @@ void	tokenizer(t_token *token, char *str)
 			while (str[start] && str[start] == ' ')
 				start++;
 		}
+	}
+}
+
+void	set_token_error(t_token **t_head)
+{
+	t_token	*error;
+
+	error = *t_head;
+	while (error->next)
+	{
+		if (!error->type)
+			error->type = "ERROR";
+		error = error->next;
 	}
 }

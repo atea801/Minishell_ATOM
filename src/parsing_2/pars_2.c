@@ -6,11 +6,25 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 14:55:34 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/08 19:02:53 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/09 16:41:29 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
+
+int	check_error(t_token *token_head)
+{
+	t_token	*t_head_1;
+
+	t_head_1 = token_head;
+	while (t_head_1)
+	{
+		if (ft_strcmp(t_head_1->type, "ERROR") == 0)
+			return (1);
+		t_head_1 = t_head_1->next;
+	}
+	return (0);
+}
 
 int	parsing_2(t_token *token_head, t_token_2 *token_2)
 {
@@ -19,6 +33,8 @@ int	parsing_2(t_token *token_head, t_token_2 *token_2)
 
 	t_head_1 = token_head;
 	t_head_2 = token_2;
+	if (check_error(t_head_1) > 0)
+		return (1);
 	tokenizer_2(t_head_1, t_head_2);
 	if (check_all(&t_head_2) > 0)
 		return (1);

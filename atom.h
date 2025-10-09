@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/09 13:43:32 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/09 16:41:49 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@
 /****************************************************************************
  *								VARIABLES									*
  ****************************************************************************/
-# define REDIR_IN 1 //"<"
-// # define HEREDOC	2	//"< <"
-# define REDIR_OUT 3 //">"
-// # define APPEND		4	//">>"
-# define PIPE 5 //"|"
-# define WORD 6 //"mot"
-// # define CMD		6	//"|"
-// # define ARG		7	//"|"
+// >
+
+// typedef enum e_flag
+// {
+// 	OUT
+// 	REDIR_IN
+// 	NB_FLAG;
+// }	t_flag;
 
 typedef struct s_token
 {
@@ -201,6 +201,8 @@ void					put_token(t_token **token, char *res);
 char					*malloc_token(int end, int start);
 void					copy_word(char *res, char *str, int end, int start);
 void					tokenizer(t_token *token, char *str);
+void					set_token_error(t_token **t_head);
+
 int						malloc_args(t_token **token);
 
 /************************************************************************
@@ -230,6 +232,7 @@ void					print_token_2_list_type(t_token_2 *token_2);
 void					print_cmd_list(t_cmd *cmd_list);
 
 // pars_2.c
+int						check_error(t_token *token_head);
 int						parsing_2(t_token *token_head, t_token_2 *token_2);
 int						in_single_quote(char *res, int pos);
 int						in_double_quote(char *res, int pos);

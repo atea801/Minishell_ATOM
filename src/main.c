@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/09 15:16:31 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/09 16:42:33 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	res_to_tokenizer1(t_token **t_head, t_token_2 **t_head_2, char *res)
 			init_token_struct(t_head, t_head_2);
 			// TOKENIZATION
 			tokenizer(*t_head, res);
+			set_token_error(t_head);
 			print_token_list(*t_head);
 			print_token_list_type(*t_head);
 	}
@@ -47,7 +48,7 @@ void	my_readline(t_token **t_head, t_token_2 **t_head_2)
 		res_to_tokenizer1(t_head, t_head_2, res);
 		if (parsing_2(*t_head, *t_head_2) > 0)
 		{
-			printf("Parse 2 as break\n");
+			printf("Syntaxe error\n");
 			break ;
 		}
 		print_token_2_list_type(*t_head_2);
