@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 14:55:34 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/09 16:41:29 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/09 16:47:14 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	check_error(t_token *token_head)
 	t_token	*t_head_1;
 
 	t_head_1 = token_head;
-	while (t_head_1)
+	while (t_head_1 && t_head_1->type)
 	{
 		if (ft_strcmp(t_head_1->type, "ERROR") == 0)
 			return (1);
