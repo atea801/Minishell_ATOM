@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_redir_space.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:30:07 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/08 10:51:02 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/09 15:18:33 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char	*add_redir_space(char *input)
 	len = ft_strlen(input) * 3 + 1;
 	res = malloc(len);
 	if (!res)
-		return (NULL);
+		return (perror("erreur malloc"), NULL);
 	while (input[i])
 	{
 		add_space_before_redir(input, res, i, &j);

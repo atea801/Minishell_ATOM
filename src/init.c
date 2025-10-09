@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 16:00:00 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/08 18:23:54 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/09 10:46:42 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	init_cmd_struct(t_cmd **cmd_list)
  * @param env 
  */
 void	init_all(t_atom_env **env_head, t_token **token_head,
-	t_cmd **cmd_list, char **env, t_token_2 **token_2)
+	char **env, t_token_2 **token_2)
 {
 	t_atom_env	*env_struct;
 
@@ -102,8 +102,8 @@ void	init_all(t_atom_env **env_head, t_token **token_head,
 		free(*token_head);
 		return ;
 	}
-	if (init_cmd_struct(cmd_list) != 0)
-		return ;
+	// if (init_cmd_struct(cmd_list) != 0)
+	// 	return ;
 	env_struct = *env_head;
 	my_getenv(env_head, env);
 	*env_head = env_struct;

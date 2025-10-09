@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 12:10:28 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/08 15:01:59 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/09 15:15:08 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*parsing_1(char *input)
 	free(res_1);
 	if (valide_quote(res_2))
 	{
-		printf("unclosed quotes\n");
+		write(2, "unclosed quotes\n", 16);
 		add_history(input);
 		free(res_2);
 		return (NULL);

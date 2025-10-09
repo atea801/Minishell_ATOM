@@ -6,20 +6,20 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 16:35:16 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/07 14:27:14 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/09 10:48:34 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
-void	free_all(t_token *token_head, t_atom_env *env_head, t_cmd *cmd_list, t_token_2 *token_2)
+void	free_all(t_token *token_head, t_atom_env *env_head, t_token_2 *token_2)
 {
 	if (token_head)
 		free_token_list(token_head, token_2);
 	if (env_head)
 		free_env_list(env_head);
-	if (cmd_list)
-		free_cmd_list(cmd_list);
+	// if (cmd_list)
+	// 	free_cmd_list(cmd_list);
 	// if (tab_env)
 	// 	free_env_tab(tab_env);
 }

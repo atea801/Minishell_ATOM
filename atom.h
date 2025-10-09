@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/08 18:44:29 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/09 13:43:32 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,11 +267,11 @@ int						init_token_struct(t_token **token_head,
 int						init_env_struct(t_atom_env **env_head);
 int						init_cmd_struct(t_cmd **cmd_list);
 void					init_all(t_atom_env **env_head, t_token **token_head,
-							t_cmd **cmd_list, char **env, t_token_2 **token_2);
+							char **env, t_token_2 **token_2);
 
 // src_utils.c
 void					free_all(t_token *token_head, t_atom_env *env_head,
-							t_cmd *cmd_list, t_token_2 *token_2);
+							t_token_2 *token_2);
 
 void					free_token_list(t_token *head, t_token_2 *head_2);
 void					free_env_list(t_atom_env *head);
@@ -279,5 +279,9 @@ void					free_cmd_list(t_cmd *cmd_list);
 void					free_env_tab(char **tab_env);
 
 // main.c
+
+void					res_to_tokenizer1(t_token **t_head,
+							t_token_2 **t_head_2, char *res);
+void					my_readline(t_token **t_head, t_token_2 **t_head_2);
 
 #endif
