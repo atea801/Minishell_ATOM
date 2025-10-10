@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/09 16:41:49 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/10 17:10:04 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,14 +203,21 @@ void					copy_word(char *res, char *str, int end, int start);
 void					tokenizer(t_token *token, char *str);
 void					set_token_error(t_token **t_head);
 
+// check_token.c
+
+void					print_redir_error(t_token **t_head);
+int						check_redir_in(t_token *t_head);
+int						check_redir_out(t_token *t_head);
+int						check_redir_alone(t_token *t_head);
+int						check_only_redir(t_token *t_head);
+
 int						malloc_args(t_token **token);
 
 /************************************************************************
  *								PARSING 2								*
  ************************************************************************/
 // checker.c
-int						check_pipe(t_token_2 **token_2);
-int						check_all(t_token_2 **token_2);
+int						parse_redir_alone(t_token **token_2);
 
 // pars_2_cmd_node_utils.c
 void					free_delete_node_list(t_cmd *node);
@@ -232,7 +239,9 @@ void					print_token_2_list_type(t_token_2 *token_2);
 void					print_cmd_list(t_cmd *cmd_list);
 
 // pars_2.c
+int						check_pipe(t_token *token_2);
 int						check_error(t_token *token_head);
+int						check_all(t_token **token_head);
 int						parsing_2(t_token *token_head, t_token_2 *token_2);
 int						in_single_quote(char *res, int pos);
 int						in_double_quote(char *res, int pos);

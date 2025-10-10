@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/09 17:26:29 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/10 16:57:37 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,12 @@ void	my_readline(t_token **t_head, t_token_2 **t_head_2)
 		res = parsing_1(input);
 		res_to_tokenizer1(t_head, t_head_2, res);
 		if (parsing_2(*t_head, *t_head_2) > 0)
+			print_redir_error(t_head);
+		else if (parsing_2(*t_head, *t_head_2) == 0)
 		{
-			printf("Syntaxe error\n");
+			print_token_2_list_type(*t_head_2);
+			check_expendable(res, *t_head_2);
 		}
-		// print_token_2_list_type(*t_head_2);
-		check_expendable(res, *t_head_2);
 		add_history(input);
 		if (input)
 			free(input);

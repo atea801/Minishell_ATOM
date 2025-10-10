@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:39:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/09 16:33:48 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/10 13:59:59 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,10 @@ void	set_token_error(t_token **t_head)
 	while (error->next)
 	{
 		if (!error->type)
+		{
 			error->type = "ERROR";
+			return ;
+		}
 		error = error->next;
 	}
 }
