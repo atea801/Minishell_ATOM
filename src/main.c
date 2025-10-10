@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/10 16:57:37 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/10 18:54:52 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	res_to_tokenizer1(t_token **t_head, t_token_2 **t_head_2, char *res)
 			*t_head_2 = NULL;
 		}
 		init_token_struct(t_head, t_head_2);
-		// TOKENIZATION
+		// TOKENIZER 1
 		tokenizer(*t_head, res);
 		set_token_error(t_head);
 		print_token_list(*t_head);

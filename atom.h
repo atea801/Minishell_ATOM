@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/10 17:10:04 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/10 19:35:27 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,17 +145,12 @@ char					*epur(char *str, char *res, int i);
 char					*clear_input(char *input);
 
 // add_redir_space.c
-int						count_redir(char *input);
-char					*add_redir_space(char *input);
-char					*add_pipe_space(char *input);
-int						count_pipe(char *input);
-char					*add_space_to_operator(char *input);
 void					add_space_before_redir(char *input, char *res, int i,
 							int *j);
-
-// parsing_1.c
-int						valide_quote(char *str);
-char					*parsing_1(char *input);
+char					*add_redir_space(char *input);
+int						count_pipe(char *input);
+char					*add_pipe_space(char *input);
+char					*add_space_to_operator(char *input);
 
 // parse_1_utils.c
 int						is_triple_redir(char *input, int i);
@@ -166,15 +161,22 @@ int						handle_single_redir(char *input, char *res, int *i,
 							int *j);
 int						is_redir(char c);
 
+// parsing_1.c
+int						valide_quote(char *str);
+char					*parsing_1(char *input);
+
 /************************************************************************
  *								TOKENIZER 1							*
  ************************************************************************/
+// error_type.c
+void					set_token_error(t_token **t_head);
+
 // find_type.c
 char					*type_mot(char *res);
 char					*type_pipe(char *res);
 char					*type_redir(char *res);
-char					*get_token_type(char *res);
 char					*type_heredoc(char *res);
+char					*get_token_type(char *res);
 
 // quote_gestion.c
 int						quote_state(char i, char next);
@@ -185,23 +187,18 @@ void					handle_quote(t_token **token, char *str, int *start,
 							int end);
 void					handle_general(t_token **token, char *str, int *start,
 							int end);
-void					handle_quote_general(t_token **token, char *str,
-							int *start, int i);
 void					handle_all(t_token **token, char *str, int start,
 							int i);
 
 // token_utils.c
 void					print_token_list(t_token *head);
 void					print_token_list_type(t_token *head);
-// int						check_error(char *res);
-// void					print_error(char *res);
-
-// token.c
+void					copy_word(char *res, char *str, int end, int start);
 void					put_token(t_token **token, char *res);
 char					*malloc_token(int end, int start);
-void					copy_word(char *res, char *str, int end, int start);
+
+// tokenizer_1.c
 void					tokenizer(t_token *token, char *str);
-void					set_token_error(t_token **t_head);
 
 // check_token.c
 
@@ -216,8 +213,11 @@ int						malloc_args(t_token **token);
 /************************************************************************
  *								PARSING 2								*
  ************************************************************************/
-// checker.c
+// pars_2_check_valide.c
 int						parse_redir_alone(t_token **token_2);
+int						check_pipe(t_token *token_2);
+int						check_error(t_token *token_head);
+int						check_all(t_token **token_head);
 
 // pars_2_cmd_node_utils.c
 void					free_delete_node_list(t_cmd *node);
@@ -227,7 +227,6 @@ void					free_init_new_node_cmd(t_cmd *new_node);
 void					add_node_to_end_cmd(t_cmd **cmd_head, char *cmd,
 							char *args);
 t_cmd					*init_new_node_cmd(char *cmd, char *args);
-void					valide_cmd(t_cmd **cmd_head, char *input);
 int						change_node_list_cmd(t_cmd **cmd_list, char *cmd,
 							char *args);
 void					delete_node_list_cmd(t_cmd **cmd_list, char *cmd);
@@ -236,16 +235,10 @@ void					delete_node_list_cmd(t_cmd **cmd_list, char *cmd);
 int						count_cmd(t_token *token_head);
 void					print_token_2_list(t_token_2 *token_2);
 void					print_token_2_list_type(t_token_2 *token_2);
-void					print_cmd_list(t_cmd *cmd_list);
+// void					print_cmd_list(t_cmd *cmd_list);
 
 // pars_2.c
-int						check_pipe(t_token *token_2);
-int						check_error(t_token *token_head);
-int						check_all(t_token **token_head);
 int						parsing_2(t_token *token_head, t_token_2 *token_2);
-int						in_single_quote(char *res, int pos);
-int						in_double_quote(char *res, int pos);
-void					check_expendable(char *res, t_token_2 *token_2);
 
 /************************************************************************
  *								TOKENIZER 2								*
@@ -264,11 +257,19 @@ char					*malloc_cmd(char *str);
 char					*copy_token_value(char *str);
 int						get_pos(t_token *token_head_1, t_token_2 *token_head_2,
 							int first_word);
-void					get_input_pos(t_token **token_1, t_token_2 **token_2);
 
 // tokenizer_2.c
+void					get_input_pos(t_token **token_1, t_token_2 **token_2);
 void					set_infile_outfile(t_token_2 **token_2);
 void					tokenizer_2(t_token *token_head, t_token_2 *token_2);
+
+/************************************************************************
+ *								CHECK_EXPANDABLE						*
+ ************************************************************************/
+// check_expand.c
+int						in_single_quote(char *res, int pos);
+int						in_double_quote(char *res, int pos);
+void					check_expendable(char *res, t_token_2 *token_2);
 
 /************************************************************************
  *								SRC										*

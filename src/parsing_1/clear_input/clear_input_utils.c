@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 11:32:06 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/08 16:45:59 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/10 18:28:58 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,20 @@ int	copy_quote(char *str, char *res, int i, int *j)
 	return (i);
 }
 
+/**
+ * @brief Ignore les espaces consécutifs et active un flag pour 
+ * signaler un espace à ajouter.
+ *
+ * - Avance l'index dans la chaîne tant qu'il y a des espaces
+ * 
+ * - Active le flag pour indiquer qu'un espace doit être ajouté dans la chaîne 
+ * résultat
+ * 
+ * @param str 
+ * @param i 
+ * @param flag 
+ * @return int 
+ */
 int	skip_and_flag_space(char *str, int i, int *flag)
 {
 	while (str[i] && is_space(str[i]))

@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 14:21:03 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/08 16:45:25 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/10 18:27:21 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,19 @@ int	skip_space(char *str)
 	return (i);
 }
 
+/**
+ * @brief Calcule la longueur à ajouter pour une séquence entre quotes.
+ * 
+ * - Compte le nombre de caractères compris entre les quotes
+ *  (y compris les quotes elles-mêmes),
+ * 
+ * - Incrémente la variable de longueur passée en paramètre
+ * 
+ * @param str 
+ * @param i 
+ * @param len 
+ * @return int 
+ */
 int	calc_res_len_quote(char *str, int i, int *len)
 {
 	char	quote;
@@ -41,6 +54,19 @@ int	calc_res_len_quote(char *str, int i, int *len)
 	return (i);
 }
 
+/**
+ * @brief Calcule la longueur de la chaîne épurée sans espaces superflus.
+ * 
+ * - Compte le nombre de caractères à conserver dans la chaîne résultat
+ * 
+ * - Supprime les espaces inutiles (sauf à l'intérieur des quotes)
+ * 
+ * - Laisse qu'un seul espace entre chaque élément
+ * 
+ * @param str 
+ * @param i 
+ * @return int 
+ */
 int	calc_res_len(char *str, int i)
 {
 	int	len;
@@ -109,7 +135,7 @@ char	*epur(char *str, char *res, int i)
 }
 
 /**
- * @brief retire les epaces avant et pendant la chaine de caractere,
+ * @brief Retire les epaces avant et pendant la chaine de caractere,
  * reecrit la chaine passee en arg et retourne une nouvelle version
  * de cette chaine
  *

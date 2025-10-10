@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 18:18:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/08 13:40:39 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/10 19:29:58 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,28 +150,3 @@ void	delete_node_list_cmd(t_cmd **cmd_list, char *cmd)
 	}
 	return ;
 }
-
-/**
- * @brief Prend une chaine de caractere et verifie que la cle est valide
- * (qu'elle existe)
- * si la cle est valide on ajoute le nouveau noeud
- *
- * @param env_head
- * @param env_line
- */
-// void	valide_cmd(t_cmd **cmd_head, char *input)
-// {
-// 	char	*cmd;
-// 	char	*args;
-
-// 	cmd = get_cmd(input);//A FAIRE
-// 	args = get_args(input); // A FAIRE
-// 	if (cmd)
-// 	{
-// 		add_node_to_end(cmd_head, cmd, args);
-// 		free(cmd);
-// 		if (args)
-// 			free(args);
-// 	}
-// 	return ;
-// }

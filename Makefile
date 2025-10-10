@@ -3,39 +3,41 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+         #
+#    By: aautret <aautret@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/10/10 13:38:52 by tlorette         ###   ########.fr        #
+#    Updated: 2025/10/10 19:34:01 by aautret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 SRC = src/parsing_1/parsing_1.c \
-		src/parsing_1/add_redir_space.c \
 		src/parsing_1/clear_input/clear_input_utils.c \
 		src/parsing_1/clear_input/clear_input.c \
+		src/parsing_1/add_redir_space.c \
 		src/parsing_1/parse_1_utils.c \
-		src/parsing_2/checker.c \
+		src/parsing_2/tokenizer_2/token_2_find_type.c \
+		src/parsing_2/tokenizer_2/token_2_type.c \
+		src/parsing_2/tokenizer_2/tokenizer_2.c \
+		src/parsing_2/pars_2_check_valide.c \
 		src/parsing_2/pars_2_cmd_node_utils.c \
 		src/parsing_2/pars_2_cmd_node.c \
 		src/parsing_2/pars_2_utils.c \
 		src/parsing_2/pars_2.c \
-		src/tokenizer_1/token.c \
+		src/tokenizer_1/check_token.c \
+		src/tokenizer_1/error_type.c \
+		src/tokenizer_1/find_type.c \
 		src/tokenizer_1/quote_gestion.c \
 		src/tokenizer_1/token_utils.c \
-		src/tokenizer_1/find_type.c \
-		src/tokenizer_1/check_token.c \
-		src/tokenizer_2/token_2_find_type.c \
-		src/tokenizer_2/token_2_type.c \
-		src/tokenizer_2/tokenizer_2.c \
+		src/tokenizer_1/tokenizer_1.c \
 		src/env/env_list_to_tabs_utils.c \
 		src/env/env_list_to_tabs.c \
 		src/env/env_path.c \
 		src/env/env_node.c \
 		src/env/env_utils.c \
 		src/env/env.c \
+		src/check_expandable/check_expand.c \
 		src/init.c\
 		src/src_utils.c \
 		src/main.c

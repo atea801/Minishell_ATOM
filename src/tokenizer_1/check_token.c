@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 13:20:49 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/10 17:21:00 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/10 18:54:24 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
-
-// int	check_error_print(t_token **t_head);
 
 void	print_redir_error(t_token **t_head)
 {
@@ -120,7 +118,6 @@ int	check_only_redir(t_token *t_head)
 {
 	if (!t_head || !t_head->type)
 		return (0);
-	// Vérifier si le token actuel est une redirection
 	if (ft_strcmp(t_head->type, "REDIR_IN") == 0 || ft_strcmp(t_head->type,
 			"REDIR_OUT") == 0)
 		return (5);

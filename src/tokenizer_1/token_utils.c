@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:34:48 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/05 12:47:56 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/10 18:52:31 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,53 +34,63 @@ void	print_token_list_type(t_token *head)
 }
 
 /**
- * @brief Vérifie la présence d'erreurs de syntaxe de redirections.
- *
- * Compte le nombre de caractères '<' et '>'
- * - Si les deux types de redirections sont présents, elle retourne 0 (erreur de mélange).
- * - Si uniquement des '<' sont présents, elle retourne leur nombre.
- * - Si uniquement des '>' sont présents, elle retourne leur nombre.
+ * @brief copie le mot dectecter pour future tokenisation
+ * (gain de lignes pour la norme)
  *
  * @param res
- * @return int
+ * @param str
+ * @param end
+ * @param start
  */
-// int	check_error(char *res)
-// {
-// 	int	i;
-// 	int	count_in;
-// 	int	count_out;
+void	copy_word(char *res, char *str, int end, int start)
+{
+	int	j;
+	int	k;
 
-// 	i = -1;
-// 	count_in = 0;
-// 	count_out = 0;
-// 	while (res[++i])
-// 		if (res[i] == '<')
-// 			count_in++;
-// 	i = -1;
-// 	while (res[++i])
-// 		if (res[i] == '>')
-// 			count_out++;
-// 	if (count_in > 0 && count_out > 0)
-// 		return (0);
-// 	if (count_in > 0)
-// 		return (count_in);
-// 	return (count_out);
-// }
+	j = 0;
+	k = start;
+	while (k <= end)
+		res[j++] = str[k++];
+	res[j] = 0;
+}
+
 
 /**
- * @brief Affiche le message d'erreur lie aux nombres retournes par check_error
+ * @brief Set token.value et set avec appel de token_type token.type
  *
- * @param res
+ * on passe au token suivant pour etre pret pour le prochain appel
+ *
+ * @param token
+ * @param str
  */
-// void	print_error(char *res)
-// {
-// 	if ((check_error(res) == 4) || (check_error(res) == 3 && res[0] == '>'))
-// 		printf("bash: syntax error near unexpected token `%c'", res[0]);
-// 	else if ((check_error(res) == 5)
-// 		|| (check_error(res) >= 5 && res[0] == '>'))
-// 		printf("bash: syntax error near unexpected token `%c%c'",
-// 			res[0], res[1]);
-// 	else if (check_error(res) >= 6 && res[0] == '<')
-// 		printf("bash: syntax error near unexpected token `%c%c%c'", res[0],
-// 			res[1], res[2]);
-// }
+void	put_token(t_token **token, char *res)
+{
+	(*token)->value = res;
+	(*token)->type = get_token_type(res);
+	(*token)->next = malloc(sizeof(t_token));
+	if (!(*token)->next)
+		return ;
+	(*token) = (*token)->next;
+	(*token)->next = NULL;
+	(*token)->value = NULL;
+	(*token)->head = NULL;
+	(*token)->type = NULL;
+}
+
+/**
+ * @brief allocation de memoire pour tokenizer
+ * (gain de lignes pour la norme)
+ *
+ * @param end
+ * @param start
+ * @return char*
+ */
+char	*malloc_token(int end, int start)
+{
+	char	*res;
+
+	res = malloc(sizeof(char) * (end - start + 2));
+	if (!res)
+		return (NULL);
+	return (res);
+}
