@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 16:35:16 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/09 10:48:34 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/15 13:43:34 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,18 +78,12 @@ void	free_cmd_list(t_cmd *cmd_list)
 	while (cmd_list)
 	{
 		tmp = cmd_list->next;
-		if (cmd_list->cmd)
-			free(cmd_list->cmd);
-		if (cmd_list->args)
-			free(cmd_list->args);
+		if (cmd_list->argv)
+			free(cmd_list->argv);
 		if (cmd_list->infile)
 			free(cmd_list->infile);
 		if (cmd_list->outfile)
 			free(cmd_list->outfile);
-		if (cmd_list->append)
-			free(cmd_list->append);
-		if (cmd_list->here_doc)
-			free(cmd_list->here_doc);
 		free(cmd_list);
 		cmd_list = tmp;
 	}

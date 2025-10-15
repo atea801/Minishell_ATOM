@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/10 18:54:52 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/15 16:45:53 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ void	my_readline(t_token **t_head, t_token_2 **t_head_2)
 {
 	char	*input;
 	char	*res;
+	t_cmd	*cmd_head;
 
+	cmd_head = NULL;
 	while (1)
 	{
 		input = readline("ATOM$ ");
@@ -52,6 +54,7 @@ void	my_readline(t_token **t_head, t_token_2 **t_head_2)
 		{
 			print_token_2_list_type(*t_head_2);
 			check_expendable(res, *t_head_2);
+			token_2_to_cmd(t_head_2, &cmd_head);
 		}
 		add_history(input);
 		if (input)

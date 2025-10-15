@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 16:00:00 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/09 10:46:42 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/15 11:54:23 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,13 @@ int	init_cmd_struct(t_cmd **cmd_list)
 	*cmd_list = malloc(sizeof(t_cmd));
 	if (!*cmd_list)
 		return (1);
-	(*cmd_list)->cmd = NULL;
-	(*cmd_list)->args = NULL;
+	(*cmd_list)->argv = NULL;
 	(*cmd_list)->infile = NULL;
-	(*cmd_list)->append = NULL;
 	(*cmd_list)->outfile = NULL;
-	(*cmd_list)->here_doc = NULL;
-	(*cmd_list)->ac = 0;
+	(*cmd_list)->heredoc_delim = NULL;
+	(*cmd_list)->append = 0;
+	(*cmd_list)->here_doc = 0;
+	(*cmd_list)->argc = 0;
 	(*cmd_list)->next = NULL;
 	return (0);
 }

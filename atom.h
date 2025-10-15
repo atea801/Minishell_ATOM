@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/10 19:35:27 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/15 16:42:48 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,13 @@ typedef struct s_token_2
 
 typedef struct s_cmd
 {
-	// char				*cmd_head;
-	char				*cmd;
-	char				**args;
+	char				**argv;
 	char				*infile;
 	char				*outfile;
-	char				*append;
-	char				*here_doc;
-	int					ac;
-
+	char				*heredoc_delim;
+	int					append;
+	int					here_doc;
+	int					argc;
 	struct s_cmd		*next;
 }						t_cmd;
 
@@ -224,12 +222,11 @@ void					free_delete_node_list(t_cmd *node);
 void					free_init_new_node_cmd(t_cmd *new_node);
 
 // pars_2_cmd_node.c
-void					add_node_to_end_cmd(t_cmd **cmd_head, char *cmd,
-							char *args);
-t_cmd					*init_new_node_cmd(char *cmd, char *args);
-int						change_node_list_cmd(t_cmd **cmd_list, char *cmd,
-							char *args);
-void					delete_node_list_cmd(t_cmd **cmd_list, char *cmd);
+void					add_node_to_end_cmd(t_cmd **cmd_head, char **argv);
+t_cmd					*init_new_node_cmd(char **argv);
+int						add_arg_to_cmd(t_cmd *cmd, char *arg);
+void					delete_node_list_cmd(t_cmd **cmd_list);
+void					set_cmd_redirection(t_cmd *cmd, char *type, char *file);
 
 // pars_2_utils.c
 int						count_cmd(t_token *token_head);
@@ -239,6 +236,16 @@ void					print_token_2_list_type(t_token_2 *token_2);
 
 // pars_2.c
 int						parsing_2(t_token *token_head, t_token_2 *token_2);
+
+// token_2_to_cmd.c
+void					token_2_to_cmd(t_token_2 **token_2, t_cmd **cmd);
+void					fill_one_node(t_cmd *cmd_head, t_token_2 *t_head_2,
+							char *str, int i);
+void					fill_out_in_file(t_cmd *cmd_head, t_token_2 *t_head_2,
+							char *str);
+void					set_heredoc_append(t_cmd *cmd_head,
+							t_token_2 *t_head_2);
+int						count_to_pipe(t_token_2 *t_head_2);
 
 /************************************************************************
  *								TOKENIZER 2								*
