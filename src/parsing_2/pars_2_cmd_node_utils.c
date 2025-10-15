@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_2_cmd_node_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 13:38:03 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/08 13:44:03 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/15 11:52:59 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,56 @@
  */
 void	free_init_new_node_cmd(t_cmd *new_node)
 {
-	free(new_node->cmd);
-	free(new_node->args);
+	int	i;
+
+	if (!new_node)
+		return ;
+	if (new_node->argv)
+	{
+		i = 0;
+		while (new_node->argv[i])
+		{
+			free(new_node->argv[i]);
+			i++;
+		}
+		free(new_node->argv);
+	}
+	if (new_node->infile)
+		free(new_node->infile);
+	if (new_node->outfile)
+		free(new_node->outfile);
+	if (new_node->heredoc_delim)
+		free(new_node->heredoc_delim);
 	free(new_node);
 }
 
 /**
  * @brief Fonction de decoupage pour les free
- * de delette_node_list_cmd
+ * de delete_node_list_cmd
  * 
  * @param node 
  */
 void	free_delete_node_list(t_cmd *node)
 {
-	free(node->args);
-	free(node->cmd);
-	free(node->infile);
-	free(node->outfile);
-	free(node->append);
-	free(node->here_doc);
+	int	i;
+
+	if (!node)
+		return ;
+	if (node->argv)
+	{
+		i = 0;
+		while (node->argv[i])
+		{
+			free(node->argv[i]);
+			i++;
+		}
+		free(node->argv);
+	}
+	if (node->infile)
+		free(node->infile);
+	if (node->outfile)
+		free(node->outfile);
+	if (node->heredoc_delim)
+		free(node->heredoc_delim);
 	free(node);
 }
