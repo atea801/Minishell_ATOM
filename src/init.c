@@ -6,11 +6,28 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 16:00:00 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/15 11:54:23 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/16 17:03:20 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
+
+/**
+ * @brief Initialise seulement une structure t_token (sans t_token_2)
+ * 
+ * @param token_head Pointeur vers le head de la liste de tokens
+ * @return int 0 si succès, 1 si erreur
+ */
+int	init_token_1_only(t_token **token_head)
+{
+	*token_head = malloc(sizeof(t_token));
+	if (!*token_head)
+		return (1);
+	(*token_head)->value = NULL;
+	(*token_head)->type = NULL;
+	(*token_head)->next = NULL;
+	return (0);
+}
 
 /**
  * @brief Initialise une structure t_token

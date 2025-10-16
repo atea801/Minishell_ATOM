@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 16:35:16 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/15 13:43:34 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/16 17:07:40 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	free_env_list(t_atom_env *head)
 void	free_cmd_list(t_cmd *cmd_list)
 {
 	t_cmd	*tmp;
+	int		i;
 
 	if (!cmd_list)
 		return ;
@@ -79,11 +80,18 @@ void	free_cmd_list(t_cmd *cmd_list)
 	{
 		tmp = cmd_list->next;
 		if (cmd_list->argv)
+		{
+			i = -1;
+			while (cmd_list->argv[++i])
+				free(cmd_list->argv[i]);
 			free(cmd_list->argv);
+		}
 		if (cmd_list->infile)
 			free(cmd_list->infile);
 		if (cmd_list->outfile)
 			free(cmd_list->outfile);
+		if (cmd_list->heredoc_delim)
+			free(cmd_list->heredoc_delim);
 		free(cmd_list);
 		cmd_list = tmp;
 	}
@@ -102,4 +110,42 @@ void	free_env_tab(char **tab_env)
 		i++;
 	}
 	free(tab_env);
+}
+
+void	free_token_1_only(t_token *head)
+{
+	t_token	*tmp;
+
+	if (!head)
+		return ;
+	while (head)
+	{
+		tmp = head->next;
+		if (head->value)
+		{
+			free(head->value);
+			head->value = NULL;
+		}
+		free(head);
+		head = tmp;
+	}
+}
+
+void	free_token_2_list(t_token_2 **t_head_2)
+{
+	t_token_2	*head_2;
+	t_token_2	*tmp_2;
+
+	if (!t_head_2 || !*t_head_2)
+		return ;
+	head_2 = *t_head_2;
+	while (head_2)
+	{
+		tmp_2 = head_2->next;
+		if (head_2->value)
+			free(head_2->value);
+		free(head_2);
+		head_2 = tmp_2;
+	}
+	*t_head_2 = NULL;
 }
