@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/15 16:45:53 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/16 17:10:06 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	my_readline(t_token **t_head, t_token_2 **t_head_2)
 	char	*input;
 	char	*res;
 	t_cmd	*cmd_head;
+	int		parsing_res;
 
 	cmd_head = NULL;
 	while (1)
@@ -48,19 +49,25 @@ void	my_readline(t_token **t_head, t_token_2 **t_head_2)
 		}
 		res = parsing_1(input);
 		res_to_tokenizer1(t_head, t_head_2, res);
-		if (parsing_2(*t_head, *t_head_2) > 0)
+		parsing_res = parsing_2(*t_head, *t_head_2);
+		if (parsing_res > 0)
 			print_redir_error(t_head);
-		else if (parsing_2(*t_head, *t_head_2) == 0)
+		else if (parsing_res == 0)
 		{
 			print_token_2_list_type(*t_head_2);
 			check_expendable(res, *t_head_2);
-			token_2_to_cmd(t_head_2, &cmd_head);
+			token_2_to_cmd(&cmd_head, t_head_2);
 		}
 		add_history(input);
 		if (input)
 			free(input);
 		if (res)
 			free(res);
+		if (cmd_head)
+		{
+			free_cmd_list(cmd_head);
+			cmd_head = NULL;
+		}
 	}
 }
 
@@ -81,8 +88,9 @@ int	main(int ac, char **av, char **env)
 		init_all(&env_head, &token_head, env, &token_2);
 	my_readline(&token_head, &token_2);
 	rl_clear_history();
-	if (env_head && token_head)
-		// free_all(token_head, env_head, cmd_list, tab_env);
-		free_all(token_head, env_head, token_2);
+	if (token_head || token_2)
+		free_token_list(token_head, token_2);
+	if (env_head)
+		free_env_list(env_head);
 	return (0);
 }
