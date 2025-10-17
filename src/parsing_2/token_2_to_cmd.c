@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 15:36:57 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/16 16:52:11 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/17 17:10:20 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	print_cmd_list(t_cmd *cmd)
 			i = 0;
 			while (cmd->argv[i])
 			{
-				printf("%s ", cmd->argv[i]);
+				printf("%s", cmd->argv[i]);
 				i++;
 			}
 		}

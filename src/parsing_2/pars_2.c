@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 14:55:34 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/10 19:28:05 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/17 11:12:09 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	parsing_2(t_token *token_head, t_token_2 *token_2)
 	t_head_1 = token_head;
 	t_head_2 = token_2;
 	error = check_all(&t_head_1);
-	if (error > 0)
+	if (error == 1)
 		return (1);
 	else if (error == 0)
 		tokenizer_2(t_head_1, t_head_2);

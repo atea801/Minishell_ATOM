@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_2_check_valide.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 19:12:52 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/10 19:17:19 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/17 11:18:23 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,16 @@ int	check_all(t_token **token_head)
 		return (0);
 	t_head_1 = *token_head;
 	if (check_pipe(t_head_1) > 0)
+	{
+		printf("pipe error\n");
 		return (1);
+	}
 	else if ((parse_redir_alone(&t_head_1) > 0))
-		return (1);
+		return (2);
 	else if (check_error(t_head_1) > 0)
+	{
+		printf("synthaxe error\n");
 		return (1);
+	}
 	return (0);
 }

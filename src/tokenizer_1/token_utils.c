@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:34:48 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/10 18:52:31 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/17 17:42:59 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,19 @@ void	copy_word(char *res, char *str, int end, int start)
  * @param token
  * @param str
  */
-void	put_token(t_token **token, char *res)
+int	put_token(t_token **token, char *res)
 {
 	(*token)->value = res;
 	(*token)->type = get_token_type(res);
 	(*token)->next = malloc(sizeof(t_token));
 	if (!(*token)->next)
-		return ;
+		return (1);
 	(*token) = (*token)->next;
 	(*token)->next = NULL;
 	(*token)->value = NULL;
 	(*token)->head = NULL;
 	(*token)->type = NULL;
+	return (0);
 }
 
 /**
