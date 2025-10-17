@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 16:35:16 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/16 17:07:40 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/17 10:48:29 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,40 +112,3 @@ void	free_env_tab(char **tab_env)
 	free(tab_env);
 }
 
-void	free_token_1_only(t_token *head)
-{
-	t_token	*tmp;
-
-	if (!head)
-		return ;
-	while (head)
-	{
-		tmp = head->next;
-		if (head->value)
-		{
-			free(head->value);
-			head->value = NULL;
-		}
-		free(head);
-		head = tmp;
-	}
-}
-
-void	free_token_2_list(t_token_2 **t_head_2)
-{
-	t_token_2	*head_2;
-	t_token_2	*tmp_2;
-
-	if (!t_head_2 || !*t_head_2)
-		return ;
-	head_2 = *t_head_2;
-	while (head_2)
-	{
-		tmp_2 = head_2->next;
-		if (head_2->value)
-			free(head_2->value);
-		free(head_2);
-		head_2 = tmp_2;
-	}
-	*t_head_2 = NULL;
-}
