@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_expand.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 19:27:38 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/10 19:27:51 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/17 17:06:22 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	in_single_quote(char *res, int pos)
 	i = 0;
 	while (i < pos)
 	{
-		if (res[i] == 39)
+		if (res[i] == '\'')
 			in_single = !in_single;
 		i++;
 	}
@@ -37,7 +37,7 @@ int	in_double_quote(char *res, int pos)
 	i = 0;
 	while (i < pos)
 	{
-		if (res[i] == 34)
+		if (res[i] == '\"')
 			in_double = !in_double;
 		i++;
 	}
@@ -46,27 +46,29 @@ int	in_double_quote(char *res, int pos)
 
 void	check_expendable(char *res, t_token_2 *token_2)
 {
-	int		in_double;
-	int		in_single;
+	// int		in_double;
+	// int		in_single;
 	int		index;
 	char	*pos;
 
+	index = 0;
 	while (token_2 && token_2->value)
 	{
-		pos = ft_strnstr(res, token_2->value, ft_strlen(res));
+		if (res)
+			pos = ft_strnstr(res + index, token_2->value, ft_strlen(res));
 		if (pos && token_2->value[0] == '$')
 		{
 			index = pos - res;
-			in_single = in_single_quote(res, index);
-			in_double = in_double_quote(res, index);
-			if ((!in_single && !in_double) || (in_double && !in_single))
-				token_2->is_expand = 1;
-			else
+			// in_single = in_single_quote(res, index);
+			// in_double = in_double_quote(res, index);
+			// if ((!in_single && !in_double) || (in_double && !in_single))
+			// 	token_2->is_expand = 1;
+			// else
+			// 	token_2->is_expand = 0;
+			if (in_single_quote(res, index))
 				token_2->is_expand = 0;
 		}
-		else
-			token_2->is_expand = 0;
-		printf("is_expand = %d\n", token_2->is_expand);
+		printf("%s is_expand = %d\n", token_2->value, token_2->is_expand);
 		token_2 = token_2->next;
 	}
 }
