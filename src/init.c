@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 16:00:00 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/16 17:03:20 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:29:21 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	init_token_struct(t_token **token_head, t_token_2 **token_2)
 	(*token_2)->value = NULL;
 	(*token_2)->type = NULL;
 	(*token_2)->next = NULL;
-	(*token_2)->is_expand = 0;
+	(*token_2)->is_expand = 1;
 	return (0);
 }
 

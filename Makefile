@@ -6,7 +6,7 @@
 #    By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/10/15 13:44:38 by tlorette         ###   ########.fr        #
+#    Updated: 2025/10/17 13:11:17 by tlorette         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,9 +39,11 @@ SRC = src/parsing_1/parsing_1.c \
 		src/env/env_utils.c \
 		src/env/env.c \
 		src/check_expandable/check_expand.c \
+		src/check_expandable/assign_expand.c \
 		src/init.c\
 		src/src_utils.c \
-		src/main.c
+		src/src_utils_2.c \
+		src/main.c \
 
 OBJ = $(SRC:.c=.o)
 

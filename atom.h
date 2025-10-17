@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/16 17:03:20 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/17 17:55:43 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,18 +181,19 @@ int						quote_state(char i, char next);
 int						skip_quote(char *str, int i);
 void					handle_quote_state(t_token **token, char *str,
 							int *start, int end);
-void					handle_quote(t_token **token, char *str, int *start,
+int						handle_quote(t_token **token, char *str, int *start,
 							int end);
+
 void					handle_general(t_token **token, char *str, int *start,
 							int end);
-void					handle_all(t_token **token, char *str, int start,
+int						handle_all(t_token **token, char *str, int start,
 							int i);
 
 // token_utils.c
 void					print_token_list(t_token *head);
 void					print_token_list_type(t_token *head);
 void					copy_word(char *res, char *str, int end, int start);
-void					put_token(t_token **token, char *res);
+int						put_token(t_token **token, char *res);
 char					*malloc_token(int end, int start);
 
 // tokenizer_1.c
@@ -274,6 +275,10 @@ int						in_single_quote(char *res, int pos);
 int						in_double_quote(char *res, int pos);
 void					check_expendable(char *res, t_token_2 *token_2);
 
+// assign_expand.c
+int						expander(t_token_2 *token_2, t_atom_env **env);
+void					assign_expand(t_token_2 *token_2, t_atom_env **env);
+
 /************************************************************************
  *								SRC										*
  ************************************************************************/
@@ -289,19 +294,22 @@ void					init_all(t_atom_env **env_head, t_token **token_head,
 void					free_all(t_token *token_head, t_atom_env *env_head,
 							t_token_2 *token_2);
 void					free_token_list(t_token *head, t_token_2 *head_2);
-void					free_token_1_only(t_token *head);
 void					free_env_list(t_atom_env *head);
 void					free_cmd_list(t_cmd *cmd_list);
 void					free_env_tab(char **tab_env);
 
-// init.c  
+// src_utils_2.c
+void					free_token_1_only(t_token *head);
+void					free_token_2_list(t_token_2 **head_2);
+
+// init.c
 int						init_token_1_only(t_token **token_head);
 
 // main.c
 
 void					res_to_tokenizer1(t_token **t_head,
 							t_token_2 **t_head_2, char *res);
-void					my_readline(t_token **t_head, t_token_2 **t_head_2);
-void					free_token_2_list(t_token_2 **head_2);
+void					my_readline(t_token **t_head, t_token_2 **t_head_2,
+							t_atom_env **env_head);
 
 #endif
