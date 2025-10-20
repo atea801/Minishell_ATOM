@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/17 17:55:43 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/20 11:53:47 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ int						malloc_args(t_token **token);
  ************************************************************************/
 // pars_2_check_valide.c
 int						parse_redir_alone(t_token **token_2);
-int						check_pipe(t_token *token_2);
+char					*check_pipe(t_token *token_2);
 int						check_error(t_token *token_head);
 int						check_all(t_token **token_head);
 
