@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_2_check_valide.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 19:12:52 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/21 17:26:52 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/21 18:15:48 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,24 +125,35 @@ int	check_all(t_minishell *shell, t_token **token_head)
 	pf = check_pipe(t_head_1);
 	if (pf)
 	{
-		fprintf(stderr, "atom: syntax error near unexpected token `%s'\n", pf);
+		printf("atom: syntax error near unexpected token `%s'\n", pf);
 		shell->exit_code = 258;
 		return (1);
 	}
 	else if ((parse_redir_alone(&t_head_1) > 0))
 	{
-		fprintf(stderr, "atom: syntax error near unexpected token `newline'\n");
+		printf("atom: syntax error near unexpected token `newline'\n");
 		shell->exit_code = 258;
 		return (2);
 	}
+	return (0);
+}
+
+int	check_redir(t_minishell *shell, t_token **token_head)
+{
+	t_token	*t_head_1;
+	char	*pf;
+
+	if (!token_head || !*token_head)
+		return (0);
+	t_head_1 = *token_head;
+	pf = check_pipe(t_head_1);
 	if (check_error(t_head_1))
 	{
 		if (ft_strchr(t_head_1->value, '>') || ft_strchr(t_head_1->value, '<'))
 			print_redir_error(&t_head_1);
 		else
 		{
-			fprintf(stderr, "atom: syntax error near unexpected token `%s'\n",
-				pf);
+			printf("atom: syntax error near unexpected token `%s'\n", pf);
 			shell->exit_code = 258;
 		}
 		return (1);

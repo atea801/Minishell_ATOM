@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/21 17:18:56 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/21 18:08:42 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,6 +227,7 @@ int						parse_redir_alone(t_token **token_2);
 char					*check_pipe(t_token *token_2);
 t_token					*check_error(t_token *token_head);
 int						check_all(t_minishell *shell, t_token **token_head);
+int						check_redir(t_minishell *shell, t_token **token_head);
 
 // pars_2_cmd_node_utils.c
 void					free_delete_node_list(t_cmd *node);
