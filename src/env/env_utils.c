@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 11:23:05 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/05 17:04:49 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/21 17:23:41 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ char	*search_in_list(t_atom_env **env, char *key)
 	searched_key = *env;
 	while (searched_key)
 	{
-		if (ft_strcmp(searched_key->key, key) == 0)
+		if (searched_key->key && ft_strcmp(searched_key->key, key) == 0)
 			return (searched_key->value);
 		searched_key = searched_key->next;
 	}

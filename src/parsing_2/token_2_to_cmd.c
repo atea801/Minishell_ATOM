@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_2_to_cmd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 15:36:57 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/17 17:10:20 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/21 16:00:35 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	token_2_to_cmd(t_cmd **cmd, t_token_2 **token_2)
 				"PIPE") == 0)
 			t_head_2 = t_head_2->next;
 	}
-	print_cmd_list(*cmd);
 }
 
 void	fill_cmd_until_pipe(t_cmd *cmd, t_token_2 **t_head_2)
@@ -62,6 +61,8 @@ void	fill_cmd_until_pipe(t_cmd *cmd, t_token_2 **t_head_2)
 				return ;
 			i++;
 		}
+		set_heredoc_delim_append(t_head_2, &cmd);
+		set_infile_cmd(t_head_2, &cmd);
 		*t_head_2 = (*t_head_2)->next;
 	}
 	cmd->argv[i] = NULL;
@@ -92,22 +93,66 @@ void	print_cmd_list(t_cmd *cmd)
 
 	while (cmd)
 	{
-		printf("Node %d: ", node);
+		printf("\nCOMMANDE %d\n", node);
 		if (cmd->argv)
 		{
 			i = 0;
 			while (cmd->argv[i])
 			{
-				printf("%s", cmd->argv[i]);
+				printf("argv[%d] : %s\n", i, cmd->argv[i]);
 				i++;
 			}
 		}
 		if (cmd->infile)
-			printf("< %s ", cmd->infile);
+			printf("infile : %s\n", cmd->infile);
 		if (cmd->outfile)
-			printf("> %s ", cmd->outfile);
-		printf("\n");
+			printf("outfile : %s\n", cmd->outfile);
+		printf("HEREDOC : %d\n", cmd->here_doc);
+		printf("APPEND : %d\n", cmd->append);
 		cmd = cmd->next;
 		node++;
+	}
+}
+
+void	set_heredoc_delim_append(t_token_2 **token_2, t_cmd **cmd)
+{
+	t_cmd		*cmd_head;
+	t_token_2	*t_head_2;
+
+	cmd_head = *cmd;
+	t_head_2 = *token_2;
+	while (t_head_2 && t_head_2->type && ft_strcmp(t_head_2->type, "PIPE") != 0)
+	{
+		if (ft_strcmp(t_head_2->type, "HEREDOC_DELIM") == 0)
+		{
+			cmd_head->heredoc_delim = ft_strdup(t_head_2->value);
+			cmd_head->here_doc = 1;
+		}
+		if (ft_strcmp(t_head_2->type, "APPEND") == 0)
+			cmd_head->append = 1;
+		t_head_2 = t_head_2->next;
+	}
+}
+
+void	set_infile_cmd(t_token_2 **token_2, t_cmd **cmd)
+{
+	t_cmd		*cmd_head;
+	t_token_2	*t_head_2;
+
+	cmd_head = *cmd;
+	t_head_2 = *token_2;
+	while (t_head_2 && t_head_2->type && ft_strcmp(t_head_2->type, "PIPE") != 0)
+	{
+		if (ft_strcmp(t_head_2->type, "INFILE") == 0)
+		{
+			cmd_head->infile = ft_strdup(t_head_2->value);
+			cmd_head->here_doc = 0;
+		}
+		if (ft_strcmp(t_head_2->type, "OUTFILE") == 0)
+		{
+			cmd_head->outfile = ft_strdup(t_head_2->value);
+			cmd_head->append = 0;
+		}
+		t_head_2 = t_head_2->next;
 	}
 }

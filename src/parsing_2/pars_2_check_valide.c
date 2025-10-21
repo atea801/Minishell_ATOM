@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 19:12:52 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/21 11:31:46 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/21 17:26:52 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,21 @@ char	*check_pipe(t_token *token_2)
 	}
 	t_head_2 = token_2;
 	if (t_head_2 && t_head_2->type && ft_strcmp(t_head_2->type, "PIPE") == 0)
-		return (t_head_2->value ? t_head_2->value : "|");
+	{
+		if (t_head_2->value)
+			return (t_head_2->value);
+		else
+			return ("|");
+	}
 	while (t_head_2 && t_head_2->next && t_head_2->next->type)
 		t_head_2 = t_head_2->next;
 	if (t_head_2 && t_head_2->type && ft_strcmp(t_head_2->type, "PIPE") == 0)
-		return (t_head_2->value ? t_head_2->value : "|");
+	{
+		if (t_head_2->value)
+			return (t_head_2->value);
+		else
+			return ("|");
+	}
 	return (NULL);
 }
 
@@ -104,7 +114,7 @@ t_token	*check_error(t_token *token_head)
  * @param token_2
  * @return int
  */
-int	check_all(t_token **token_head)
+int	check_all(t_minishell *shell, t_token **token_head)
 {
 	t_token	*t_head_1;
 	char	*pf;
@@ -116,20 +126,25 @@ int	check_all(t_token **token_head)
 	if (pf)
 	{
 		fprintf(stderr, "atom: syntax error near unexpected token `%s'\n", pf);
+		shell->exit_code = 258;
 		return (1);
 	}
 	else if ((parse_redir_alone(&t_head_1) > 0))
 	{
 		fprintf(stderr, "atom: syntax error near unexpected token `newline'\n");
+		shell->exit_code = 258;
 		return (2);
 	}
 	if (check_error(t_head_1))
 	{
-		if (ft_strchr(t_head_1->value, '>')|| ft_strchr(t_head_1->value, '<'))
+		if (ft_strchr(t_head_1->value, '>') || ft_strchr(t_head_1->value, '<'))
 			print_redir_error(&t_head_1);
 		else
+		{
 			fprintf(stderr, "atom: syntax error near unexpected token `%s'\n",
 				pf);
+			shell->exit_code = 258;
+		}
 		return (1);
 	}
 	return (0);

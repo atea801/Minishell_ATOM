@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 12:10:28 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/09 15:15:08 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/21 17:19:16 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	valide_quote(char *str)
  * @param input
  * @return char*
  */
-char	*parsing_1(char *input)
+char	*parsing_1(t_minishell *shell, char *input)
 {
 	char	*res_1;
 	char	*res_2;
@@ -63,6 +63,7 @@ char	*parsing_1(char *input)
 		write(2, "unclosed quotes\n", 16);
 		add_history(input);
 		free(res_2);
+		shell->exit_code = 258;
 		return (NULL);
 	}
 	return (res_2);

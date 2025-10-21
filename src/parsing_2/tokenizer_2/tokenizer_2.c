@@ -6,24 +6,24 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 10:54:05 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/10 19:23:42 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/21 15:09:32 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
 /**
- * @brief Parcourt la liste des tokens et met à jour leur type 
+ * @brief Parcourt la liste des tokens et met à jour leur type
  * dans la structure token_2
  *
  * - utilise get_pos pour analyser chaque token +
  *  mettre à jour la structure token_2
- * 
- * - Distingue les CMD, ARGS, REDIR_INT, REDIR_OUT 
+ *
+ * - Distingue les CMD, ARGS, REDIR_INT, REDIR_OUT
  * selon le type de chaque token.
- * 
- * @param token_1 
- * @param token_2 
+ *
+ * @param token_1
+ * @param token_2
  */
 void	get_input_pos(t_token **token_1, t_token_2 **token_2)
 {
@@ -45,11 +45,11 @@ void	get_input_pos(t_token **token_1, t_token_2 **token_2)
 }
 
 /**
- * @brief Defini si le type est un INFILE ou un OUTFILE 
+ * @brief Defini si le type est un INFILE ou un OUTFILE
  * en fonction de la redirection trouvee
- * 
- * @param token_2 
- * @return t_token_2 
+ *
+ * @param token_2
+ * @return t_token_2
  */
 void	set_infile_outfile(t_token_2 **token_2)
 {
@@ -68,14 +68,29 @@ void	set_infile_outfile(t_token_2 **token_2)
 	}
 }
 
+void	set_heredoc_delim(t_token_2 **token_2)
+{
+	t_token_2	*t_head_2;
+
+	t_head_2 = *token_2;
+	while (t_head_2 && t_head_2->next)
+	{
+		if (t_head_2->next->type && ft_strcmp(t_head_2->type, "HEREDOC") == 0
+			&& ft_strcmp(t_head_2->next->type, "CMD") == 0)
+			t_head_2->next->type = "HEREDOC_DELIM";
+		t_head_2 = t_head_2->next;
+	}
+	return ;
+}
+
 /**
  * @brief Analyse la liste des tokens et initialise la structure token_2.
  *
  * - Détermine le type CMD ARGS REDIR_INT REDIR_OUT PIPE APPEND HEREDOC
- * 
+ *
  * - Determine les OUTFILE et INFILE fonction des redirections.
- * @param token_head 
- * @param token_2 
+ * @param token_head
+ * @param token_2
  */
 void	tokenizer_2(t_token *token_head, t_token_2 *token_2)
 {
@@ -86,4 +101,5 @@ void	tokenizer_2(t_token *token_head, t_token_2 *token_2)
 	t_head_2 = token_2;
 	get_input_pos(&t_head_1, &t_head_2);
 	set_infile_outfile(&t_head_2);
+	set_heredoc_delim(&t_head_2);
 }

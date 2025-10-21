@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/21 11:10:57 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/21 17:18:56 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,16 @@
 typedef struct s_token
 {
 	char				*head;
-	char *value; // le texte du token
-	char *type;  // MOT PIPE REDIRIN REDIROUT HERDOC
+	char				*value;
+	char				*type;
 	struct s_token		*next;
 }						t_token;
 
 typedef struct s_token_2
 {
 	char				*head;
-	char *value; // le texte du token
-	char *type;  // CMD ARG INFILE OUTFILE HERE_DOC APPEND
+	char				*value;
+	char				*type;
 	int					is_expand;
 	struct s_token_2	*next;
 }						t_token_2;
@@ -76,6 +76,16 @@ typedef struct s_atom_env
 	int					size;
 	struct s_atom_env	*next;
 }						t_atom_env;
+
+typedef struct s_minishell
+{
+	t_token				*tok1;
+	t_token_2			*tok2;
+	t_cmd				*cmd;
+	t_atom_env			*env;
+	int					exit_code;
+	bool				should_execute;
+}						t_minishell;
 
 /****************************************************************************
  ****************************************************************************
@@ -161,7 +171,7 @@ int						is_redir(char c);
 
 // parsing_1.c
 int						valide_quote(char *str);
-char					*parsing_1(char *input);
+char					*parsing_1(t_minishell *shell, char *input);
 
 /************************************************************************
  *								TOKENIZER 1							*
@@ -216,7 +226,7 @@ int						malloc_args(t_token **token);
 int						parse_redir_alone(t_token **token_2);
 char					*check_pipe(t_token *token_2);
 t_token					*check_error(t_token *token_head);
-int						check_all(t_token **token_head);
+int						check_all(t_minishell *shell, t_token **token_head);
 
 // pars_2_cmd_node_utils.c
 void					free_delete_node_list(t_cmd *node);
@@ -236,13 +246,17 @@ void					print_token_2_list_type(t_token_2 *token_2);
 // void					print_cmd_list(t_cmd *cmd_list);
 
 // pars_2.c
-int						parsing_2(t_token *token_head, t_token_2 *token_2);
+int						parsing_2(t_minishell *shell, t_token *token_head,
+							t_token_2 *token_2);
 
 // token_2_to_cmd.c
 void					token_2_to_cmd(t_cmd **cmd, t_token_2 **token_2);
 void					fill_cmd_until_pipe(t_cmd *cmd, t_token_2 **t_head_2);
 int						count_args_to_pipe(t_token_2 *token_2);
 void					print_cmd_list(t_cmd *cmd);
+void					set_heredoc_delim_append(t_token_2 **token_2,
+							t_cmd **cmd);
+void					set_infile_cmd(t_token_2 **token_2, t_cmd **cmd);
 
 /************************************************************************
  *								TOKENIZER 2								*
@@ -265,6 +279,7 @@ int						get_pos(t_token *token_head_1, t_token_2 *token_head_2,
 // tokenizer_2.c
 void					get_input_pos(t_token **token_1, t_token_2 **token_2);
 void					set_infile_outfile(t_token_2 **token_2);
+void					set_heredoc_delim(t_token_2 **token_2);
 void					tokenizer_2(t_token *token_head, t_token_2 *token_2);
 
 /************************************************************************
@@ -276,8 +291,8 @@ int						in_double_quote(char *res, int pos);
 void					check_expendable(char *res, t_token_2 *token_2);
 
 // assign_expand.c
-int						expander(t_token_2 *token_2, t_atom_env **env);
-void					assign_expand(t_token_2 *token_2, t_atom_env **env);
+int						expander(t_minishell *shell, t_token_2 *token_2);
+void					assign_expand(t_minishell *shell, t_token_2 *token_2);
 
 /************************************************************************
  *								SRC										*
@@ -309,7 +324,6 @@ int						init_token_1_only(t_token **token_head);
 
 void					res_to_tokenizer1(t_token **t_head,
 							t_token_2 **t_head_2, char *res);
-void					my_readline(t_token **t_head, t_token_2 **t_head_2,
-							t_atom_env **env_head);
+void					my_readline(t_minishell *shell);
 
 #endif

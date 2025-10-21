@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 14:55:34 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/21 10:57:12 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/21 17:16:59 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
  * @param token_2 
  * @return int 
  */
-int	parsing_2(t_token *token_head, t_token_2 *token_2)
+int	parsing_2(t_minishell *shell, t_token *token_head, t_token_2 *token_2)
 {
 	t_token_2	*t_head_2;
 	t_token		*t_head_1;
@@ -35,7 +35,7 @@ int	parsing_2(t_token *token_head, t_token_2 *token_2)
 
 	t_head_1 = token_head;
 	t_head_2 = token_2;
-	error = check_all(&t_head_1);
+	error = check_all(shell, &t_head_1);
 	if (error == 1)
 		return (1);
 	else if (error == 0)

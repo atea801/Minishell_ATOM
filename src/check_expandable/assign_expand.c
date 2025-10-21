@@ -3,51 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   assign_expand.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:45:18 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/17 17:22:19 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/21 17:20:46 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
-void	assign_expand(t_token_2 *token_2, t_atom_env **env)
+void	assign_expand(t_minishell *shell, t_token_2 *token_2)
 {
-	t_token_2	*t_head_2;
-
-	t_head_2 = token_2;
-	while (t_head_2 && t_head_2->value)
+	while (token_2)
 	{
-		if (t_head_2->is_expand == 1 && t_head_2->value[0] == '$')
+		if (token_2->is_expand == 1)
 		{
-			expander(t_head_2, env);
+			expander(shell, token_2);
 		}
-		t_head_2 = t_head_2->next;
+		token_2 = token_2->next;
 	}
 }
 
-int	expander(t_token_2 *token_2, t_atom_env **env)
+int	expander(t_minishell *shell, t_token_2 *token_2)
 {
-	t_token_2	*t_head_2;
-	t_atom_env	*env_head;
-	char		*str;
+	char	*key;
+	char	*expanded;
 
-	env_head = *env;
-	t_head_2 = token_2;
-	str = t_head_2->value;
-	str++;
-	while (env_head && t_head_2->value && env_head->key)
+	if (!token_2 || !token_2->value)
+		return (0);
+	if (ft_strcmp(token_2->value, "$?") == 0)
 	{
-		if (ft_strcmp(str, env_head->key) == 0)
-		{
-			free(t_head_2->value);
-			t_head_2->value = ft_strdup(env_head->value);
+		expanded = ft_itoa(shell->exit_code);
+		if (!expanded)
 			return (0);
-		}
-		env_head = env_head->next;
+		free(token_2->value);
+		token_2->value = expanded;
+		return (1);
 	}
-	free(t_head_2->value);
-	t_head_2->value = ft_strdup("");
+	key = get_key(token_2->value);
+	if (!key)
+		return (0);
+	expanded = search_in_list(&shell->env, key);
+	free(key);
+	if (expanded)
+	{
+		free(token_2->value);
+		token_2->value = ft_strdup(expanded);
+	}
 	return (1);
 }
