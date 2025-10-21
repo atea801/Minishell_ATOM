@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/17 17:22:33 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/21 11:45:28 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,7 @@ void	my_readline(t_token **t_head, t_token_2 **t_head_2, t_atom_env **env_head)
 		res = parsing_1(input);
 		res_to_tokenizer1(t_head, t_head_2, res);
 		parsing_res = parsing_2(*t_head, *t_head_2);
-		if (parsing_res == 2)
-			print_redir_error(t_head);
-		else if (parsing_res == 0)
+		if (parsing_res == 0)
 		{
 			check_expendable(res, *t_head_2);
 			assign_expand(*t_head_2, env_head);
