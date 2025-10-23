@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 11:58:02 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/23 12:03:31 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/23 12:55:38 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,34 +129,5 @@ void	token_2_to_cmd(t_cmd **cmd, t_token_2 **token_2)
 		if (t_head_2 && t_head_2->type && ft_strcmp(t_head_2->type,
 				"PIPE") == 0)
 			t_head_2 = t_head_2->next;
-	}
-}
-
-void	print_cmd_list(t_cmd *cmd)
-{
-	int node;
-	int i;
-
-	node = 0;
-	while (cmd)
-	{
-		printf("\nCOMMANDE %d\n", node);
-		if (cmd->argv)
-		{
-			i = 0;
-			while (cmd->argv[i])
-			{
-				printf("argv[%d] : %s\n", i, cmd->argv[i]);
-				i++;
-			}
-		}
-		if (cmd->infile)
-			printf("infile : %s\n", cmd->infile);
-		if (cmd->outfile)
-			printf("outfile : %s\n", cmd->outfile);
-		printf("HEREDOC : %d\n", cmd->here_doc);
-		printf("APPEND : %d\n", cmd->append);
-		cmd = cmd->next;
-		node++;
 	}
 }

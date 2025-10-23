@@ -6,36 +6,49 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 13:20:49 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/10 18:54:24 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/23 14:39:21 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
-void	print_redir_error(t_token **t_head)
-{
-	t_token	*t_error;
+// void	print_redir_error(t_token **t_head)
+// {
+// 	t_token	*t_error;
 
-	t_error = *t_head;
-	while (t_error)
+// 	t_error = *t_head;
+// 	while (t_error)
+// 	{
+// 		if (check_redir_in(t_error) == 1 || check_redir_alone(t_error) == 1)
+// 			write(2, "ATOM : syntax error near unexpected token `<'\n", 47);
+// 		else if (check_redir_in(t_error) == 2
+// 			|| check_redir_alone(t_error) == 2)
+// 			write(2, "ATOM : syntax error near unexpected token `<<'\n", 48);
+// 		else if (check_redir_alone(t_error) == 3
+// 			|| check_redir_out(t_error) == 3)
+// 			write(2, "ATOM : syntax error near unexpected token `>'\n", 47);
+// 		else if (check_redir_out(t_error) == 4
+// 			|| check_redir_alone(t_error) == 4)
+// 			write(2, "ATOM : syntax error near unexpected token `>>'\n", 48);
+// 		else if (check_redir_alone(t_error) == 5
+// 			|| check_only_redir(t_error) == 5)
+// 			write(2, "ATOM : syntax error near unexpected token `newline'\n",
+// 				53);
+// 		t_error = t_error->next;
+// 	}
+// }
+
+void	print_redir_error(t_token **error_token)
+{
+	if (!error_token || !*error_token)
+		return ;
+	if (!(*error_token)->value)
 	{
-		if (check_redir_in(t_error) == 1 || check_redir_alone(t_error) == 1)
-			write(2, "ATOM : syntax error near unexpected token `<'\n", 47);
-		else if (check_redir_in(t_error) == 2
-			|| check_redir_alone(t_error) == 2)
-			write(2, "ATOM : syntax error near unexpected token `<<'\n", 48);
-		else if (check_redir_alone(t_error) == 3
-			|| check_redir_out(t_error) == 3)
-			write(2, "ATOM : syntax error near unexpected token `>'\n", 47);
-		else if (check_redir_out(t_error) == 4
-			|| check_redir_alone(t_error) == 4)
-			write(2, "ATOM : syntax error near unexpected token `>>'\n", 48);
-		else if (check_redir_alone(t_error) == 5
-			|| check_only_redir(t_error) == 5)
-			write(2, "ATOM : syntax error near unexpected token `newline'\n",
-				53);
-		t_error = t_error->next;
+		printf("atom: syntax error\n");
+		return ;
 	}
+	printf("atom: syntax error near unexpected token `%s'\n",
+		(*error_token)->value);
 }
 
 int	check_redir_in(t_token *t_head)
