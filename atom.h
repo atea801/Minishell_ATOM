@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/23 11:59:56 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/23 14:40:01 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,7 +211,7 @@ void					tokenizer(t_token *token, char *str);
 
 // check_token.c
 
-void					print_redir_error(t_token **t_head);
+void					print_redir_error(t_token **error_token);
 int						check_redir_in(t_token *t_head);
 int						check_redir_out(t_token *t_head);
 int						check_redir_alone(t_token *t_head);
@@ -227,7 +227,7 @@ int						parse_redir_alone(t_token **token_2);
 char					*check_pipe(t_token *token_2);
 t_token					*check_error(t_token *token_head);
 int						check_all(t_minishell *shell, t_token **token_head);
-int						check_redir(t_minishell *shell, t_token **token_head);
+int						check_redir(t_token **token_head);
 
 // pars_2_cmd_node_utils.c
 void					free_delete_node_list(t_cmd *node);
@@ -294,6 +294,12 @@ void					check_expendable(char *res, t_token_2 *token_2);
 // assign_expand.c
 int						expander(t_minishell *shell, t_token_2 *token_2);
 void					assign_expand(t_minishell *shell, t_token_2 *token_2);
+
+/************************************************************************
+ *								BUILT_IN								*
+ ************************************************************************/
+// echo.c
+int						builtin_echo(t_cmd *cmd);
 
 /************************************************************************
  *								SRC										*

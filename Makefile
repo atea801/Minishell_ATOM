@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+         #
+#    By: aautret <aautret@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/10/17 13:11:17 by tlorette         ###   ########.fr        #
+#    Updated: 2025/10/23 13:36:34 by aautret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,8 +38,10 @@ SRC = src/parsing_1/parsing_1.c \
 		src/env/env_node.c \
 		src/env/env_utils.c \
 		src/env/env.c \
+		src/myprint/my_print.c \
 		src/check_expandable/check_expand.c \
 		src/check_expandable/assign_expand.c \
+		src/built_in/echo.c \
 		src/init.c\
 		src/src_utils.c \
 		src/src_utils_2.c \
