@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 12:10:28 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/21 17:19:16 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/23 13:41:54 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*parsing_1(t_minishell *shell, char *input)
 	char	*res_2;
 
 	res_1 = add_space_to_operator(input);
-	printf("%s\n", res_1);
+	// printf("%s\n", res_1);
 	res_2 = clear_input(res_1);
 	free(res_1);
 	if (valide_quote(res_2))
