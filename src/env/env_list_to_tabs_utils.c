@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_list_to_tabs_utils.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 15:31:39 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/06 16:30:29 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/23 12:57:18 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
-
-void	print_env_tab(char **tab_env)
-{
-	int	i;
-
-	i = 0;
-	if (!tab_env)
-		return ;
-	while (tab_env[i])
-	{
-		printf("tab_env[%d]: %s\n", i, tab_env[i]);
-		i++;
-	}
-}
 
 int	count_var_env(t_atom_env *env_list)
 {
