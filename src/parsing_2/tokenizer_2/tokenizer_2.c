@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 10:54:05 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/21 15:09:32 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/23 13:55:46 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	set_infile_outfile(t_token_2 **token_2)
 	t_token_2	*t_head_2;
 
 	t_head_2 = *token_2;
-	while (t_head_2->next && t_head_2->next->type)
+	while (t_head_2 && t_head_2->type && t_head_2->next && t_head_2->next->type)
 	{
 		if (ft_strcmp(t_head_2->type, "REDIR_IN") == 0
 			&& ft_strcmp(t_head_2->next->type, "CMD") == 0)
