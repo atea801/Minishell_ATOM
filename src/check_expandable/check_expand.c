@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_expand.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 19:27:38 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/17 17:06:22 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/23 11:23:40 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	check_expendable(char *res, t_token_2 *token_2)
 			if (in_single_quote(res, index))
 				token_2->is_expand = 0;
 		}
-		printf("%s is_expand = %d\n", token_2->value, token_2->is_expand);
+		// printf("%s is_expand = %d\n", token_2->value, token_2->is_expand);
 		token_2 = token_2->next;
 	}
 }
