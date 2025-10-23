@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/23 15:59:19 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/23 18:57:07 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	my_readline(t_minishell *shell)
 		if (t_head)
 		{
 			free_token_1_only(t_head);
-			t_head = NULL; // remettre a NULL 
+			t_head = NULL;
 		}
 		if (t_head_2)
 		{
@@ -65,13 +65,12 @@ void	my_readline(t_minishell *shell)
 			printf("exit\n");
 			break ;
 		}
-		// protection parsing 1 => si parisng 1 return NULL
 		res = parsing_1(shell, input);
 		if (!res)
 		{
 			if (input)
 				free(input);
-			continue; //permet de retourner au debut de la boucle
+			continue ;
 		}
 		res_to_tokenizer1(&t_head, &t_head_2, res);
 		shell->tok1 = t_head;
@@ -84,7 +83,7 @@ void	my_readline(t_minishell *shell)
 			assign_expand(shell, t_head_2);
 			token_2_to_cmd(&shell->cmd, &t_head_2);
 			// print_token_2_list(shell->tok2);
-			// print_cmd_list(shell->cmd);
+			print_cmd_list(shell->cmd);
 		}
 		builtin_echo(shell->cmd);
 		add_history(input);

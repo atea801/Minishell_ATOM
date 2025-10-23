@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aautret <aautret@student.42.fr>            +#+  +:+       +#+         #
+#    By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/10/23 13:36:34 by aautret          ###   ########.fr        #
+#    Updated: 2025/10/23 18:41:10 by tlorette         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRC = src/parsing_1/parsing_1.c \
 		src/tokenizer_1/check_token.c \
 		src/tokenizer_1/error_type.c \
 		src/tokenizer_1/find_type.c \
+		src/tokenizer_1/find_type_2.c \
 		src/tokenizer_1/quote_gestion.c \
 		src/tokenizer_1/token_utils.c \
 		src/tokenizer_1/tokenizer_1.c \

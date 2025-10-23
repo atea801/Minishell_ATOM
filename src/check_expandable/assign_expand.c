@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assign_expand.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:45:18 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/23 11:24:25 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/23 18:54:50 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,11 @@ void	assign_expand(t_minishell *shell, t_token_2 *token_2)
 	}
 }
 
-int	expander(t_minishell *shell, t_token_2 *token_2)
+int	special_expand(t_minishell *shell, t_token_2 *token_2)
 {
-	char	*key;
 	char	*expanded;
 
-	if (!token_2 || !token_2->value)
-		return (0);
+	expanded = NULL;
 	if (ft_strcmp(token_2->value, "$?") == 0)
 	{
 		expanded = ft_itoa(shell->exit_code);
@@ -40,6 +38,18 @@ int	expander(t_minishell *shell, t_token_2 *token_2)
 		token_2->value = expanded;
 		return (1);
 	}
+	return (0);
+}
+
+int	expander(t_minishell *shell, t_token_2 *token_2)
+{
+	char	*key;
+	char	*expanded;
+
+	if (!token_2 || !token_2->value)
+		return (0);
+	if (special_expand(shell, token_2) == 1)
+		return (1);
 	key = get_key(token_2->value);
 	if (!key)
 		return (0);

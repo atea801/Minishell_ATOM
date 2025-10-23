@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_type.c                                       :+:      :+:    :+:   */
+/*   find_type_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/10 18:48:57 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/23 18:42:58 by tlorette         ###   ########.fr       */
+/*   Created: 2025/10/22 13:01:05 by tlorette          #+#    #+#             */
+/*   Updated: 2025/10/23 18:36:14 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
-/**
- * @brief Assigne le type ERREUR si il n'y a pas de type 
- * qui a ete alloue precedement 
- * 
- * @param t_head 
- */
-void	set_token_error(t_token **t_head)
+char	*type_expand(char *res)
 {
-	t_token	*error;
+	int	i;
 
-	error = *t_head;
-	while (error->next)
+	i = 0;
+	while (res[i])
 	{
-		if (!error->type)
-		{
-			error->type = "ERROR";
-			return ;
-		}
-		error = error->next;
+		if (res[i] == '$' && res[i + 1] == '?')
+			return ("$?");
+		i++;
 	}
+	return (NULL);
 }

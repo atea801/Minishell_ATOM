@@ -1,35 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_type.c                                       :+:      :+:    :+:   */
+/*   my_printf_list_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/10 18:48:57 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/23 18:42:58 by tlorette         ###   ########.fr       */
+/*   Created: 2025/10/22 11:00:03 by tlorette          #+#    #+#             */
+/*   Updated: 2025/10/22 11:00:34 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
-/**
- * @brief Assigne le type ERREUR si il n'y a pas de type 
- * qui a ete alloue precedement 
- * 
- * @param t_head 
- */
-void	set_token_error(t_token **t_head)
+void	print_token_list(t_token *head)
 {
-	t_token	*error;
-
-	error = *t_head;
-	while (error->next)
+	while (head && head->value)
 	{
-		if (!error->type)
-		{
-			error->type = "ERROR";
-			return ;
-		}
-		error = error->next;
+		printf("value:%s | type:%s\n", head->value, head->type);
+		head = head->next;
 	}
+}
+
+
+void	print_token_list_type(t_token *head)
+{
+	printf("T_TOKEN :");
+	while (head && head->value)
+	{
+		printf("%s ", head->type);
+		head = head->next;
+	}
+	printf("\n");
 }

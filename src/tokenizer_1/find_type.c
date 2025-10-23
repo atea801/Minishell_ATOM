@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_type.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:18:07 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/09 16:29:16 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/23 18:37:21 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,9 @@ char	*get_token_type(char *res)
 	if (type)
 		return (type);
 	type = type_pipe(res);
+	if (type)
+		return (type);
+	type = type_expand(res);
 	if (type)
 		return (type);
 	type = type_mot(res);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_2_type.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 17:06:04 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/23 11:26:13 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/23 18:51:43 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int	get_pos(t_token *token_head_1, t_token_2 *token_head_2, int first_word)
 	{
 		fill_heredoc_append(&token_head_1, &token_head_2);
 		fill_redirin_redirout(&token_head_1, &token_head_2);
+		fill_expand(&token_head_1, &token_head_2);
 		first_word = 0;
 	}
 	return (first_word);

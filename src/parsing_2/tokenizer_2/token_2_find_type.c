@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 17:36:06 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/17 13:47:43 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/23 18:51:04 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 /**
  * @brief Remplie le contenu du token_2, type == CMD et rempli la value
- * 
- * @param token_1 
- * @param token_2 
+ *
+ * @param token_1
+ * @param token_2
  */
 void	fill_cmd(t_token **token_1, t_token_2 **token_2)
 {
@@ -31,9 +31,9 @@ void	fill_cmd(t_token **token_1, t_token_2 **token_2)
 
 /**
  * @brief Remplie le contenu du token_2, type == ARGS et rempli la value
- * 
- * @param token_1 
- * @param token_2 
+ *
+ * @param token_1
+ * @param token_2
  */
 void	fill_args(t_token **token_1, t_token_2 **token_2)
 {
@@ -48,9 +48,9 @@ void	fill_args(t_token **token_1, t_token_2 **token_2)
 
 /**
  * @brief Reassigne le type APPEND et HEREDOC de token_1 a token_2
- * 
- * @param token_1 
- * @param token_2 
+ *
+ * @param token_1
+ * @param token_2
  */
 void	fill_heredoc_append(t_token **token_1, t_token_2 **token_2)
 {
@@ -75,9 +75,9 @@ void	fill_heredoc_append(t_token **token_1, t_token_2 **token_2)
 
 /**
  * @brief Reassigne le type REDIR_IN / REDIR_OUT / PIPE de token_1 a token_2
- * 
- * @param token_1 
- * @param token_2 
+ *
+ * @param token_1
+ * @param token_2
  */
 void	fill_redirin_redirout(t_token **token_1, t_token_2 **token_2)
 {
@@ -103,4 +103,15 @@ void	fill_redirin_redirout(t_token **token_1, t_token_2 **token_2)
 		t_head_2->type = "PIPE";
 		t_head_2->value = copy_token_value(t_head_1->value);
 	}
+}
+
+void	fill_expand(t_token **token_1, t_token_2 **token_2)
+{
+	t_token		*t_head_1;
+	t_token_2	*t_head_2;
+
+	t_head_1 = *token_1;
+	t_head_2 = *token_2;
+	t_head_2->type = "$?";
+	t_head_2->value = copy_token_value(t_head_1->value);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/23 14:40:01 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/23 18:52:20 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,9 @@ char					*type_redir(char *res);
 char					*type_heredoc(char *res);
 char					*get_token_type(char *res);
 
+// find_type_2.c
+char					*type_expand(char *res);
+
 // quote_gestion.c
 int						quote_state(char i, char next);
 int						skip_quote(char *str, int i);
@@ -269,6 +272,7 @@ void					fill_heredoc_append(t_token **token_1,
 							t_token_2 **token_2);
 void					fill_redirin_redirout(t_token **token_1,
 							t_token_2 **token_2);
+void					fill_expand(t_token **token_1, t_token_2 **token_2);
 
 // token_2_type.c
 void					put_token_2(t_token_2 **token_2);
@@ -294,6 +298,7 @@ void					check_expendable(char *res, t_token_2 *token_2);
 // assign_expand.c
 int						expander(t_minishell *shell, t_token_2 *token_2);
 void					assign_expand(t_minishell *shell, t_token_2 *token_2);
+int						special_expand(t_minishell *shell, t_token_2 *token_2);
 
 /************************************************************************
  *								BUILT_IN								*
