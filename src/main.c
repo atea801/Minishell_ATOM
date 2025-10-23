@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/21 17:21:33 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/23 11:30:22 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ void	res_to_tokenizer1(t_token **t_head, t_token_2 **t_head_2, char *res)
 {
 	if (res)
 	{
-		if (*t_head)
-		{
-			free_token_list(*t_head, *t_head_2);
-			*t_head = NULL;
-			*t_head_2 = NULL;
-		}
+		// if (*t_head)
+		// {
+		// 	free_token_list(*t_head, *t_head_2);
+		// 	*t_head = NULL;
+		// 	*t_head_2 = NULL;
+		// }
 		init_token_struct(t_head, t_head_2);
 		// TOKENIZER 1
 		tokenizer(*t_head, res);
@@ -33,9 +33,9 @@ void	res_to_tokenizer1(t_token **t_head, t_token_2 **t_head_2, char *res)
 
 void	my_readline(t_minishell *shell)
 {
-	char	*input;
-	char	*res;
-	int		parsing_res;
+	char		*input;
+	char		*res;
+	int			parsing_res;
 	t_token		*t_head;
 	t_token_2	*t_head_2;
 
@@ -43,23 +43,26 @@ void	my_readline(t_minishell *shell)
 	t_head_2 = NULL;
 	while (1)
 	{
+		if (t_head)
+			free_token_1_only(t_head);
+		if (t_head_2)
+			free_token_2_list(&t_head_2);
 		shell->tok1 = NULL;
 		shell->tok2 = NULL;
 		shell->cmd = NULL;
 		shell->should_execute = false;
-		
 		input = readline("\033[1;92mAtom > \033[0m");
 		if (!input || ft_strcmp(input, "exit") == 0)
 		{
+			if (input)
+				free(input);
 			printf("exit\n");
 			break ;
 		}
 		res = parsing_1(shell, input);
 		res_to_tokenizer1(&t_head, &t_head_2, res);
-		
 		shell->tok1 = t_head;
 		shell->tok2 = t_head_2;
-		
 		parsing_res = parsing_2(shell, t_head, t_head_2);
 		if (parsing_res == 0)
 		{
@@ -68,8 +71,8 @@ void	my_readline(t_minishell *shell)
 			assign_expand(shell, t_head_2);
 			token_2_to_cmd(&shell->cmd, &t_head_2);
 			print_cmd_list(shell->cmd);
+			print_token_2_list(shell->tok2);
 		}
-		
 		add_history(input);
 		if (input)
 			free(input);
@@ -91,14 +94,13 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
-
 	shell.tok1 = NULL;
 	shell.tok2 = NULL;
 	shell.cmd = NULL;
 	shell.exit_code = 0;
 	shell.should_execute = false;
 	// if (!env || !env[0])
-		// create_minimal_env(&env_head);
+	// create_minimal_env(&env_head);
 	// else
 	init_all(&shell.env, &t_head, env, &t_head_2);
 	my_readline(&shell);

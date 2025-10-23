@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/21 18:08:42 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/23 11:59:56 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,9 +251,9 @@ int						parsing_2(t_minishell *shell, t_token *token_head,
 							t_token_2 *token_2);
 
 // token_2_to_cmd.c
+int						count_args_to_pipe(t_token_2 *token_2);
 void					token_2_to_cmd(t_cmd **cmd, t_token_2 **token_2);
 void					fill_cmd_until_pipe(t_cmd *cmd, t_token_2 **t_head_2);
-int						count_args_to_pipe(t_token_2 *token_2);
 void					print_cmd_list(t_cmd *cmd);
 void					set_heredoc_delim_append(t_token_2 **token_2,
 							t_cmd **cmd);

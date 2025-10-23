@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 16:00:00 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/17 16:29:21 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/23 11:28:13 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ int	init_token_struct(t_token **token_head, t_token_2 **token_2)
 		return (1);
 	(*token_2)->value = NULL;
 	(*token_2)->type = NULL;
-	(*token_2)->next = NULL;
 	(*token_2)->is_expand = 1;
+	(*token_2)->next = NULL;
 	return (0);
 }
 
