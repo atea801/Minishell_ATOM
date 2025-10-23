@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 12:42:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/08 13:44:23 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/23 10:28:47 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	print_token_2_list(t_token_2 *token_2)
 	while (t_head_2)
 	{
 		if (t_head_2->value)
-			printf("value:%s | type:%s\n", t_head_2->value, t_head_2->type);
+			printf("TOKEN 2 = value:%s | type:%s\n", t_head_2->value, t_head_2->type);
 		t_head_2 = t_head_2->next;
 	}
 }
