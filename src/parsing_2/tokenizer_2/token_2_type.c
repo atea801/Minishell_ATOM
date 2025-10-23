@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 17:06:04 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/10 19:23:48 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/23 11:26:13 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ void	put_token_2(t_token_2 **token_2)
 		if (!token_head_2->next)
 			return ;
 		token_head_2->next->value = NULL;
+		token_head_2->next->is_expand = 1;
 		token_head_2->next->type = NULL;
 		token_head_2->next->next = NULL;
+	
 	}
 }
 
