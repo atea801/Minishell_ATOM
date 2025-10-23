@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:45:18 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/21 17:20:46 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/23 11:24:25 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	assign_expand(t_minishell *shell, t_token_2 *token_2)
 {
-	while (token_2)
+	while (token_2 && token_2->is_expand)
 	{
 		if (token_2->is_expand == 1)
 		{
