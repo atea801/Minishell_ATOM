@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_2_check_valide.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 19:12:52 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/21 18:15:48 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/23 15:57:31 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,49 +114,106 @@ t_token	*check_error(t_token *token_head)
  * @param token_2
  * @return int
  */
-int	check_all(t_minishell *shell, t_token **token_head)
+// int	check_all(t_minishell *shell, t_token **token_head)
+// {
+// 	t_token	*t_head_1;
+// 	char	*pf;
+
+// 	if (!token_head || !*token_head)
+// 		return (0);
+// 	t_head_1 = *token_head;
+// 	pf = check_pipe(t_head_1);
+// 	if (pf)
+// 	{
+// 		printf("atom: syntax error near unexpected token `%s'\n", pf);
+// 		shell->exit_code = 258;
+// 		return (1);
+// 	}
+// 	else if ((parse_redir_alone(&t_head_1) > 0))
+// 	{
+// 		printf("atom: syntax error near unexpected token `newline'\n");
+// 		shell->exit_code = 258;
+// 		return (2);
+// 	}
+// 	return (0);
+// }
+
+// int	check_redir(t_token **token_head)
+// {
+// 	t_token	*t_head_1;
+// 	char	*pf;
+
+// 	if (!token_head || !*token_head)
+// 		return (0);
+// 	t_head_1 = *token_head;
+// 	pf = check_pipe(t_head_1);
+// 	if (check_error(t_head_1))
+// 	{
+// 		if (t_head_1 && t_head_1->value && (ft_strchr(t_head_1->value, '>')
+// || ft_strchr(t_head_1->value, '<')))
+// 			print_redir_error(&t_head_1);
+// 		// else
+// 		// {
+// 		// 	printf("atom: syntax error near unexpected token `%s'\n", pf);
+// 		// 	shell->exit_code = 258;
+// 		// }
+// 		return (1);
+// 	}
+// 	return (0);
+// }
+
+int	check_redir(t_token **token_head)
 {
-	t_token	*t_head_1;
-	char	*pf;
+	t_token	*error_token;
 
 	if (!token_head || !*token_head)
 		return (0);
-	t_head_1 = *token_head;
-	pf = check_pipe(t_head_1);
+	error_token = check_error(*token_head);
+	if (!error_token)
+		return (0);
+	// Vérifier que value existe ET n'est pas vide
+	if (!error_token->value || error_token->value[0] == '\0')
+		return (0);
+	// ft_strchr securise
+	if (ft_strchr(error_token->value, '<') 
+		|| ft_strchr(error_token->value, '>'))
+	{
+		print_redir_error(&error_token);
+		return (1);
+	}
+	return (0);
+}
+
+int	check_all(t_minishell *shell, t_token **token_head)
+{
+	char *pf;
+
+	if (!token_head || !*token_head)
+		return (0);
+
+	// Vérifier les erreurs de pipes
+	pf = check_pipe(*token_head);
 	if (pf)
 	{
 		printf("atom: syntax error near unexpected token `%s'\n", pf);
 		shell->exit_code = 258;
 		return (1);
 	}
-	else if ((parse_redir_alone(&t_head_1) > 0))
+
+	// Vérifier les redirections seules
+	if (parse_redir_alone(token_head))
 	{
 		printf("atom: syntax error near unexpected token `newline'\n");
 		shell->exit_code = 258;
-		return (2);
-	}
-	return (0);
-}
-
-int	check_redir(t_minishell *shell, t_token **token_head)
-{
-	t_token	*t_head_1;
-	char	*pf;
-
-	if (!token_head || !*token_head)
-		return (0);
-	t_head_1 = *token_head;
-	pf = check_pipe(t_head_1);
-	if (check_error(t_head_1))
-	{
-		if (ft_strchr(t_head_1->value, '>') || ft_strchr(t_head_1->value, '<'))
-			print_redir_error(&t_head_1);
-		else
-		{
-			printf("atom: syntax error near unexpected token `%s'\n", pf);
-			shell->exit_code = 258;
-		}
 		return (1);
 	}
+
+	// Vérifier les erreurs de chevrons
+	if (check_redir(token_head))
+	{
+		shell->exit_code = 258;
+		return (1);
+	}
+
 	return (0);
 }

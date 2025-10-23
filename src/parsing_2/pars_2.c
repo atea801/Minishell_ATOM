@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 14:55:34 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/21 18:16:49 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/23 13:53:22 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	parsing_2(t_minishell *shell, t_token *token_head, t_token_2 *token_2)
 	t_head_1 = token_head;
 	t_head_2 = token_2;
 	error = check_all(shell, &t_head_1);
-	redir_err = check_redir(shell, &t_head_1);
+	redir_err = check_redir(&t_head_1);
 	if (error == 1 || redir_err == 1)
 		return (1);
 	else if (error == 0)
