@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 11:08:47 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/21 17:11:02 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/23 12:04:25 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,6 @@ char	**ft_split(char const *s, char c);
 int		ft_strcmp(char *s1, char *s2);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_itoa(int n);
-
+void	*ft_calloc(size_t nmemb, size_t size);
 
 #endif
