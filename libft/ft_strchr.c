@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:03:44 by codespace         #+#    #+#             */
-/*   Updated: 2025/05/01 11:32:40 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/23 15:03:43 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,18 @@
 
 char	*ft_strchr(const char *s, int c)
 {
-	int	i;
-
-	i = 0;
-	while (s[i])
+	// Si s = "" (chaîne vide)
+	while (*s) // *s = '\0' donc on n'entre pas dans la boucle
 	{
-		if (s[i] == (char)c)
-			return ((char *)(s + i));
-		i++;
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
 	}
-	if ((char)c == '\0')
-		return ((char *)(s + i));
-	else
-		return (NULL);
+	if (c == '\0')          // Si on cherche '\0'
+		return ((char *)s); // On retourne un pointeur vers '\0'
+	return (NULL);
 }
-// int	main()
+// int	main(void)
 // {
 // 	printf("%s\n", ft_strchr("pamoi", 'c'));
 // 	return (0);
