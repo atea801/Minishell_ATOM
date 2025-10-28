@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/23 18:57:07 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/28 15:11:49 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,10 @@ void	my_readline(t_minishell *shell)
 			check_expendable(res, t_head_2);
 			assign_expand(shell, t_head_2);
 			token_2_to_cmd(&shell->cmd, &t_head_2);
-			// print_token_2_list(shell->tok2);
+			print_token_2_list(shell->tok2);
 			print_cmd_list(shell->cmd);
 		}
-		builtin_echo(shell->cmd);
+		echo_completed(shell->cmd);
 		add_history(input);
 		if (input)
 			free(input);

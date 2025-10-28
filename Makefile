@@ -6,7 +6,7 @@
 #    By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/10/23 18:41:10 by tlorette         ###   ########.fr        #
+#    Updated: 2025/10/28 15:06:32 by tlorette         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,8 @@ SRC = src/parsing_1/parsing_1.c \
 		src/env/env_node.c \
 		src/env/env_utils.c \
 		src/env/env.c \
-		src/myprint/my_print.c \
+		src/myprintlist/my_print_list.c \
+		src/myprintlist/my_print_list_2.c \
 		src/check_expandable/check_expand.c \
 		src/check_expandable/assign_expand.c \
 		src/built_in/echo.c \

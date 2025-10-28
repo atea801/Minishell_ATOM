@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/23 18:52:20 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/28 15:08:26 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,7 @@ void					print_token_list(t_token *head);
 void					print_token_list_type(t_token *head);
 void					copy_word(char *res, char *str, int end, int start);
 int						put_token(t_token **token, char *res);
+void					print_token_2_list(t_token_2 *token_2);
 char					*malloc_token(int end, int start);
 
 // tokenizer_1.c
@@ -305,6 +306,8 @@ int						special_expand(t_minishell *shell, t_token_2 *token_2);
  ************************************************************************/
 // echo.c
 int						builtin_echo(t_cmd *cmd);
+int						echo_parser(t_cmd *cmd);
+int						echo_completed(t_cmd *cmd);
 
 /************************************************************************
  *								SRC										*
