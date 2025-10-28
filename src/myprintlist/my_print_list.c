@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 10:55:29 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/22 11:07:51 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/28 15:08:03 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,10 @@ void	print_env_tab(char **tab_env)
 
 void	print_cmd_list(t_cmd *cmd)
 {
-	int	node = 0;
+	int	node;
 	int	i;
 
+	node = 0;
 	while (cmd)
 	{
 		printf("\nCOMMANDE %d\n", node);
@@ -71,21 +72,8 @@ void	print_token_2_list(t_token_2 *token_2)
 	while (t_head_2)
 	{
 		if (t_head_2->value)
-			printf("value:%s | type:%s\n", t_head_2->value, t_head_2->type);
+			printf("value:%s | type:%s | isexpand:%d\n", t_head_2->value,
+				t_head_2->type, token_2->is_expand);
 		t_head_2 = t_head_2->next;
 	}
-}
-
-void	print_token_2_list_type(t_token_2 *token_2)
-{
-	t_token_2	*t_head_2;
-
-	t_head_2 = token_2;
-	printf("T_TOKEN_2 :");
-	while (t_head_2 && t_head_2->value)
-	{
-		printf("%s ", t_head_2->type);
-		t_head_2 = t_head_2->next;
-	}
-	printf("\n");
 }

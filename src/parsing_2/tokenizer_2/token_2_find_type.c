@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 17:36:06 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/23 18:51:04 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/28 14:07:43 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,11 @@ void	fill_expand(t_token **token_1, t_token_2 **token_2)
 
 	t_head_1 = *token_1;
 	t_head_2 = *token_2;
-	t_head_2->type = "$?";
-	t_head_2->value = copy_token_value(t_head_1->value);
+	if (!token_1)
+		return ;
+	if (t_head_1->value && (ft_strcmp(t_head_1->value, "$?") == 0))
+	{
+		t_head_2->type = "$?";
+		t_head_2->value = copy_token_value(t_head_1->value);
+	}
 }

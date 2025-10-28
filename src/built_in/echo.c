@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 13:05:59 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/23 18:13:52 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/28 15:25:50 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ int	builtin_echo(t_cmd *cmd)
 		return (1);
 	i = 1;
 	flag = 0;
-	if (cmd->argv[1] && ft_strcmp(cmd->argv[1], "-n") == 0)
+	if (echo_parser(cmd) > 1)
 	{
 		flag = 1;
-		i = 2;
+		i = echo_parser(cmd);
 	}
 	while (cmd->argv[i])
 	{
@@ -40,15 +40,34 @@ int	builtin_echo(t_cmd *cmd)
 	return (0);
 }
 
-// int	check_echo_arg(t_cmd *cmd)
-// {
-// 	int		i;
-// 	t_cmd	*cmd_head;
+int	echo_parser(t_cmd *cmd)
+{
+	int	i;
+	int	j;
 
-// 	cmd_head = cmd;
-// 	i = 0;
-// 	if (cmd_head->argv[1] && cmd_head->argv[1][0] == '-')
-// 	{
-// 		while ()
-// 	}
-// }
+	i = 1;
+	while (cmd->argv[i] && cmd->argv[i][0] == '-')
+	{
+		j = 1;
+		while (cmd->argv[i][j] == 'n')
+			j++;
+		if (cmd->argv[i][j] != 0)
+			return (i);
+		i++;
+	}
+	return (1);
+}
+
+
+
+int	echo_completed(t_cmd *cmd)
+{
+	if (!cmd)
+		return (1);
+	while (cmd)
+	{
+		builtin_echo(cmd);
+		cmd = cmd->next;
+	}
+	return (0);
+}
