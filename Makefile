@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aautret <aautret@student.42.fr>            +#+  +:+       +#+         #
+#    By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/10/29 16:15:00 by aautret          ###   ########.fr        #
+#    Updated: 2025/10/29 16:44:45 by tlorette         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ SRC = src/parsing_1/parsing_1.c \
 		src/myprintlist/my_print_list.c \
 		src/myprintlist/my_print_list_2.c \
 		src/check_expandable/check_expand.c \
-		src/check_expandable/assign_expand.c \
+		src/check_expandable/expand_utils.c \
 		src/built_in/built_in_dispatcher.c \
 		src/built_in/built_in.c \
 		src/built_in/echo.c \

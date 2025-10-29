@@ -6,11 +6,11 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 19:27:38 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/29 16:40:20 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/29 16:43:18 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "atom.h"
+#include "atom.h"
 
 static int	var_len(char *s, int start)
 {

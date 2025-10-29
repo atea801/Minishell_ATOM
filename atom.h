@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/29 16:16:24 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/29 16:46:36 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-// #include <string.h>
-// #include <fcntl.h>
+#include <string.h>
+#include <fcntl.h>
 
 /****************************************************************************
  *								VARIABLES									*
@@ -293,14 +293,14 @@ void					tokenizer_2(t_token *token_head, t_token_2 *token_2);
  *								CHECK_EXPANDABLE						*
  ************************************************************************/
 // check_expand.c
+void					expand_all_vars(t_minishell *shell, t_token_2 *token);
+
+// expand_utils.c
+void					expand_all_tokens(t_minishell *shell, t_token_2 *head);
+char					*replace_env_var(t_minishell *shell, char *s);
+void					check_expendable(char *res, t_token_2 *token_2);
 int						in_single_quote(char *res, int pos);
 int						in_double_quote(char *res, int pos);
-void					check_expendable(char *res, t_token_2 *token_2);
-
-// assign_expand.c
-int						expander(t_minishell *shell, t_token_2 *token_2);
-void					assign_expand(t_minishell *shell, t_token_2 *token_2);
-int						special_expand(t_minishell *shell, t_token_2 *token_2);
 
 /************************************************************************
  *								BUILT_IN								*
