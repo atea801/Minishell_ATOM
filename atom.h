@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/29 15:39:34 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/29 16:16:24 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -319,6 +319,17 @@ int						echo_completed(t_cmd *cmd);
 // pwd.c
 int						builtin_pwd(t_cmd *cmd);
 int						pwd_parser(t_cmd *cmd);
+
+/************************************************************************
+ *								EXEC									*
+ ************************************************************************/
+// exec.c
+void					redirect_input(char *file);
+void					redirect_output(char *file);
+void					redirect_append(char *file);
+void					handle_redirections(t_cmd *cmd);
+void					exec_single_cmd(t_minishell *shell, t_cmd *cmd,
+							char **tab_to_env);
 
 /************************************************************************
  *								SRC										*

@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/29 16:04:55 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/29 16:24:00 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,7 @@ void	my_readline(t_minishell *shell)
 			// print_token_2_list(shell->tok2);
 			// print_cmd_list(shell->cmd);
 		}
-		echo_completed(shell->cmd);
-		builtin_pwd(shell->cmd);
+		exec_single_cmd(shell, shell->cmd, shell->env);
 		add_history(input);
 		if (input)
 			free(input);
