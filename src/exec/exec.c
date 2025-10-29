@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 15:44:26 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/22 17:24:28 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/29 13:59:32 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,37 +67,37 @@ void	handle_redirections(t_cmd *cmd)
 	}
 }
 
-// void	exec_single_cmd(t_minishell *shell, t_cmd *cmd, char **tab_to_env)
-// {
-// 	pid_t	pid;
-// 	int		status;
+void	exec_single_cmd(t_minishell *shell, t_cmd *cmd, char **tab_to_env)
+{
+	pid_t	pid;
+	int		status;
 
-// 	// Si c'est un builtin, l'exécuter directement (pas de fork)
-// 	// if (is_builtin(cmd->argv))
-// 	// {
-// 	// 	execute_builtin(shell, cmd);
-// 	// 	return ;
-// 	// }
-// 	// Sinon, fork pour exécuter une commande externe
-// 	pid = fork();
-// 	if (pid == -1)
-// 	{
-// 		perror("fork");
-// 		shell->exit_code = 1;
-// 		return ;
-// 	}
-// 	if (pid == 0) // Processus enfant
-// 	{
-// 		// Gérer les redirections A FAIREEEEEEEEE
-// 		handle_redirections(cmd);
-// 		// Exécuter la commande
-// 		execve()
-// 		// Si execve échoue
-// 		perror(cmd->argv[0]);
-// 		exit(127);
-// 	}
-// 	// Processus parent : attendre la fin du child
-// 	waitpid(pid, &status, 0);
-// 	if (WIFEXITED(status))
-// 		shell->exit_code = WEXITSTATUS(status);
-// }
+	// Si c'est un builtin, l'exécuter directement (pas de fork)
+	if (is_builtin(cmd->argv[0]) == 1)
+	{
+		shell->exit_code = execute_builtin(cmd);
+		return ;
+	}
+	// Sinon, fork pour exécuter une commande externe
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("fork");
+		shell->exit_code = 1;
+		return ;
+	}
+	if (pid == 0) // Processus enfant
+	{
+		// Gérer les redirections A FAIREEEEEEEEE
+		handle_redirections(cmd);
+		// Exécuter la commande
+		execve()
+		// Si execve échoue
+		perror(cmd->argv[0]);
+		exit(127);
+	}
+	// Processus parent : attendre la fin du child
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		shell->exit_code = WEXITSTATUS(status);
+}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/28 15:11:49 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/29 16:04:55 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,14 @@ void	my_readline(t_minishell *shell)
 		if (parsing_res == 0)
 		{
 			shell->should_execute = true;
-			check_expendable(res, t_head_2);
-			assign_expand(shell, t_head_2);
+			// check_expendable(res, t_head_2);
+			// assign_expand(shell, t_head_2);
 			token_2_to_cmd(&shell->cmd, &t_head_2);
-			print_token_2_list(shell->tok2);
-			print_cmd_list(shell->cmd);
+			// print_token_2_list(shell->tok2);
+			// print_cmd_list(shell->cmd);
 		}
 		echo_completed(shell->cmd);
+		builtin_pwd(shell->cmd);
 		add_history(input);
 		if (input)
 			free(input);

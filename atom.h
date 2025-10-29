@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/28 15:08:26 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/29 15:39:34 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@
 /****************************************************************************
  *								VARIABLES									*
  ****************************************************************************/
-// >
+
+# define BUFFER_SIZE 4096
 
 // typedef enum e_flag
 // {
@@ -304,10 +305,20 @@ int						special_expand(t_minishell *shell, t_token_2 *token_2);
 /************************************************************************
  *								BUILT_IN								*
  ************************************************************************/
+// built-in_dispatcher.c
+int						execute_builtin(t_cmd *cmd);
+
+// built_in.c
+int						is_builtin(char *cmd);
+
 // echo.c
 int						builtin_echo(t_cmd *cmd);
 int						echo_parser(t_cmd *cmd);
 int						echo_completed(t_cmd *cmd);
+
+// pwd.c
+int						builtin_pwd(t_cmd *cmd);
+int						pwd_parser(t_cmd *cmd);
 
 /************************************************************************
  *								SRC										*
