@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 16:10:20 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/29 16:24:06 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/30 16:24:23 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ char	*replace_env_var(t_minishell *shell, char *s)
 	}
 	return (s);
 }
+
 
 void	check_expendable(char *res, t_token_2 *token_2)
 {

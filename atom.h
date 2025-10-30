@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/30 11:13:11 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/30 15:35:22 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,11 +312,14 @@ int						echo_parser(t_cmd *cmd);
 int						echo_completed(t_cmd *cmd);
 
 // pwd.c
-int						builtin_pwd(t_cmd *cmd);
-int						pwd_parser(t_cmd *cmd);
+int						builtin_pwd(t_minishell *shell);
+int						pwd_parser(t_minishell *shell);
 
 // env.c
 int						builtin_env(t_minishell *shell);
+
+// exit.c
+int						builtin_exit(t_minishell *shell);
 
 /************************************************************************
  *								EXEC									*
