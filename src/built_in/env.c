@@ -6,12 +6,19 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 10:41:03 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/30 11:43:45 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/30 17:33:42 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
+/**
+ * @brief Permet d'afficher l'env mais uniquement les cles
+ * associe a une value
+ * 
+ * @param shell 
+ * @return int 
+ */
 int	builtin_env(t_minishell *shell)
 {
 	t_atom_env	*tmp;
