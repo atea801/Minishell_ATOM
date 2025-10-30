@@ -49,6 +49,7 @@ void	my_readline(t_minishell *shell)
 		ft_putstr_fd("Error: failed to convert env to tab\n", 2);
 		return ;
 	}
+	// print_env_tab(env_tab);
 	while (1)
 	{
 		if (t_head)
@@ -71,6 +72,7 @@ void	my_readline(t_minishell *shell)
 			if (input)
 				free(input);
 			printf("exit\n");
+			free_env_tab(env_tab);
 			break ;
 		}
 		res = parsing_1(shell, input);

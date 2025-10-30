@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 15:44:26 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/29 16:57:31 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/30 11:18:35 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	exec_single_cmd(t_minishell *shell, t_cmd *cmd, char **tab_to_env)
 	// Pour l'instant, on teste uniquement les built-ins
 	if (is_builtin(cmd->argv[0]) == 1)
 	{
-		shell->exit_code = execute_builtin(cmd);
+		shell->exit_code = execute_builtin(shell);
 		return ;
 	}
 

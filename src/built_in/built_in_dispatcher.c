@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 13:40:32 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/29 14:54:53 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/30 11:16:19 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@
  * @return int n'est jamais sence return 1 car call dans le cas ou
  * is_builin == 1
  */
-int	execute_builtin(t_cmd *cmd)
+int	execute_builtin(t_minishell *shell)
 {
-	if (ft_strcmp(cmd->argv[0], "echo") == 0)
-		return (builtin_echo(cmd));
-	if (ft_strcmp(cmd->argv[0], "pwd") == 0)
-		return (builtin_pwd(cmd));
-	// if (ft_strcmp(cmd->argv[0], "env") == 0)
-	// 	return (builtin_env(cmd));
+	if (ft_strcmp(shell->cmd->argv[0], "echo") == 0)
+		return (builtin_echo(shell->cmd));
+	if (ft_strcmp(shell->cmd->argv[0], "pwd") == 0)
+		return (builtin_pwd(shell->cmd));
+	if (ft_strcmp(shell->cmd->argv[0], "env") == 0)
+		return (builtin_env(shell));
 	// if (ft_strcmp(cmd->argv[0], "exit") == 0)
 	// 	return (builtin_exit(cmd));
 	// if (ft_strcmp(cmd->argv[0], "cd") == 0)
