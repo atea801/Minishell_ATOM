@@ -89,9 +89,8 @@ void	my_readline(t_minishell *shell)
 		if (parsing_res == 0)
 		{
 			shell->should_execute = true;
-			// check_expendable(res, t_head_2);
-			// assign_expand(shell, t_head_2);
-			token_2_to_cmd(&shell->cmd, &t_head_2);
+			expand_all_tokens(shell, shell->tok2);
+			token_2_to_cmd(&shell->cmd, &shell->tok2);
 			// print_token_2_list(shell->tok2);
 			// print_cmd_list(shell->cmd);
 		}
