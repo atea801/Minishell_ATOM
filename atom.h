@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/30 10:26:00 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/30 11:13:11 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -301,7 +301,7 @@ int						in_double_quote(char *res, int pos);
  *								BUILT_IN								*
  ************************************************************************/
 // built-in_dispatcher.c
-int						execute_builtin(t_cmd *cmd);
+int						execute_builtin(t_minishell *shell);
 
 // built_in.c
 int						is_builtin(char *cmd);
@@ -314,6 +314,9 @@ int						echo_completed(t_cmd *cmd);
 // pwd.c
 int						builtin_pwd(t_cmd *cmd);
 int						pwd_parser(t_cmd *cmd);
+
+// env.c
+int						builtin_env(t_minishell *shell);
 
 /************************************************************************
  *								EXEC									*
