@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/29 16:58:20 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/30 10:08:51 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void					allocate_content_box_tabs(t_atom_env *env_list,
 // env_list_to_tabs.c
 void					fill_up_box_tabs(t_atom_env *env_list, char **tab,
 							int count);
+char					**env_list_to_tab(t_atom_env *env_list);
 char					**env_list_to_tab_new(t_atom_env *env_list);
 
 // env_node.c
