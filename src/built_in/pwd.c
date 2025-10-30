@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 14:07:37 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/29 16:04:13 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/30 17:11:52 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,11 @@
  * @param cmd
  * @return int 0 == success 1 == erreur
  */
-int	builtin_pwd(t_cmd *cmd)
+int	builtin_pwd(t_minishell *shell)
 {
 	char	buffer[BUFFER_SIZE];
 
-	(void)cmd;
-	if (pwd_parser(cmd) == 1)
+	if (pwd_parser(shell) == 1)
 	{
 		return (1);
 	}
@@ -37,20 +36,27 @@ int	builtin_pwd(t_cmd *cmd)
 	return (0);
 }
 
-int	pwd_parser(t_cmd *cmd)
+/**
+ * @brief Permet de detecter les cas speciaux avec une option
+ * 
+ * 
+ * @param shell 
+ * @return int 
+ */
+int	pwd_parser(t_minishell *shell)
 {
-	int count;
-	int i;
-	int j;
+	int	count;
+	int	i;
+	int	j;
 
 	count = 0;
 	i = 1;
 	j = 0;
-	if (!cmd->argv[i])
+	if (!shell->cmd->argv[i])
 		return (0);
-	while (cmd->argv[i][j])
+	while (shell->cmd->argv[i][j])
 	{
-		if (cmd->argv[i][j] == '-')
+		if (shell->cmd->argv[i][j] == '-')
 			count++;
 		j++;
 	}
@@ -63,7 +69,7 @@ int	pwd_parser(t_cmd *cmd)
 	else if (count == 1)
 	{
 		write(2, "Atom: pwd: ", 11);
-		write(2, cmd->argv[i], ft_strlen(cmd->argv[i]));
+		write(2, shell->cmd->argv[i], ft_strlen(shell->cmd->argv[i]));
 		write(2, ": invalid option\n", 17);
 		write(2, "pwd: usage: pwd [-LP]\n", 22);
 		return (1);
