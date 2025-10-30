@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/30 10:08:51 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/30 10:26:00 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,18 +100,14 @@ typedef struct s_minishell
  *								EVIRONNEMENT								*
  ****************************************************************************/
 // env_list_to_tabs_utils.c
-void					print_env_tab(char **tab_env);
 int						count_var_env(t_atom_env *env_list);
-char					**create_box_tab_env(int count);
-void					free_for_env_list_to_tab(char **tab, int i);
-void					allocate_content_box_tabs(t_atom_env *env_list,
-							char **tab, int count);
-
-// env_list_to_tabs.c
+void					free_allocated_tab(char **tab, int i);
 void					fill_up_box_tabs(t_atom_env *env_list, char **tab,
 							int count);
-char					**env_list_to_tab(t_atom_env *env_list);
 char					**env_list_to_tab_new(t_atom_env *env_list);
+
+// env_list_to_tabs.c
+char					**env_list_to_tab(t_atom_env *env_list);
 
 // env_node.c
 void					add_node_to_end(t_atom_env **env_head, char *key,
@@ -128,7 +124,6 @@ char					*get_home(char *cwd);
 char					*get_username(char *cwd);
 
 // env_utils.c
-void					print_env_list(t_atom_env *env_head);
 char					*get_key(char *env_line);
 char					*get_value(char *env_line);
 char					*search_in_list(t_atom_env **env, char *key);
@@ -250,7 +245,6 @@ void					set_cmd_redirection(t_cmd *cmd, char *type, char *file);
 int						count_cmd(t_token *token_head);
 void					print_token_2_list(t_token_2 *token_2);
 void					print_token_2_list_type(t_token_2 *token_2);
-// void					print_cmd_list(t_cmd *cmd_list);
 
 // pars_2.c
 int						parsing_2(t_minishell *shell, t_token *token_head,
@@ -333,6 +327,19 @@ void					exec_single_cmd(t_minishell *shell, t_cmd *cmd,
 							char **tab_to_env);
 
 /************************************************************************
+ *								MYPRINTLIST								*
+ ************************************************************************/
+// my_print_list_1.c
+void					print_env_list(t_atom_env *env_head);
+void					print_env_tab(char **tab_env);
+void					print_cmd_list(t_cmd *cmd);
+void					print_token_2_list(t_token_2 *token_2);
+
+// my_print_list_2.c
+void					print_token_list(t_token *head);
+void					print_token_list_type(t_token *head);
+
+/************************************************************************
  *								SRC										*
  ************************************************************************/
 // init.c
@@ -359,7 +366,6 @@ void					free_token_2_list(t_token_2 **head_2);
 int						init_token_1_only(t_token **token_head);
 
 // main.c
-
 void					res_to_tokenizer1(t_token **t_head,
 							t_token_2 **t_head_2, char *res);
 void					my_readline(t_minishell *shell);
