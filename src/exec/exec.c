@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 15:44:26 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/29 16:27:19 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/29 16:57:31 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,39 +67,22 @@ void	handle_redirections(t_cmd *cmd)
 	}
 }
 
-// void	exec_single_cmd(t_minishell *shell, t_cmd *cmd, char **tab_to_env)
-// {
-// 	// pid_t	pid;
-// 	// int		status;
+void	exec_single_cmd(t_minishell *shell, t_cmd *cmd, char **tab_to_env)
+{
+	(void)tab_to_env;
 
-// 	if (!cmd || !cmd->argv || !cmd->argv[0])
-// 		return ;
-// 	// Si c'est un builtin, l'exécuter directement (pas de fork)
-// 	if (is_builtin(cmd->argv[0]) == 1)
-// 	{
-// 		shell->exit_code = execute_builtin(cmd);
-// 		return ;
-// 	}
-// 	// Sinon, fork pour exécuter une commande externe
-// 	// pid = fork();
-// 	// if (pid == -1)
-// 	// {
-// 	// 	perror("fork");
-// 	// 	shell->exit_code = 1;
-// 	// 	return ;
-// 	// }
-// 	// if (pid == 0) // Processus enfant
-// 	// {
-// 	// 	// Gérer les redirections A FAIREEEEEEEEE
-// 	// 	handle_redirections(cmd);
-// 	// 	// Exécuter la commande
-// 	// 	execve()
-// 	// 	// Si execve échoue
-// 	// 	perror(cmd->argv[0]);
-// 	// 	exit(127);
-// 	// }
-// 	// Processus parent : attendre la fin du child
-// 	// waitpid(pid, &status, 0);
-// 	// if (WIFEXITED(status))
-// 	// 	shell->exit_code = WEXITSTATUS(status);
-// }
+	if (!cmd || !cmd->argv || !cmd->argv[0])
+		return ;
+
+	// Pour l'instant, on teste uniquement les built-ins
+	if (is_builtin(cmd->argv[0]) == 1)
+	{
+		shell->exit_code = execute_builtin(cmd);
+		return ;
+	}
+
+	// Pour l'instant, on affiche juste un message pour les commandes externes
+	printf("Command '%s' is not a built-in (external commands not implemented yet)\n",
+		cmd->argv[0]);
+	shell->exit_code = 127;
+}

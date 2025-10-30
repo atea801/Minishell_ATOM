@@ -6,6 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
+
 /*   Updated: 2025/10/29 16:24:00 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -35,12 +36,19 @@ void	my_readline(t_minishell *shell)
 {
 	char		*input;
 	char		*res;
+	char		**env_tab;
 	int			parsing_res;
 	t_token		*t_head;
 	t_token_2	*t_head_2;
 
 	t_head = NULL;
 	t_head_2 = NULL;
+	env_tab = env_list_to_tab_new(shell->env);
+	if (!env_tab)
+	{
+		ft_putstr_fd("Error: failed to convert env to tab\n", 2);
+		return ;
+	}
 	while (1)
 	{
 		if (t_head)
@@ -85,7 +93,7 @@ void	my_readline(t_minishell *shell)
 			// print_token_2_list(shell->tok2);
 			// print_cmd_list(shell->cmd);
 		}
-		exec_single_cmd(shell, shell->cmd, shell->env);
+		exec_single_cmd(shell, shell->cmd, env_tab);
 		add_history(input);
 		if (input)
 			free(input);

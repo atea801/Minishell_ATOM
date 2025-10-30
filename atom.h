@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/29 16:46:36 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/29 16:58:20 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define ATOM_H
 
 # include "libft/libft.h"
+# include <fcntl.h>
 # include <limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -21,9 +22,8 @@
 # include <stddef.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 # include <unistd.h>
-#include <string.h>
-#include <fcntl.h>
 
 /****************************************************************************
  *								VARIABLES									*
@@ -110,7 +110,7 @@ void					allocate_content_box_tabs(t_atom_env *env_list,
 // env_list_to_tabs.c
 void					fill_up_box_tabs(t_atom_env *env_list, char **tab,
 							int count);
-char					**env_list_to_tab(t_atom_env *env_list);
+char					**env_list_to_tab_new(t_atom_env *env_list);
 
 // env_node.c
 void					add_node_to_end(t_atom_env **env_head, char *key,
