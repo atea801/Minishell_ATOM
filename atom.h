@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/30 15:35:22 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/31 16:44:51 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -320,6 +320,9 @@ int						builtin_env(t_minishell *shell);
 
 // exit.c
 int						builtin_exit(t_minishell *shell);
+
+// cd.c
+int						builtin_cd(t_minishell *shell);
 
 /************************************************************************
  *								EXEC									*

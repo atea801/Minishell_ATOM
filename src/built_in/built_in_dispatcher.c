@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 13:40:32 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/30 15:35:48 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/31 16:44:19 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int	execute_builtin(t_minishell *shell)
 		return (builtin_env(shell));
 	if (ft_strcmp(shell->cmd->argv[0], "exit") == 0)
 		return (builtin_exit(shell));
-	// if (ft_strcmp(cmd->argv[0], "cd") == 0)
-	// 	return (builtin_cd(cmd));
+	if (ft_strcmp(shell->cmd->argv[0], "cd") == 0)
+		return (builtin_cd(shell));
 	// if (ft_strcmp(cmd->argv[0], "export") == 0)
 	// 	return (builtin_export(cmd));
 	// if (ft_strcmp(cmd->argv[0], "unset") == 0)

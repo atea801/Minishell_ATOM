@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 13:05:59 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/30 16:24:58 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/31 11:39:26 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	echo_parser(t_cmd *cmd)
 			return (i);
 		i++;
 	}
-	return (1);
+	return (i);
 }
 
 int	echo_completed(t_cmd *cmd)

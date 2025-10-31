@@ -6,7 +6,7 @@
 #    By: aautret <aautret@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/10/30 14:36:32 by aautret          ###   ########.fr        #
+#    Updated: 2025/10/31 16:47:13 by aautret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SRC = src/parsing_1/parsing_1.c \
 		src/built_in/pwd.c \
 		src/built_in/env.c \
 		src/built_in/exit.c \
+		src/built_in/cd.c \
 		src/exec/exec.c \
 		src/init.c\
 		src/src_utils.c \
