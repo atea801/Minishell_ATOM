@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 11:23:05 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/28 15:11:02 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/03 11:36:07 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,17 @@ char	*get_value(char *env_line)
 char	*search_in_list(t_atom_env **env, char *key)
 {
 	t_atom_env	*searched_key;
+	char		*k;
 
-	if (!*env || !env)
+	if (!*env || !env || !key)
 		return (NULL);
+	k = key;
+	if (k[0] == '$')
+		k = k + 1;
 	searched_key = *env;
 	while (searched_key)
 	{
-		if (searched_key->key && ft_strcmp(searched_key->key, key + 1) == 0)
+		if (searched_key->key && ft_strcmp(searched_key->key, k) == 0)
 			return (searched_key->value);
 		searched_key = searched_key->next;
 	}
