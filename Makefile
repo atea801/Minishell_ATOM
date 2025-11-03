@@ -6,7 +6,7 @@
 #    By: aautret <aautret@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/10/31 16:47:13 by aautret          ###   ########.fr        #
+#    Updated: 2025/11/03 15:34:43 by aautret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,8 +41,8 @@ SRC = src/parsing_1/parsing_1.c \
 		src/env/env.c \
 		src/myprintlist/my_print_list.c \
 		src/myprintlist/my_print_list_2.c \
-		src/check_expandable/check_expand.c \
-		src/check_expandable/expand_utils.c \
+		src/env/check_expandable/check_expand.c \
+		src/env/check_expandable/expand_utils.c \
 		src/built_in/built_in_dispatcher.c \
 		src/built_in/built_in.c \
 		src/built_in/echo.c \
@@ -50,6 +50,8 @@ SRC = src/parsing_1/parsing_1.c \
 		src/built_in/env.c \
 		src/built_in/exit.c \
 		src/built_in/cd.c \
+		src/built_in/cd_utils.c \
+		src/built_in/cd_case.c \
 		src/exec/exec.c \
 		src/init.c\
 		src/src_utils.c \

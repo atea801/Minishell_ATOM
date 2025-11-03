@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/31 16:44:51 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/03 15:35:52 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -322,7 +322,25 @@ int						builtin_env(t_minishell *shell);
 int						builtin_exit(t_minishell *shell);
 
 // cd.c
+int						cd_init_vars(t_minishell *shell, char **home,
+							char **oldpwd);
+int						cd_dispatch_case(t_minishell *shell, char *home,
+							char *oldpwd, char *new_pwd);
 int						builtin_cd(t_minishell *shell);
+
+// cd_utils.c
+void					cd_update_env(t_minishell *shell, char *old_pwd,
+							char *new_pwd);
+void					cd_with_args_free(char *old_pwd, char *path);
+void					cd_with_args_error_print(char *path);
+
+// cd_case.c
+int						case_cd_sin_arg(t_minishell *shell, char *home,
+							char *old_pwd, char *new_pwd);
+int						cd_special_case(t_minishell *shell, char *old_pwd,
+							char *new_pwd);
+int						cd_with_args(t_minishell *shell, char *old_pwd,
+							char *new_pwd);
 
 /************************************************************************
  *								EXEC									*
