@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_printf_list_2.c                                 :+:      :+:    :+:   */
+/*   my_print_list_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 11:00:03 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/22 11:00:34 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/04 13:48:23 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	print_token_list(t_token *head)
 
 void	print_token_list_type(t_token *head)
 {
-	printf("T_TOKEN :");
+	printf("\nT_TOKEN :");
 	while (head && head->value)
 	{
 		printf("%s ", head->type);

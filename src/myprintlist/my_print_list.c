@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   my_print_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 10:55:29 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/28 15:08:03 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/04 13:47:47 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	print_token_2_list(t_token_2 *token_2)
 	t_token_2	*t_head_2;
 
 	t_head_2 = token_2;
+	printf("\nTOKEN 2 :\n");
 	while (t_head_2)
 	{
 		if (t_head_2->value)
