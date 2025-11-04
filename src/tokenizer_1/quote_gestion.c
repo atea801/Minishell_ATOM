@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_gestion.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 17:35:21 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/17 17:57:33 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/04 14:56:18 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,10 +120,21 @@ int	handle_quote(t_token **token, char *str, int *start, int end)
 void	handle_general(t_token **token, char *str, int *start, int i)
 {
 	char	*res;
+	int		j;
 
+	if (*start > i)
+		return ;
 	res = malloc_token(i, *start);
 	copy_word(res, str, i, *start);
-	put_token(token, res);
+	
+	// Vérifier si le token n'est pas vide ou ne contient que des espaces
+	j = 0;
+	while (res[j] && res[j] == ' ')
+		j++;
+	if (res[j] != '\0')  // Si on trouve un caractère non-espace
+		put_token(token, res);
+	else
+		free(res);  // Libérer si c'est que des espaces
 	(*start) = i + 1;
 }
 
