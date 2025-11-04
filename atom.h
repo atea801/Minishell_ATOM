@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/03 15:35:52 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/04 16:02:56 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,7 +244,7 @@ void					set_cmd_redirection(t_cmd *cmd, char *type, char *file);
 // pars_2_utils.c
 int						count_cmd(t_token *token_head);
 void					print_token_2_list(t_token_2 *token_2);
-void					print_token_2_list_type(t_token_2 *token_2);
+// void					print_token_2_list_type(t_token_2 *token_2);
 
 // pars_2.c
 int						parsing_2(t_minishell *shell, t_token *token_head,
@@ -337,7 +337,7 @@ void					cd_with_args_error_print(char *path);
 // cd_case.c
 int						case_cd_sin_arg(t_minishell *shell, char *home,
 							char *old_pwd, char *new_pwd);
-int						cd_special_case(t_minishell *shell, char *old_pwd,
+int						cd_special_case_dash(t_minishell *shell, char *old_pwd,
 							char *new_pwd);
 int						cd_with_args(t_minishell *shell, char *old_pwd,
 							char *new_pwd);
@@ -393,6 +393,9 @@ void					free_token_2_list(t_token_2 **head_2);
 int						init_token_1_only(t_token **token_head);
 
 // main.c
+char					*get_dynamic_prompt(void);
+void					res_to_tokenizer1(t_token **t_head,
+							t_token_2 **t_head_2, char *res);
 void					res_to_tokenizer1(t_token **t_head,
 							t_token_2 **t_head_2, char *res);
 void					my_readline(t_minishell *shell);
