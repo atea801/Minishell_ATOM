@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 14:07:37 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/04 16:16:05 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/04 17:19:43 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ int	builtin_pwd(t_minishell *shell)
 	{
 		return (1);
 	}
+	if (access(".", F_OK) != 0)
+	{
+		perror("Minishell: pwd:");
+		return (1);
+	}
 	if (!getcwd(buffer, BUFFER_SIZE))
 	{
 		write(2, "echec de recuperation du chemin\n", 31);
@@ -38,10 +43,10 @@ int	builtin_pwd(t_minishell *shell)
 
 /**
  * @brief Permet de detecter les cas speciaux avec une option
- * 
- * 
- * @param shell 
- * @return int 
+ *
+ *
+ * @param shell
+ * @return int
  */
 int	pwd_parser(t_minishell *shell)
 {
