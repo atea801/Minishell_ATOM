@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 14:07:37 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/30 17:11:52 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/04 16:16:05 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	builtin_pwd(t_minishell *shell)
 	if (!getcwd(buffer, BUFFER_SIZE))
 	{
 		write(2, "echec de recuperation du chemin\n", 31);
-		perror("pwd");
+		perror("Minishell: pwd");
 		return (1);
 	}
 	printf("%s\n", buffer);
@@ -62,16 +62,16 @@ int	pwd_parser(t_minishell *shell)
 	}
 	if (count >= 2)
 	{
-		write(2, "Atom: pwd: --: invalid option\n", 30);
+		write(2, "Minishell: pwd: --: invalid option\n", 30);
 		write(2, "pwd: usage: pwd [-LP]\n", 22);
 		return (1);
 	}
 	else if (count == 1)
 	{
-		write(2, "Atom: pwd: ", 11);
+		write(2, "Minishell: pwd: ", 11);
 		write(2, shell->cmd->argv[i], ft_strlen(shell->cmd->argv[i]));
 		write(2, ": invalid option\n", 17);
-		write(2, "pwd: usage: pwd [-LP]\n", 22);
+		write(2, "Minishell: usage: pwd [-LP]\n", 22);
 		return (1);
 	}
 	return (0);
