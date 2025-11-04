@@ -13,6 +13,31 @@
 
 #include "atom.h"
 
+char	*get_dynamic_prompt(void)
+{
+	char	*cwd;
+	char	*directory;
+	char	*prompt_start;
+	char	*prompt_mid;
+	char	*prompt;
+
+	cwd = getcwd(NULL, 0);
+	directory = ft_strrchr(cwd, '/');
+	if (directory && directory[1])
+		directory++;
+	else if (directory && ft_strcmp(cwd, "/") == 0)
+		directory = "/";
+	else
+		directory = "Atom";
+	prompt_start = ft_strjoin("\033[1;92m", directory);
+	prompt_mid = ft_strjoin(prompt_start, " > ");
+	prompt = ft_strjoin(prompt_mid, "\033[0m");
+	free(cwd);
+	free(prompt_start);
+	free(prompt_mid);
+	return (prompt);
+}
+
 void	res_to_tokenizer1(t_token **t_head, t_token_2 **t_head_2, char *res)
 {
 	if (res)
@@ -37,6 +62,7 @@ void	my_readline(t_minishell *shell)
 	char		*input;
 	char		*res;
 	char		**env_tab;
+	char		*prompt;
 	int			parsing_res;
 	t_token		*t_head;
 	t_token_2	*t_head_2;
@@ -66,11 +92,13 @@ void	my_readline(t_minishell *shell)
 		shell->tok2 = NULL;
 		shell->cmd = NULL;
 		shell->should_execute = false;
-		input = readline("\033[1;92mAtom > \033[0m");
+		prompt = get_dynamic_prompt();
+		input = readline(prompt);
 		if (!input || ft_strcmp(input, "exit") == 0)
 		{
 			if (input)
 				free(input);
+			free(prompt);
 			printf("exit\n");
 			free_env_tab(env_tab);
 			break ;
@@ -80,6 +108,7 @@ void	my_readline(t_minishell *shell)
 		{
 			if (input)
 				free(input);
+			free(prompt);
 			continue ;
 		}
 		res_to_tokenizer1(&t_head, &t_head_2, res);
@@ -94,6 +123,7 @@ void	my_readline(t_minishell *shell)
 			// print_token_2_list(shell->tok2);
 			// print_cmd_list(shell->cmd);
 		}
+		// print_env_list(shell->env);
 		exec_single_cmd(shell, shell->cmd, env_tab);
 		add_history(input);
 		if (input)
@@ -105,6 +135,7 @@ void	my_readline(t_minishell *shell)
 			free_cmd_list(shell->cmd);
 			shell->cmd = NULL;
 		}
+		free(prompt);
 	}
 }
 
