@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/29 16:46:36 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/05 14:22:12 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define ATOM_H
 
 # include "libft/libft.h"
+# include <fcntl.h>
 # include <limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -21,9 +22,10 @@
 # include <stddef.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include <unistd.h>
-#include <string.h>
-#include <fcntl.h>
 
 /****************************************************************************
  *								VARIABLES									*
@@ -61,6 +63,7 @@ typedef struct s_cmd
 	char				*infile;
 	char				*outfile;
 	char				*heredoc_delim;
+	char				*path;
 	int					append;
 	int					here_doc;
 	int					argc;
@@ -104,13 +107,14 @@ void					print_env_tab(char **tab_env);
 int						count_var_env(t_atom_env *env_list);
 char					**create_box_tab_env(int count);
 void					free_for_env_list_to_tab(char **tab, int i);
-void					allocate_content_box_tabs(t_atom_env *env_list,
+int						allocate_content_box_tabs(t_atom_env *env_list,
 							char **tab, int count);
 
 // env_list_to_tabs.c
 void					fill_up_box_tabs(t_atom_env *env_list, char **tab,
 							int count);
 char					**env_list_to_tab(t_atom_env *env_list);
+char					**env_list_to_tab_new(t_atom_env *env_list);
 
 // env_node.c
 void					add_node_to_end(t_atom_env **env_head, char *key,
@@ -323,13 +327,29 @@ int						pwd_parser(t_cmd *cmd);
 /************************************************************************
  *								EXEC									*
  ************************************************************************/
-// exec.c
+// exec_single_cmd.c
 void					redirect_input(char *file);
 void					redirect_output(char *file);
 void					redirect_append(char *file);
 void					handle_redirections(t_cmd *cmd);
 void					exec_single_cmd(t_minishell *shell, t_cmd *cmd,
 							char **tab_to_env);
+
+// exec_utils.c
+char					*find_command_path(char *cmd, t_minishell *shell);
+char					**get_path(t_atom_env *env);
+void					free_tab(char **tab);
+
+// exec_utils_2.c
+int						count_commands(t_cmd *cmd_list);
+int						**create_pipes(int num_pipes);
+void					free_pipes(int **pipes, int num_pipes);
+void					close_all_pipes(int **pipes, int num_pipes);
+void					setup_pipe_redirections(int **pipes, int cmd_index,
+							int num_cmds);
+// exec_multipipe.c
+void					execute_multipipe(t_minishell *shell, t_cmd *cmd,
+							char **env);
 
 /************************************************************************
  *								SRC										*
@@ -361,6 +381,6 @@ int						init_token_1_only(t_token **token_head);
 
 void					res_to_tokenizer1(t_token **t_head,
 							t_token_2 **t_head_2, char *res);
-void					my_readline(t_minishell *shell);
+void					my_readline(int ac, char **argv, t_minishell *shell);
 
 #endif

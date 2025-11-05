@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list_to_tabs_utils.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 15:31:39 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/23 12:57:18 by aautret          ###   ########.fr       */
+/*   Updated: 2025/10/31 11:19:29 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,17 @@ int	count_var_env(t_atom_env *env_list)
 char	**create_box_tab_env(int count)
 {
 	char	**tab;
+	int		i;
 
 	tab = malloc(sizeof(char *) * (count + 1));
 	if (!tab)
 		return (NULL);
+	i = 0;
+	while (i <= count)
+	{
+		tab[i] = NULL;
+		i++;
+	}
 	return (tab);
 }
 
@@ -50,7 +57,7 @@ void	free_for_env_list_to_tab(char **tab, int i)
 	free(tab);
 }
 
-void	allocate_content_box_tabs(t_atom_env *env_list, char **tab, int count)
+int	allocate_content_box_tabs(t_atom_env *env_list, char **tab, int count)
 {
 	int	i;
 	int	key_len;
@@ -71,9 +78,10 @@ void	allocate_content_box_tabs(t_atom_env *env_list, char **tab, int count)
 		if (!tab[i])
 		{
 			free_for_env_list_to_tab(tab, i);
-			break ;
+			return (-1);
 		}
 		i++;
 		env_list = env_list->next;
 	}
+	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 10:54:05 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/23 13:55:46 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/05 14:47:47 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	set_heredoc_delim(t_token_2 **token_2)
 	t_token_2	*t_head_2;
 
 	t_head_2 = *token_2;
-	while (t_head_2 && t_head_2->next)
+	while (t_head_2 && t_head_2->next && t_head_2->next->type)
 	{
 		if (t_head_2->next->type && ft_strcmp(t_head_2->type, "HEREDOC") == 0
 			&& ft_strcmp(t_head_2->next->type, "CMD") == 0)

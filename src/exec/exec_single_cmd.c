@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
+/*   exec_single_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 15:44:26 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/29 16:27:19 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/05 10:41:33 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,39 +67,47 @@ void	handle_redirections(t_cmd *cmd)
 	}
 }
 
-// void	exec_single_cmd(t_minishell *shell, t_cmd *cmd, char **tab_to_env)
-// {
-// 	// pid_t	pid;
-// 	// int		status;
+void	exec_single_cmd(t_minishell *shell, t_cmd *cmd, char **tab_to_env)
+{
+	pid_t	pid;
+	int		status;
 
-// 	if (!cmd || !cmd->argv || !cmd->argv[0])
-// 		return ;
-// 	// Si c'est un builtin, l'exécuter directement (pas de fork)
-// 	if (is_builtin(cmd->argv[0]) == 1)
-// 	{
-// 		shell->exit_code = execute_builtin(cmd);
-// 		return ;
-// 	}
-// 	// Sinon, fork pour exécuter une commande externe
-// 	// pid = fork();
-// 	// if (pid == -1)
-// 	// {
-// 	// 	perror("fork");
-// 	// 	shell->exit_code = 1;
-// 	// 	return ;
-// 	// }
-// 	// if (pid == 0) // Processus enfant
-// 	// {
-// 	// 	// Gérer les redirections A FAIREEEEEEEEE
-// 	// 	handle_redirections(cmd);
-// 	// 	// Exécuter la commande
-// 	// 	execve()
-// 	// 	// Si execve échoue
-// 	// 	perror(cmd->argv[0]);
-// 	// 	exit(127);
-// 	// }
-// 	// Processus parent : attendre la fin du child
-// 	// waitpid(pid, &status, 0);
-// 	// if (WIFEXITED(status))
-// 	// 	shell->exit_code = WEXITSTATUS(status);
-// }
+	if (!cmd || !cmd->argv || !cmd->argv[0])
+		return ;
+	// if (is_builtin(cmd->argv[0]) == 1)
+	// {
+	// 	shell->exit_code = execute_builtin(shell, cmd);
+	// 	return ;
+	// }
+	cmd->path = find_command_path(cmd->argv[0], shell);
+	if (!cmd->path)
+	{
+		ft_putstr_fd(cmd->argv[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+		shell->exit_code = 127;
+		return ;
+	}
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("fork");
+		free(cmd->path);
+		cmd->path = NULL;
+		shell->exit_code = 1;
+		return ;
+	}
+	if (pid == 0)
+	{
+		handle_redirections(cmd);
+		execve(cmd->path, cmd->argv, tab_to_env);
+		perror(cmd->argv[0]);
+		free(cmd->path);
+		exit(127);
+	}
+	free(cmd->path);
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		shell->exit_code = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		shell->exit_code = 128 + WTERMSIG(status);
+}

@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 11:23:05 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/28 15:11:02 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/31 10:52:12 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,3 +91,4 @@ char	*search_in_list(t_atom_env **env, char *key)
 	}
 	return (NULL);
 }
+

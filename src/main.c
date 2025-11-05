@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/29 16:24:00 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/05 14:42:30 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,19 @@ void	res_to_tokenizer1(t_token **t_head, t_token_2 **t_head_2, char *res)
 	}
 }
 
-void	my_readline(t_minishell *shell)
+void	my_readline(int ac, char **argv, t_minishell *shell)
 {
 	char		*input;
 	char		*res;
+	char		**tab_env;
 	int			parsing_res;
 	t_token		*t_head;
 	t_token_2	*t_head_2;
 
 	t_head = NULL;
 	t_head_2 = NULL;
+	(void)ac;
+	(void)argv;
 	while (1)
 	{
 		if (t_head)
@@ -79,13 +82,24 @@ void	my_readline(t_minishell *shell)
 		if (parsing_res == 0)
 		{
 			shell->should_execute = true;
-			// check_expendable(res, t_head_2);
-			// assign_expand(shell, t_head_2);
-			token_2_to_cmd(&shell->cmd, &t_head_2);
-			// print_token_2_list(shell->tok2);
-			// print_cmd_list(shell->cmd);
+			check_expendable(res, shell->tok2);
+			expand_all_tokens(shell, shell->tok2);
+			token_2_to_cmd(&shell->cmd, &shell->tok2);
+			print_token_2_list(shell->tok2);
+			print_cmd_list(shell->cmd);
 		}
-		exec_single_cmd(shell, shell->cmd, shell->env);
+		if (shell->should_execute && shell->cmd)
+		{
+			tab_env = env_list_to_tab_new(shell->env);
+			if (tab_env)
+			{
+				if (shell->cmd->next)
+					execute_multipipe(shell, shell->cmd, tab_env);
+				else
+					exec_single_cmd(shell, shell->cmd, tab_env);
+				free_env_tab(tab_env);
+			}
+		}
 		add_history(input);
 		if (input)
 			free(input);
@@ -105,8 +119,7 @@ int	main(int ac, char **av, char **env)
 	t_token		*t_head;
 	t_token_2	*t_head_2;
 
-	(void)ac;
-	(void)av;
+
 	shell.tok1 = NULL;
 	shell.tok2 = NULL;
 	shell.cmd = NULL;
@@ -116,7 +129,7 @@ int	main(int ac, char **av, char **env)
 	// create_minimal_env(&env_head);
 	// else
 	init_all(&shell.env, &t_head, env, &t_head_2);
-	my_readline(&shell);
+	my_readline(ac, av, &shell);
 	free_all(t_head, shell.env, t_head_2);
 	// rl_clear_history();
 	// if (token_head || token_2)

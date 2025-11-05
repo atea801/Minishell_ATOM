@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 16:38:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/06 16:29:59 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/10/31 11:22:52 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@ void	fill_up_box_tabs(t_atom_env *env_list, char **tab, int count)
 	int	k;
 
 	i = 0;
-	j = 0;
-	i = 0;
 	while (env_list && i < count)
 	{
+		j = 0;
 		if (env_list->key)
 		{
 			while (env_list->key[j])
@@ -50,25 +49,15 @@ char	**env_list_to_tab_new(t_atom_env *env_list)
 	t_atom_env	*start;
 	char		**tab;
 	int			count;
-	int			i;
 
-	i = 0;
 	start = env_list;
-	// alloue le nombre de boite necessaire mais n'alloue pas le contenu de la boite
 	count = count_var_env(env_list);
 	tab = create_box_tab_env(count);
 	if (!tab)
 		return (NULL);
-	while (i < count)
-	{
-		if (!tab[i])
-			return (NULL);
-		i++;
-	}
-	// allouer le contenu de la boite
 	env_list = start;
-	allocate_content_box_tabs(env_list, tab, count);
-	// remplir le contenu de la boite
+	if (allocate_content_box_tabs(env_list, tab, count) == -1)
+		return (NULL);
 	env_list = start;
 	fill_up_box_tabs(env_list, tab, count);
 	return (tab);
