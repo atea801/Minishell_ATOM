@@ -6,139 +6,96 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 16:38:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/31 11:22:52 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/05 15:04:31 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
-void	fill_up_box_tabs(t_atom_env *env_list, char **tab, int count)
+static int	get_env_entry_len(t_atom_env *env_list)
 {
-	int	i;
+	int	key_len;
+	int	value_len;
+
+	key_len = 0;
+	value_len = 0;
+	if (env_list->key)
+		key_len = ft_strlen(env_list->key);
+	if (env_list->has_value && env_list->value)
+		value_len = ft_strlen(env_list->value);
+	return (key_len + value_len + 2);
+}
+
+static char	**allocate_tab_boxes(t_atom_env *env_list, int count)
+{
+	char		**tab;
+	int			i;
+
+	tab = malloc(sizeof(char *) * (count + 1));
+	if (!tab)
+		return (NULL);
+	i = 0;
+	while (env_list && i < count)
+	{
+		tab[i] = malloc(sizeof(char) * get_env_entry_len(env_list));
+		if (!tab[i])
+		{
+			free_allocated_tab(tab, i);
+			return (NULL);
+		}
+		i++;
+		env_list = env_list->next;
+	}
+	return (tab);
+}
+
+static void	fill_tab_entry(char *tab_entry, t_atom_env *env_node)
+{
 	int	j;
 	int	k;
+
+	j = 0;
+	if (env_node->key)
+	{
+		k = 0;
+		while (env_node->key[k])
+			tab_entry[j++] = env_node->key[k++];
+	}
+	tab_entry[j++] = '=';
+	if (env_node->has_value && env_node->value)
+	{
+		k = 0;
+		while (env_node->value[k])
+			tab_entry[j++] = env_node->value[k++];
+	}
+	tab_entry[j] = '\0';
+}
+
+static void	fill_all_entries(char **tab, t_atom_env *env_list, int count)
+{
+	int	i;
 
 	i = 0;
 	while (env_list && i < count)
 	{
-		j = 0;
-		if (env_list->key)
-		{
-			while (env_list->key[j])
-			{
-				tab[i][j] = env_list->key[j];
-				j++;
-			}
-		}
-		tab[i][j++] = '=';
-		if (env_list->has_value && env_list->value)
-		{
-			k = 0;
-			while (env_list->value[k])
-				tab[i][j++] = env_list->value[k++];
-		}
-		tab[i][j] = '\0';
+		fill_tab_entry(tab[i], env_list);
 		i++;
 		env_list = env_list->next;
 	}
 	tab[i] = NULL;
 }
 
-char	**env_list_to_tab_new(t_atom_env *env_list)
+char	**env_list_to_tab(t_atom_env *env_list)
 {
-	t_atom_env	*start;
-	char		**tab;
-	int			count;
+	char	**tab;
+	int		count;
 
-	start = env_list;
+	if (!env_list)
+		return (NULL);
 	count = count_var_env(env_list);
-	tab = create_box_tab_env(count);
+	tab = allocate_tab_boxes(env_list, count);
 	if (!tab)
 		return (NULL);
-	env_list = start;
-	if (allocate_content_box_tabs(env_list, tab, count) == -1)
-		return (NULL);
-	env_list = start;
-	fill_up_box_tabs(env_list, tab, count);
+	fill_all_entries(tab, env_list, count);
 	return (tab);
 }
-
-// char	**env_list_to_tab(t_atom_env *env_list)
-// {
-// 	t_atom_env	*start;
-// 	char		**tab;
-// 	int			count;
-// 	int			key_len;
-// 	int			value_len;
-// 	int			i;
-// 	int			j;
-// 	int			k;
-// 	int			x;
-
-// 	start = env_list;
-// 	i = 0;
-// 	// alloue le nombre de boite necessaire mais n'alloue pas le contenu de la boite
-// 	count = count_var_env(env_list);
-// 	tab = malloc(sizeof(char *) * (count + 1));
-// 	if (!tab)
-// 	return (NULL);
-
-// 	// allouer le contenu de la boite
-// 	env_list = start;
-// 	i = 0;
-// 	while (env_list && i < count)
-// 	{
-// 		if (env_list->key)
-// 			key_len = ft_strlen(env_list->key);
-// 		else
-// 			key_len = 0;
-// 		if (env_list->has_value && env_list->value)
-// 			value_len = ft_strlen(env_list->value);
-// 		else
-// 			value_len = 0;
-// 		tab[i] = malloc(sizeof(char) * (key_len + value_len + 2));
-// 		if (!tab[i])
-// 		{
-// 			// Libère la mémoire déjà allouée
-// 			x = 0;
-// 			while (x < i)
-// 			{
-// 				free(tab[x]);
-// 				x++;
-// 			}
-// 			free(tab);
-// 			return (NULL);
-// 		}
-// 		i++;
-// 		env_list = env_list->next;
-// 	}
-// 	// remplir le contenu de la boite
-// 	env_list = start;
-// 	i = 0;
-// 	while (env_list && i < count)
-// 	{
-// 		j = 0;
-// 		if (env_list->key)
-// 		{
-// 			while (env_list->key[j])
-// 			{
-// 				tab[i][j] = env_list->key[j];
-// 				j++;
-// 			}
-// 		}
-// 		tab[i][j++] = '=';
-// 		if (env_list->has_value && env_list->value)
-// 		{
-// 			k = 0;
-// 			while (env_list->value[k])
-// 			{
-// 				tab[i][j++] = env_list->value[k++];
-// 			}
-// 		}
-// 		tab[i][j] = '\0';
-// 		i++;
-// 		env_list = env_list->next;
-// 	}
-// 	tab[i] = NULL;
-// 	return (tab);
-// }

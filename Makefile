@@ -6,9 +6,10 @@
 #    By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/11/05 14:26:03 by tlorette         ###   ########.fr        #
+#    Updated: 2025/11/05 15:06:12 by tlorette         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 NAME = minishell
 
@@ -47,6 +48,8 @@ SRC = src/parsing_1/parsing_1.c \
 		src/built_in/built_in.c \
 		src/built_in/echo.c \
 		src/built_in/pwd.c \
+		src/built_in/env.c \
+		src/exec/exec.c \
 		src/exec/exec_single_cmd.c \
 		src/exec/exec_multipipe.c \
 		src/exec/exec_utils.c \

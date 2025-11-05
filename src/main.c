@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/05 14:42:30 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/05 15:07:50 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,20 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 {
 	char		*input;
 	char		*res;
-	char		**tab_env;
+	char		**env_tab;
 	int			parsing_res;
 	t_token		*t_head;
 	t_token_2	*t_head_2;
 
 	t_head = NULL;
 	t_head_2 = NULL;
-	(void)ac;
-	(void)argv;
+	env_tab = env_list_to_tab_new(shell->env);
+	if (!env_tab)
+	{
+		ft_putstr_fd("Error: failed to convert env to tab\n", 2);
+		return ;
+	}
+	// print_env_tab(env_tab);
 	while (1)
 	{
 		if (t_head)
@@ -66,6 +71,7 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 			if (input)
 				free(input);
 			printf("exit\n");
+			free_env_tab(env_tab);
 			break ;
 		}
 		res = parsing_1(shell, input);

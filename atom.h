@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/05 14:22:12 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/05 15:05:43 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft/libft.h"
 # include <fcntl.h>
+# include <fcntl.h>
 # include <limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -22,6 +23,7 @@
 # include <stddef.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 # include <string.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -103,8 +105,8 @@ typedef struct s_minishell
  *								EVIRONNEMENT								*
  ****************************************************************************/
 // env_list_to_tabs_utils.c
-void					print_env_tab(char **tab_env);
 int						count_var_env(t_atom_env *env_list);
+void					free_allocated_tab(char **tab, int i);
 char					**create_box_tab_env(int count);
 void					free_for_env_list_to_tab(char **tab, int i);
 int						allocate_content_box_tabs(t_atom_env *env_list,
@@ -113,6 +115,9 @@ int						allocate_content_box_tabs(t_atom_env *env_list,
 // env_list_to_tabs.c
 void					fill_up_box_tabs(t_atom_env *env_list, char **tab,
 							int count);
+char					**env_list_to_tab_new(t_atom_env *env_list);
+
+// env_list_to_tabs.c
 char					**env_list_to_tab(t_atom_env *env_list);
 char					**env_list_to_tab_new(t_atom_env *env_list);
 
@@ -131,7 +136,6 @@ char					*get_home(char *cwd);
 char					*get_username(char *cwd);
 
 // env_utils.c
-void					print_env_list(t_atom_env *env_head);
 char					*get_key(char *env_line);
 char					*get_value(char *env_line);
 char					*search_in_list(t_atom_env **env, char *key);
@@ -253,7 +257,6 @@ void					set_cmd_redirection(t_cmd *cmd, char *type, char *file);
 int						count_cmd(t_token *token_head);
 void					print_token_2_list(t_token_2 *token_2);
 void					print_token_2_list_type(t_token_2 *token_2);
-// void					print_cmd_list(t_cmd *cmd_list);
 
 // pars_2.c
 int						parsing_2(t_minishell *shell, t_token *token_head,
@@ -310,7 +313,7 @@ int						in_double_quote(char *res, int pos);
  *								BUILT_IN								*
  ************************************************************************/
 // built-in_dispatcher.c
-int						execute_builtin(t_cmd *cmd);
+int						execute_builtin(t_minishell *shell);
 
 // built_in.c
 int						is_builtin(char *cmd);
@@ -324,6 +327,9 @@ int						echo_completed(t_cmd *cmd);
 int						builtin_pwd(t_cmd *cmd);
 int						pwd_parser(t_cmd *cmd);
 
+// env.c
+int						builtin_env(t_minishell *shell);
+
 /************************************************************************
  *								EXEC									*
  ************************************************************************/
@@ -334,6 +340,19 @@ void					redirect_append(char *file);
 void					handle_redirections(t_cmd *cmd);
 void					exec_single_cmd(t_minishell *shell, t_cmd *cmd,
 							char **tab_to_env);
+
+/************************************************************************
+ *								MYPRINTLIST								*
+ ************************************************************************/
+// my_print_list_1.c
+void					print_env_list(t_atom_env *env_head);
+void					print_env_tab(char **tab_env);
+void					print_cmd_list(t_cmd *cmd);
+void					print_token_2_list(t_token_2 *token_2);
+
+// my_print_list_2.c
+void					print_token_list(t_token *head);
+void					print_token_list_type(t_token *head);
 
 // exec_utils.c
 char					*find_command_path(char *cmd, t_minishell *shell);
@@ -378,7 +397,6 @@ void					free_token_2_list(t_token_2 **head_2);
 int						init_token_1_only(t_token **token_head);
 
 // main.c
-
 void					res_to_tokenizer1(t_token **t_head,
 							t_token_2 **t_head_2, char *res);
 void					my_readline(int ac, char **argv, t_minishell *shell);

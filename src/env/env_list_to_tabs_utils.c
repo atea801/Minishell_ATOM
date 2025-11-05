@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/06 15:31:39 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/31 11:19:29 by tlorette         ###   ########.fr       */
+/*   Created: 2025/10/30 10:02:06 by aautret           #+#    #+#             */
+/*   Updated: 2025/11/05 15:11:37 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,18 @@
 
 int	count_var_env(t_atom_env *env_list)
 {
-	t_atom_env	*current;
-	int			count;
+	int	count;
 
 	count = 0;
-	current = env_list;
-	while (current)
+	while (env_list)
 	{
 		count++;
-		current = current->next;
+		env_list = env_list->next;
 	}
 	return (count);
 }
 
-char	**create_box_tab_env(int count)
-{
-	char	**tab;
-	int		i;
-
-	tab = malloc(sizeof(char *) * (count + 1));
-	if (!tab)
-		return (NULL);
-	i = 0;
-	while (i <= count)
-	{
-		tab[i] = NULL;
-		i++;
-	}
-	return (tab);
-}
-
-void	free_for_env_list_to_tab(char **tab, int i)
+void	free_allocated_tab(char **tab, int i)
 {
 	int	x;
 
@@ -57,31 +38,36 @@ void	free_for_env_list_to_tab(char **tab, int i)
 	free(tab);
 }
 
-int	allocate_content_box_tabs(t_atom_env *env_list, char **tab, int count)
+void	fill_up_box_tabs(t_atom_env *env_list, char **tab, int count)
 {
-	int	i;
-	int	key_len;
-	int	value_len;
+	int i;
+	int j;
+	int k;
 
 	i = 0;
 	while (env_list && i < count)
 	{
-		if (env_list->key)
-			key_len = ft_strlen(env_list->key);
-		else
-			key_len = 0;
-		if (env_list->has_value && env_list->value)
-			value_len = ft_strlen(env_list->value);
-		else
-			value_len = 0;
-		tab[i] = malloc(sizeof(char) * (key_len + value_len + 2));
-		if (!tab[i])
+		j = 0;
+		while (env_list->key && env_list->key[j])
 		{
-			free_for_env_list_to_tab(tab, i);
-			return (-1);
+			tab[i][j] = env_list->key[j];
+			j++;
 		}
+		tab[i][j++] = '=';
+		if (env_list->has_value && env_list->value)
+		{
+			k = 0;
+			while (env_list->value[k])
+				tab[i][j++] = env_list->value[k++];
+		}
+		tab[i][j] = '\0';
 		i++;
 		env_list = env_list->next;
 	}
-	return (0);
+	tab[i] = NULL;
+}
+
+char	**env_list_to_tab_new(t_atom_env *env_list)
+{
+	return (env_list_to_tab(env_list));
 }
