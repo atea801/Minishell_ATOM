@@ -6,28 +6,11 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 11:58:02 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/31 10:20:41 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/05 18:44:01 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
-
-int	count_args_to_pipe(t_token_2 *token_2)
-{
-	int			count;
-	t_token_2	*t_head_2;
-
-	count = 0;
-	t_head_2 = token_2;
-	while (t_head_2 && t_head_2->type && ft_strcmp(t_head_2->type, "PIPE") != 0)
-	{
-		if (ft_strcmp(t_head_2->type, "ARGS") == 0 || ft_strcmp(t_head_2->type,
-				"CMD") == 0)
-			count++;
-		t_head_2 = t_head_2->next;
-	}
-	return (count);
-}
 
 static int	allocate_argv(t_cmd *cmd, t_token_2 *t_head_2)
 {
@@ -89,6 +72,11 @@ void	fill_cmd_until_pipe(t_cmd *cmd, t_token_2 **t_head_2)
 
 	if (allocate_argv(cmd, *t_head_2) == -1)
 		return ;
+	if (open_all_redirs_from_tokens(*t_head_2, &cmd->fd_in, &cmd->fd_out) == -1)
+	{
+		cmd->fd_in = -1;
+		cmd->fd_out = -1;
+	}
 	i = 0;
 	while (*t_head_2 && (*t_head_2)->type && ft_strcmp((*t_head_2)->type,
 			"PIPE") != 0)

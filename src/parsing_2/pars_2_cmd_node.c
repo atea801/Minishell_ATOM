@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 18:18:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/15 11:52:58 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/05 18:56:10 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	add_node_to_end_cmd(t_cmd **cmd_head, char **argv)
 
 /**
  * @brief Creation d'un nouveau noeud
- * 
- * @param argv 
+ *
+ * @param argv
  * @return t_cmd* new node
  */
 t_cmd	*init_new_node_cmd(char **argv)
@@ -48,7 +48,7 @@ t_cmd	*init_new_node_cmd(char **argv)
 	t_cmd	*new_node;
 	int		i;
 
-	new_node = malloc(sizeof(t_cmd));
+	new_node = ft_calloc(1, sizeof(t_cmd));
 	if (!new_node)
 		return (NULL);
 	i = 0;
@@ -58,7 +58,7 @@ t_cmd	*init_new_node_cmd(char **argv)
 			i++;
 	}
 	new_node->argc = i;
-	new_node->argv = malloc(sizeof(char *) * (i + 1));
+	new_node->argv = ft_calloc(i + 1, sizeof(char *));
 	if (!new_node->argv)
 	{
 		free(new_node);
@@ -78,22 +78,16 @@ t_cmd	*init_new_node_cmd(char **argv)
 			i++;
 		}
 	}
-	new_node->argv[i] = NULL;
-	new_node->infile = NULL;
-	new_node->outfile = NULL;
-	new_node->heredoc_delim = NULL;
-	new_node->append = 0;
-	new_node->here_doc = 0;
-	new_node->next = NULL;
+	new_node->fd_in = -1;
+	new_node->fd_out = -1;
 	return (new_node);
 }
 
-
 /**
  * @brief Ajoute un argument a une commande existante
- * 
- * @param cmd 
- * @param arg 
+ *
+ * @param cmd
+ * @param arg
  * @return int 0 = erreur, 1 = succès
  */
 int	add_arg_to_cmd(t_cmd *cmd, char *arg)
@@ -127,8 +121,8 @@ int	add_arg_to_cmd(t_cmd *cmd, char *arg)
 
 /**
  * @brief Fonction de suppression de la liste de commandes
- * 
- * @param cmd_list 
+ *
+ * @param cmd_list
  */
 void	delete_node_list_cmd(t_cmd **cmd_list)
 {
@@ -149,10 +143,10 @@ void	delete_node_list_cmd(t_cmd **cmd_list)
 
 /**
  * @brief Configure les redirections d'une commande
- * 
- * @param cmd 
+ *
+ * @param cmd
  * @param type "REDIR_IN", "REDIR_OUT", "HEREDOC", "APPEND"
- * @param file 
+ * @param file
  */
 void	set_cmd_redirection(t_cmd *cmd, char *type, char *file)
 {
