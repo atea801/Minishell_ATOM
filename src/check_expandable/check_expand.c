@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 19:27:38 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/29 16:43:18 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/05 15:48:19 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ void	expand_all_vars(t_minishell *shell, t_token_2 *token)
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] == '$')
+		if (s[i] == '$' && (s[i + 1] == '?' || ft_isalnum(s[i + 1])
+				|| s[i + 1] == '_'))
 		{
 			res = handle_dollar(shell, &s, &i, res);
 			if (!res)
