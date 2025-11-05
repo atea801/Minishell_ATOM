@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:32:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/05 14:23:26 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/05 15:16:48 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	execute_child(t_minishell *shell, t_cmd *cmd, char **env)
 	handle_redirections(cmd);
 	if (is_builtin(cmd->argv[0]))
 	{
-		shell->exit_code = execute_builtin(cmd);
+		shell->exit_code = execute_builtin(shell);
 		exit(shell->exit_code);
 	}
 	path = find_command_path(cmd->argv[0], shell);

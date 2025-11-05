@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/05 15:07:50 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/05 15:18:41 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 	t_head = NULL;
 	t_head_2 = NULL;
 	env_tab = env_list_to_tab_new(shell->env);
+	(void)ac;
+	(void)argv;
 	if (!env_tab)
 	{
 		ft_putstr_fd("Error: failed to convert env to tab\n", 2);
@@ -96,14 +98,14 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 		}
 		if (shell->should_execute && shell->cmd)
 		{
-			tab_env = env_list_to_tab_new(shell->env);
-			if (tab_env)
+			env_tab = env_list_to_tab_new(shell->env);
+			if (env_tab)
 			{
 				if (shell->cmd->next)
-					execute_multipipe(shell, shell->cmd, tab_env);
+					execute_multipipe(shell, shell->cmd, env_tab);
 				else
-					exec_single_cmd(shell, shell->cmd, tab_env);
-				free_env_tab(tab_env);
+					exec_single_cmd(shell, shell->cmd, env_tab);
+				free_env_tab(env_tab);
 			}
 		}
 		add_history(input);
