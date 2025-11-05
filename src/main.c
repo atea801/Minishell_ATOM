@@ -104,6 +104,7 @@ void	my_readline(t_minishell *shell)
 			break ;
 		}
 		res = parsing_1(shell, input);
+		// printf("res : %s\n", res);
 		if (!res)
 		{
 			if (input)
