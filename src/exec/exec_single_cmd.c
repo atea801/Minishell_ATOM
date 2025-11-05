@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 15:44:26 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/05 15:12:02 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/05 18:38:21 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,15 @@ void	redirect_append(char *file)
 
 void	handle_redirections(t_cmd *cmd)
 {
-	if (cmd->infile)
-		redirect_input(cmd->infile);
-	if (cmd->outfile)
+	if (cmd->fd_in != -1)
 	{
-		if (cmd->append == 1)
-			redirect_append(cmd->outfile);
-		else
-			redirect_output(cmd->outfile);
+		dup2(cmd->fd_in, STDIN_FILENO);
+		close(cmd->fd_in);
+	}
+	if (cmd->fd_out != -1)
+	{
+		dup2(cmd->fd_out, STDOUT_FILENO);
+		close(cmd->fd_out);
 	}
 }
 
@@ -104,6 +105,10 @@ void	exec_single_cmd(t_minishell *shell, t_cmd *cmd, char **tab_to_env)
 		free(cmd->path);
 		exit(127);
 	}
+	if (cmd->fd_in != -1)
+		close(cmd->fd_in);
+	if (cmd->fd_out != -1)
+		close(cmd->fd_out);
 	free(cmd->path);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
