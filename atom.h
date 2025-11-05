@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/05 15:05:43 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/05 18:43:01 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "libft/libft.h"
 # include <fcntl.h>
-# include <fcntl.h>
 # include <limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -23,7 +22,6 @@
 # include <stddef.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <string.h>
 # include <string.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -68,6 +66,8 @@ typedef struct s_cmd
 	char				*path;
 	int					append;
 	int					here_doc;
+	int					fd_in;
+	int					fd_out;
 	int					argc;
 	struct s_cmd		*next;
 }						t_cmd;
@@ -245,6 +245,8 @@ int						check_redir(t_token **token_head);
 // pars_2_cmd_node_utils.c
 void					free_delete_node_list(t_cmd *node);
 void					free_init_new_node_cmd(t_cmd *new_node);
+int						open_all_redirs_from_tokens(t_token_2 *tokens,
+							int *fd_in, int *fd_out);
 
 // pars_2_cmd_node.c
 void					add_node_to_end_cmd(t_cmd **cmd_head, char **argv);
@@ -255,8 +257,10 @@ void					set_cmd_redirection(t_cmd *cmd, char *type, char *file);
 
 // pars_2_utils.c
 int						count_cmd(t_token *token_head);
-void					print_token_2_list(t_token_2 *token_2);
-void					print_token_2_list_type(t_token_2 *token_2);
+int						open_redir_file(char *type, char *file, int *old_fd);
+int						open_all_redirs_from_tokens(t_token_2 *tokens,
+							int *fd_in, int *fd_out);
+int						count_args_to_pipe(t_token_2 *token_2);
 
 // pars_2.c
 int						parsing_2(t_minishell *shell, t_token *token_head,
@@ -270,6 +274,8 @@ void					print_cmd_list(t_cmd *cmd);
 void					set_heredoc_delim_append(t_token_2 **token_2,
 							t_cmd **cmd);
 void					set_infile_cmd(t_token_2 **token_2, t_cmd **cmd);
+int						open_all_redirs_from_tokens(t_token_2 *tokens,
+							int *fd_in, int *fd_out);
 
 /************************************************************************
  *								TOKENIZER 2								*
@@ -349,6 +355,7 @@ void					print_env_list(t_atom_env *env_head);
 void					print_env_tab(char **tab_env);
 void					print_cmd_list(t_cmd *cmd);
 void					print_token_2_list(t_token_2 *token_2);
+void					print_token_2_list_type(t_token_2 *token_2);
 
 // my_print_list_2.c
 void					print_token_list(t_token *head);
