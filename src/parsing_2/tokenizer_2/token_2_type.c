@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_2_type.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 17:06:04 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/23 18:51:43 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/05 16:17:10 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	put_token_2(t_token_2 **token_2)
 		token_head_2->next->is_expand = 1;
 		token_head_2->next->type = NULL;
 		token_head_2->next->next = NULL;
-	
 	}
 }
 
@@ -92,6 +91,8 @@ char	*copy_token_value(char *str)
 int	get_pos(t_token *token_head_1, t_token_2 *token_head_2, int first_word)
 {
 	put_token_2(&token_head_2);
+	if (ft_strcmp(token_head_1->type, "ERROR") == 0)
+		return (first_word);
 	if (first_word == 0 && ft_strcmp(token_head_1->type, "MOT") == 0)
 	{
 		fill_cmd(&token_head_1, &token_head_2);

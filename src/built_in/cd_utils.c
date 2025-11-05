@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_print_list_2.c                                  :+:      :+:    :+:   */
+/*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/22 11:00:03 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/04 13:48:23 by aautret          ###   ########.fr       */
+/*   Created: 2025/11/03 15:17:34 by aautret           #+#    #+#             */
+/*   Updated: 2025/11/03 15:23:30 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
-void	print_token_list(t_token *head)
+void	cd_update_env(t_minishell *shell, char *old_pwd, char *new_pwd)
 {
-	while (head && head->value)
-	{
-		printf("value:%s | type:%s\n", head->value, head->type);
-		head = head->next;
-	}
+	change_node_list(&shell->env, "OLDPWD", old_pwd);
+	change_node_list(&shell->env, "PWD", new_pwd);
+	free(old_pwd);
 }
 
-
-void	print_token_list_type(t_token *head)
+void	cd_with_args_free(char *old_pwd, char *path)
 {
-	printf("\nT_TOKEN :");
-	while (head && head->value)
-	{
-		printf("%s ", head->type);
-		head = head->next;
-	}
-	printf("\n");
+	free(old_pwd);
+	free(path);
+}
+
+void	cd_with_args_error_print(char *path)
+{
+	ft_putstr_fd("Atom: cd: ", 2);
+	ft_putstr_fd(path, 2);
+	ft_putstr_fd(": No such file or directory\n", 2);
 }

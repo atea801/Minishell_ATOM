@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_gestion.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 17:35:21 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/17 17:57:33 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/05 16:15:00 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,23 @@ void	handle_quote_state(t_token **token, char *str, int *start, int end)
 int	handle_quote(t_token **token, char *str, int *start, int end)
 {
 	char	*res;
+	char	*final_res;
 
 	res = malloc_token(end, *start + 1);
 	if (!res)
 		return (1);
 	copy_word(res, str, end, *start + 1);
+	
+	// Marquer les tokens entre guillemets simples avec un préfixe spécial
+	if (str[*start] == '\'')
+	{
+		final_res = ft_strjoin("__SINGLE_QUOTE__", res);
+		free(res);
+		if (!final_res)
+			return (1);
+		res = final_res;
+	}
+	
 	if (put_token(token, res))
 		return (free(res), 1);
 	(*start) += 1;
@@ -120,10 +132,21 @@ int	handle_quote(t_token **token, char *str, int *start, int end)
 void	handle_general(t_token **token, char *str, int *start, int i)
 {
 	char	*res;
+	int		j;
 
+	if (*start > i)
+		return ;
 	res = malloc_token(i, *start);
 	copy_word(res, str, i, *start);
-	put_token(token, res);
+	
+	// Vérifier si le token n'est pas vide ou ne contient que des espaces
+	j = 0;
+	while (res[j] && res[j] == ' ')
+		j++;
+	if (res[j] != '\0')  // Si on trouve un caractère non-espace
+		put_token(token, res);
+	else
+		free(res);  // Libérer si c'est que des espaces
 	(*start) = i + 1;
 }
 

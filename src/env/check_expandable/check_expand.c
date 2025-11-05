@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_expand.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 19:27:38 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/05 15:48:19 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/05 20:21:36 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,22 @@ static char	*process_variable(t_minishell *shell, char *s, int *i, char *res)
 	return (res);
 }
 
+static char	*handle_escaped_dollar(char **s, int *i, char *res)
+{
+	char	*before;
+
+	before = ft_substr(*s, 0, *i);
+	res = ft_strjoin_free(res, before);
+	if (!res)
+		return (NULL);
+	res = ft_strjoin_free(res, ft_strdup("$"));
+	if (!res)
+		return (NULL);
+	*s += *i + 2;
+	*i = 0;
+	return (res);
+}
+
 static char	*handle_dollar(t_minishell *shell, char **s, int *i, char *res)
 {
 	int	len;
@@ -83,8 +99,15 @@ void	expand_all_vars(t_minishell *shell, t_token_2 *token)
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] == '$' && (s[i + 1] == '?' || ft_isalnum(s[i + 1])
-				|| s[i + 1] == '_'))
+		// if (s[i] == '$' && (s[i + 1] == '?' || ft_isalnum(s[i + 1])
+		// 		|| s[i + 1] == '_'))
+		if (s[i] == '\\' && s[i + 1] == '$')
+		{
+			res = handle_escaped_dollar(&s, &i, res);
+			if (!res)
+				return (free(token->value), (void)0);
+		}
+		else if (s[i] == '$')
 		{
 			res = handle_dollar(shell, &s, &i, res);
 			if (!res)

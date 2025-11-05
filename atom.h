@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/05 18:43:01 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/05 20:08:45 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -330,11 +330,35 @@ int						echo_parser(t_cmd *cmd);
 int						echo_completed(t_cmd *cmd);
 
 // pwd.c
-int						builtin_pwd(t_cmd *cmd);
-int						pwd_parser(t_cmd *cmd);
+int						builtin_pwd(t_minishell *shell);
+int						pwd_parser(t_minishell *shell);
 
 // env.c
 int						builtin_env(t_minishell *shell);
+
+// exit.c
+int						builtin_exit(t_minishell *shell);
+
+// cd.c
+int						cd_init_vars(t_minishell *shell, char **home,
+							char **oldpwd);
+int						cd_dispatch_case(t_minishell *shell, char *home,
+							char *oldpwd, char *new_pwd);
+int						builtin_cd(t_minishell *shell);
+
+// cd_utils.c
+void					cd_update_env(t_minishell *shell, char *old_pwd,
+							char *new_pwd);
+void					cd_with_args_free(char *old_pwd, char *path);
+void					cd_with_args_error_print(char *path);
+
+// cd_case.c
+int						case_cd_sin_arg(t_minishell *shell, char *home,
+							char *old_pwd, char *new_pwd);
+int						cd_special_case_dash(t_minishell *shell, char *old_pwd,
+							char *new_pwd);
+int						cd_with_args(t_minishell *shell, char *old_pwd,
+							char *new_pwd);
 
 /************************************************************************
  *								EXEC									*
@@ -404,6 +428,9 @@ void					free_token_2_list(t_token_2 **head_2);
 int						init_token_1_only(t_token **token_head);
 
 // main.c
+char					*get_dynamic_prompt(void);
+void					res_to_tokenizer1(t_token **t_head,
+							t_token_2 **t_head_2, char *res);
 void					res_to_tokenizer1(t_token **t_head,
 							t_token_2 **t_head_2, char *res);
 void					my_readline(int ac, char **argv, t_minishell *shell);

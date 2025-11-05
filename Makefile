@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+         #
+#    By: aautret <aautret@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/11/05 15:19:54 by tlorette         ###   ########.fr        #
+#    Updated: 2025/11/05 20:09:16 by aautret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,13 +42,17 @@ SRC = src/parsing_1/parsing_1.c \
 		src/env/env.c \
 		src/myprintlist/my_print_list.c \
 		src/myprintlist/my_print_list_2.c \
-		src/check_expandable/check_expand.c \
-		src/check_expandable/expand_utils.c \
+		src/env/check_expandable/check_expand.c \
+		src/env/check_expandable/expand_utils.c \
 		src/built_in/built_in_dispatcher.c \
 		src/built_in/built_in.c \
 		src/built_in/echo.c \
 		src/built_in/pwd.c \
 		src/built_in/env.c \
+		src/built_in/exit.c \
+		src/built_in/cd.c \
+		src/built_in/cd_utils.c \
+		src/built_in/cd_case.c \
 		src/exec/exec_single_cmd.c \
 		src/exec/exec_multipipe.c \
 		src/exec/exec_utils.c \
