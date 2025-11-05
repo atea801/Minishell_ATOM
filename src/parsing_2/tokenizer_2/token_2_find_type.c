@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 17:36:06 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/30 16:27:33 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/05 16:15:50 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,16 @@ void	fill_cmd(t_token **token_1, t_token_2 **token_2)
 	t_head_1 = *token_1;
 	t_head_2 = *token_2;
 	t_head_2->type = "CMD";
-	t_head_2->value = copy_token_value(t_head_1->value);
+	if (ft_strnstr(t_head_1->value, "__SINGLE_QUOTE__",
+			ft_strlen(t_head_1->value)))
+	{
+		t_head_2->is_expand = 0;
+		t_head_2->value = copy_token_value(t_head_1->value + 16);
+	}
+	else
+	{
+		t_head_2->value = copy_token_value(t_head_1->value);
+	}
 }
 
 /**
@@ -43,7 +52,16 @@ void	fill_args(t_token **token_1, t_token_2 **token_2)
 	t_head_1 = *token_1;
 	t_head_2 = *token_2;
 	t_head_2->type = "ARGS";
-	t_head_2->value = copy_token_value(t_head_1->value);
+	if (ft_strnstr(t_head_1->value, "__SINGLE_QUOTE__",
+			ft_strlen(t_head_1->value)))
+	{
+		t_head_2->is_expand = 0;
+		t_head_2->value = copy_token_value(t_head_1->value + 16);
+	}
+	else
+	{
+		t_head_2->value = copy_token_value(t_head_1->value);
+	}
 }
 
 /**
