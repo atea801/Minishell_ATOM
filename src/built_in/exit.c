@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 14:20:58 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/30 15:51:18 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/06 11:27:03 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ int	builtin_exit(t_minishell *shell)
 
 	printf("exit\n");
 	if (shell->cmd->argv[1] == NULL)
-		exit(shell->exit_code);
+	{
+		shell->should_exit = true;
+		return (0);
+	}
 	if (shell->cmd->argv[2])
 	{
 		write(2, "Atom: exit: too many arguments\n", 31);
@@ -50,12 +53,16 @@ int	builtin_exit(t_minishell *shell)
 		write(2, "Atom: exit: ", 12);
 		write(2, shell->cmd->argv[1], ft_strlen(shell->cmd->argv[1]));
 		write(2, ": numeric argument required\n", 28);
-		exit(2);
+		shell->exit_code = 2;
+		shell->should_exit = true;
+		return (0);
 	}
 	code = ft_atoi(shell->cmd->argv[1]);
 	if (code < 0)
 		code = (code % 256) + 256;
 	else
 		code = code % 256;
-	exit(code);
+	shell->exit_code = code;
+	shell->should_exit = true;
+	return (0);
 }

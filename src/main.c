@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/06 10:11:15 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/06 11:28:06 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 	char		*res;
 	char		**env_tab;
 	char		*prompt;
+	char		**current_env_tab;
 	int			parsing_res;
 	t_token		*t_head;
 	t_token_2	*t_head_2;
@@ -128,15 +129,30 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 		}
 		if (shell->should_execute && shell->cmd)
 		{
-			env_tab = env_list_to_tab_new(shell->env);
-			if (env_tab)
+			current_env_tab = env_list_to_tab_new(shell->env);
+			if (current_env_tab)
 			{
 				if (shell->cmd->next)
-					execute_multipipe(shell, shell->cmd, env_tab);
+					execute_multipipe(shell, shell->cmd, current_env_tab);
 				else
-					exec_single_cmd(shell, shell->cmd, env_tab);
-				free_env_tab(env_tab);
+					exec_single_cmd(shell, shell->cmd, current_env_tab);
+				free_env_tab(current_env_tab);
 			}
+		}
+		if (shell->should_exit)
+		{
+			if (input)
+				free(input);
+			if (res)
+				free(res);
+			if (shell->cmd)
+			{
+				free_cmd_list(shell->cmd);
+				shell->cmd = NULL;
+			}
+			free(prompt);
+			free_env_tab(env_tab);
+			break ;
 		}
 		add_history(input);
 		if (input)
@@ -164,6 +180,7 @@ int	main(int ac, char **av, char **env)
 	shell.cmd = NULL;
 	shell.exit_code = 0;
 	shell.should_execute = false;
+	shell.should_exit = false;
 	// if (!env || !env[0])
 	// create_minimal_env(&env_head);
 	// else
@@ -175,5 +192,5 @@ int	main(int ac, char **av, char **env)
 	// 	free_token_list(token_head, token_2);
 	// if (env_head)
 	// 	free_env_list(env_head);
-	return (0);
+	return (shell.exit_code);
 }
