@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/05 20:10:33 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/06 10:11:15 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,8 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 			check_expendable(res, shell->tok2);
 			expand_all_tokens(shell, shell->tok2);
 			token_2_to_cmd(&shell->cmd, &shell->tok2);
-			print_token_2_list(shell->tok2);
-			print_cmd_list(shell->cmd);
+			// print_token_2_list(shell->tok2);
+			// print_cmd_list(shell->cmd);
 		}
 		if (shell->should_execute && shell->cmd)
 		{
