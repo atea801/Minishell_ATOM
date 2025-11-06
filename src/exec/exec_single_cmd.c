@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 15:44:26 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/05 18:38:21 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/06 10:36:20 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,11 @@ void	exec_single_cmd(t_minishell *shell, t_cmd *cmd, char **tab_to_env)
 
 	if (!cmd || !cmd->argv || !cmd->argv[0])
 		return ;
-	// if (is_builtin(cmd->argv[0]) == 1)
-	// {
-	// 	shell->exit_code = execute_builtin(shell, cmd);
-	// 	return ;
-	// }
+	if (is_builtin(cmd->argv[0]) == 1)
+	{
+		shell->exit_code = execute_builtin(shell);
+		return ;
+	}
 	cmd->path = find_command_path(cmd->argv[0], shell);
 	if (!cmd->path)
 	{
