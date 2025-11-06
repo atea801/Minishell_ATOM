@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 16:10:20 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/05 20:21:55 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/06 10:05:15 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ char	*replace_env_var(t_minishell *shell, char *s)
 	return (s);
 }
 
-
 void	check_expendable(char *res, t_token_2 *token_2)
 {
 	int		index;
@@ -56,8 +55,8 @@ void	check_expendable(char *res, t_token_2 *token_2)
 	{
 		if (res)
 			pos = ft_strnstr(res + index, token_2->value, ft_strlen(res));
-		if (pos && token_2->value[0] == '$' && (token_2->value[1] == '?' 
-			|| ft_isalnum(token_2->value[1]) || token_2->value[1] == '_'))
+		if (pos && token_2->value[0] == '$' && (token_2->value[1] == '?'
+				|| ft_isalnum(token_2->value[1]) || token_2->value[1] == '_'))
 		{
 			index = pos - res;
 			if ((!in_single_quote(res, index) && !in_double_quote(res, index))
