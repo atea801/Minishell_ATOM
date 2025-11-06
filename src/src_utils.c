@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   src_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 16:35:16 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/17 10:48:29 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/06 11:27:12 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,6 @@ void	free_all(t_token *token_head, t_atom_env *env_head, t_token_2 *token_2)
 		free_token_list(token_head, token_2);
 	if (env_head)
 		free_env_list(env_head);
-	// if (cmd_list)
-	// 	free_cmd_list(cmd_list);
-	// if (tab_env)
-	// 	free_env_tab(tab_env);
 }
 
 void	free_token_list(t_token *head, t_token_2 *head_2)
@@ -101,9 +97,9 @@ void	free_env_tab(char **tab_env)
 {
 	int	i;
 
-	i = 0;
 	if (!tab_env)
 		return ;
+	i = 0;
 	while (tab_env[i])
 	{
 		free(tab_env[i]);
@@ -111,4 +107,3 @@ void	free_env_tab(char **tab_env)
 	}
 	free(tab_env);
 }
-

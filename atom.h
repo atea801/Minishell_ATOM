@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/05 20:08:45 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/06 11:27:08 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct s_minishell
 	t_atom_env			*env;
 	int					exit_code;
 	bool				should_execute;
+	bool				should_exit;
 }						t_minishell;
 
 /****************************************************************************
