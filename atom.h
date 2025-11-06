@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/05 20:08:45 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/06 11:32:29 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -370,6 +370,25 @@ void					redirect_append(char *file);
 void					handle_redirections(t_cmd *cmd);
 void					exec_single_cmd(t_minishell *shell, t_cmd *cmd,
 							char **tab_to_env);
+
+// exec_single_utils.c
+int						check_fork_error(t_minishell *shell, t_cmd *cmd);
+void					secure_exec(t_cmd *cmd, char **tab_to_env);
+int						unfound_path(t_cmd *cmd, t_minishell *shell);
+int						init_cmd_path(t_cmd *cmd, t_minishell *shell);
+void					close_fds(t_cmd *cmd);
+
+// exec_multipipe.c
+void					execute_multipipe(t_minishell *shell, t_cmd *cmd,
+							char **env);
+
+// exec_multipipe_utils.c
+int						count_commands(t_cmd *cmd_list);
+int						**create_pipes(int num_pipes);
+void					free_pipes(int **pipes, int num_pipes);
+void					close_all_pipes(int **pipes, int num_pipes);
+void					setup_pipe_redirections(int **pipes, int cmd_index,
+							int num_cmds);
 
 /************************************************************************
  *								MYPRINTLIST								*

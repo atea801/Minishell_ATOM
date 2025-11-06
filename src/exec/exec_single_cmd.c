@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 15:44:26 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/06 10:36:20 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/06 11:32:14 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,35 +80,15 @@ void	exec_single_cmd(t_minishell *shell, t_cmd *cmd, char **tab_to_env)
 		shell->exit_code = execute_builtin(shell);
 		return ;
 	}
-	cmd->path = find_command_path(cmd->argv[0], shell);
-	if (!cmd->path)
-	{
-		ft_putstr_fd(cmd->argv[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
-		shell->exit_code = 127;
+	if (!init_cmd_path(cmd, shell))
 		return ;
-	}
 	pid = fork();
 	if (pid == -1)
-	{
-		perror("fork");
-		free(cmd->path);
-		cmd->path = NULL;
-		shell->exit_code = 1;
-		return ;
-	}
+		if (!check_fork_error(shell, cmd))
+			return ;
 	if (pid == 0)
-	{
-		handle_redirections(cmd);
-		execve(cmd->path, cmd->argv, tab_to_env);
-		perror(cmd->argv[0]);
-		free(cmd->path);
-		exit(127);
-	}
-	if (cmd->fd_in != -1)
-		close(cmd->fd_in);
-	if (cmd->fd_out != -1)
-		close(cmd->fd_out);
+		secure_exec(cmd, tab_to_env);
+	close_fds(cmd);
 	free(cmd->path);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aautret <aautret@student.42.fr>            +#+  +:+       +#+         #
+#    By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/11/05 20:09:16 by aautret          ###   ########.fr        #
+#    Updated: 2025/11/06 11:07:31 by tlorette         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,10 +53,11 @@ SRC = src/parsing_1/parsing_1.c \
 		src/built_in/cd.c \
 		src/built_in/cd_utils.c \
 		src/built_in/cd_case.c \
-		src/exec/exec_single_cmd.c \
-		src/exec/exec_multipipe.c \
 		src/exec/exec_utils.c \
-		src/exec/exec_utils_2.c \
+		src/exec/exec_single_cmd.c \
+		src/exec/exec_single_utils.c \
+		src/exec/exec_multipipe.c \
+		src/exec/exec_multipipe_utils.c \
 		src/exec/redirections.c \
 		src/init.c\
 		src/src_utils.c \
