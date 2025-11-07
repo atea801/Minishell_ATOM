@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:32:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/06 13:25:29 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/07 14:21:43 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	execute_child(t_minishell *shell, t_cmd *cmd, char **env)
 	path = find_command_path(cmd->argv[0], shell);
 	if (!path)
 	{
-		ft_putstr_fd("atom: command not found: ", 2);
+		// ft_putstr_fd("atom: command not found: ", 2);
 		ft_putendl_fd(cmd->argv[0], 2);
 		exit(127);
 	}
