@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/06 13:26:16 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/07 15:00:51 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -399,6 +399,13 @@ void					close_wait_free(t_minishell *shell, pid_t *pids,
 							int **pipes, int num_cmd);
 int						cleanup_on_error(int **pipes, pid_t *pids, int num_cmd,
 							t_minishell *shell);
+
+// exec_heredoc.c
+int						heredoc_detected(t_token_2 *token2);
+void					exec_heredoc(t_cmd *cmd, int *pipe_fd, t_atom_env *env);
+void					here_doc_infile(t_cmd *cmd, t_atom_env *env);
+void					write_here_doc(char *line, int *pipe_fd,
+							t_atom_env *env);
 
 /************************************************************************
  *								MYPRINTLIST								*
