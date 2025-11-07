@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:18:07 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/05 20:15:48 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/07 11:14:13 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,9 +120,6 @@ char	*get_token_type(char *res)
 {
 	char	*type;
 
-	// type = type_heredoc(res);
-	// if (type)
-	// 	return (type);
 	type = type_redir(res);
 	if (type)
 		return (type);

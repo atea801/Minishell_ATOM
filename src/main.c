@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/06 11:28:06 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/07 13:33:20 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 		res_to_tokenizer1(&t_head, &t_head_2, res);
 		shell->tok1 = t_head;
 		shell->tok2 = t_head_2;
+		// print_token_list(shell->tok1);
 		parsing_res = parsing_2(shell, t_head, t_head_2);
 		if (parsing_res == 0)
 		{
