@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/07 15:05:19 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/08 11:34:11 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,13 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 			free_token_2_list(&t_head_2);
 			t_head_2 = NULL;
 		}
+		if (shell->cmd)
+		{
+			free_cmd_list(shell->cmd);
+			shell->cmd = NULL;
+		}
 		shell->tok1 = NULL;
 		shell->tok2 = NULL;
-		shell->cmd = NULL;
 		shell->should_execute = false;
 		prompt = get_dynamic_prompt();
 		input = readline(prompt);
@@ -103,6 +107,11 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 				free(input);
 			free(prompt);
 			printf("exit\n");
+			if (shell->cmd)
+			{
+				free_cmd_list(shell->cmd);
+				shell->cmd = NULL;
+			}
 			free_env_tab(env_tab);
 			break ;
 		}
@@ -167,11 +176,6 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 			free(input);
 		if (res)
 			free(res);
-		if (shell->cmd)
-		{
-			free_cmd_list(shell->cmd);
-			shell->cmd = NULL;
-		}
 		free(prompt);
 	}
 }
@@ -181,7 +185,6 @@ int	main(int ac, char **av, char **env)
 	t_minishell	shell;
 	t_token		*t_head;
 	t_token_2	*t_head_2;
-
 
 	shell.tok1 = NULL;
 	shell.tok2 = NULL;

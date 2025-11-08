@@ -13,20 +13,6 @@
 
 #include "atom.h"
 
-int	heredoc_detected(t_token_2 *token2)
-{
-	int	i;
-
-	i = 0;
-	while (token2)
-	{
-		if (ft_strcmp(token2->type, "HEREDOC") == 0)
-			return (1);
-		token2 = token2->next;
-	}
-	return (0);
-}
-
 void	exec_heredoc(t_cmd *cmd, int *pipe_fd, t_atom_env *env)
 {
 	char	*line;
@@ -39,7 +25,8 @@ void	exec_heredoc(t_cmd *cmd, int *pipe_fd, t_atom_env *env)
 			line = readline("> ");
 			if (!line)
 				break ;
-			if (ft_strcmp(cmd->heredoc_delim, line) == 0)
+			if (cmd->heredoc_delim && cmd->heredoc_delim[0]
+				&& ft_strcmp(cmd->heredoc_delim[0], line) == 0)
 			{
 				free(line);
 				break ;
@@ -57,28 +44,22 @@ void	here_doc_infile(t_cmd *cmd, t_atom_env *env)
 	int		p_fd[2];
 	pid_t	pid;
 
-	if (pipe(p_fd) == -1)
-	{
-		perror("pipe");
+	if (!cmd)
 		return ;
-	}
+	if (pipe(p_fd) == -1)
+		return (perror("pipe"));
 	pid = fork();
 	if (pid == -1)
-	{
-		close(p_fd[0]);
-		close(p_fd[1]);
-		perror("fork");
-		return ;
-	}
+		return (close(p_fd[0]), close(p_fd[1]), perror("fork"));
 	if (pid == 0)
 		exec_heredoc(cmd, p_fd, env);
 	else
 	{
 		close(p_fd[1]);
+		wait(NULL);
 		if (cmd->fd_in != -1)
 			close(cmd->fd_in);
 		cmd->fd_in = p_fd[0];
-		wait(NULL);
 	}
 }
 

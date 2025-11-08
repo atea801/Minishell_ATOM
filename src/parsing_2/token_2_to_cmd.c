@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_2_to_cmd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 11:58:02 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/05 20:11:46 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/07 17:55:22 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,12 @@ static void	process_current_redirection(t_cmd *cmd, t_token_2 *token)
 	if (ft_strcmp(token->type, "HEREDOC_DELIM") == 0)
 	{
 		if (cmd->heredoc_delim)
-			free(cmd->heredoc_delim);
-		cmd->heredoc_delim = ft_strdup(token->value);
+			free_heredoc_delims(cmd->heredoc_delim);
+		cmd->heredoc_delim = malloc(sizeof(char *) * 2);
+		if (!cmd->heredoc_delim)
+			return ;
+		cmd->heredoc_delim[0] = ft_strdup(token->value);
+		cmd->heredoc_delim[1] = NULL;
 		cmd->here_doc = 1;
 	}
 	else if (ft_strcmp(token->type, "APPEND") == 0)

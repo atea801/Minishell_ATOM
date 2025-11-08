@@ -6,17 +6,39 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:32:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/07 14:21:43 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/08 13:09:47 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
-static void	execute_child(t_minishell *shell, t_cmd *cmd, char **env)
+static void	close_unused_fds(t_cmd *cmd_list, t_cmd *current_cmd)
+{
+	t_cmd	*tmp;
+
+	tmp = cmd_list;
+	while (tmp)
+	{
+		if (tmp != current_cmd)
+		{
+			if (tmp->fd_in != -1)
+				close(tmp->fd_in);
+			if (tmp->fd_out != -1)
+				close(tmp->fd_out);
+		}
+		tmp = tmp->next;
+	}
+}
+
+static void	execute_child(t_minishell *shell, t_cmd *cmd, t_cmd *cmd_list,
+		char **env)
 {
 	char	*path;
 
 	handle_redirections(cmd);
+	close_unused_fds(cmd_list, cmd);
+	if (!cmd->argv || !cmd->argv[0])
+		exit (127);
 	if (is_builtin(cmd->argv[0]))
 	{
 		shell->exit_code = execute_builtin(shell);
@@ -25,7 +47,6 @@ static void	execute_child(t_minishell *shell, t_cmd *cmd, char **env)
 	path = find_command_path(cmd->argv[0], shell);
 	if (!path)
 	{
-		// ft_putstr_fd("atom: command not found: ", 2);
 		ft_putendl_fd(cmd->argv[0], 2);
 		exit(127);
 	}
@@ -86,8 +107,8 @@ void	execute_multipipe(t_minishell *shell, t_cmd *cmd, char **env)
 			return ;
 		if (pids[i] == 0)
 		{
-			setup_pipe_redirections(pipes, i, num_cmd);
-			execute_child(shell, current, env);
+			setup_pipe_redirections(pipes, i, num_cmd, current);
+			execute_child(shell, current, cmd, env);
 		}
 		current = current->next;
 	}

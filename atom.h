@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/07 15:00:51 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/08 11:32:37 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,14 @@ typedef struct s_cmd
 	char				**argv;
 	char				*infile;
 	char				*outfile;
-	char				*heredoc_delim;
+	char				**heredoc_delim;
 	char				*path;
 	int					append;
 	int					here_doc;
 	int					fd_in;
 	int					fd_out;
 	int					argc;
+	int					count_heredocs;
 	struct s_cmd		*next;
 }						t_cmd;
 
@@ -391,14 +392,16 @@ int						**create_pipes(int num_pipes);
 void					free_pipes(int **pipes, int num_pipes);
 void					close_all_pipes(int **pipes, int num_pipes);
 void					setup_pipe_redirections(int **pipes, int cmd_index,
-							int num_cmds);
+							int num_cmds, t_cmd *cmd);
 
 // multipipe_utils_2.c
 int						check_pid_error(int **pipes, int num_cmd);
-void					close_wait_free(t_minishell *shell, pid_t *pids,
-							int **pipes, int num_cmd);
 int						cleanup_on_error(int **pipes, pid_t *pids, int num_cmd,
 							t_minishell *shell);
+int						handle_fork_error(pid_t pid, int *p_fd);
+void					multi_heredoc_readline(char *line, char *delimiter,
+							int *p_fd, t_atom_env *env);
+void					last_heredoc_checker(t_cmd *cmd, int *p_fd, int index);
 
 // exec_heredoc.c
 int						heredoc_detected(t_token_2 *token2);
@@ -406,6 +409,14 @@ void					exec_heredoc(t_cmd *cmd, int *pipe_fd, t_atom_env *env);
 void					here_doc_infile(t_cmd *cmd, t_atom_env *env);
 void					write_here_doc(char *line, int *pipe_fd,
 							t_atom_env *env);
+
+// exec_multiple_heredoc.c
+void					free_heredoc_delims(char **delims);
+char					**extract_heredoc_delims(t_cmd *cmd);
+int						count_and_extract_heredocs(t_cmd *cmd);
+void					multiple_heredoc_gestion(t_cmd *cmd, t_atom_env *env,
+							int index);
+void					exec_multiple_heredoc(t_cmd *cmd, t_atom_env *env);
 
 /************************************************************************
  *								MYPRINTLIST								*
@@ -432,7 +443,7 @@ int						**create_pipes(int num_pipes);
 void					free_pipes(int **pipes, int num_pipes);
 void					close_all_pipes(int **pipes, int num_pipes);
 void					setup_pipe_redirections(int **pipes, int cmd_index,
-							int num_cmds);
+							int num_cmds, t_cmd *cmd);
 // exec_multipipe.c
 void					execute_multipipe(t_minishell *shell, t_cmd *cmd,
 							char **env);
