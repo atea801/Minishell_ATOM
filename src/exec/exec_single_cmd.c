@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 15:44:26 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/07 11:11:01 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/08 15:27:16 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,12 @@ void	exec_single_cmd(t_minishell *shell, t_cmd *cmd, char **tab_to_env)
 		if (!check_fork_error(shell, cmd))
 			return ;
 	if (pid == 0)
+	{
+		restore_default_signals();
 		secure_exec(cmd, tab_to_env);
+	}
 	close_fds(cmd);
 	free(cmd->path);
 	waitpid(pid, &status, 0);
-	if (WIFEXITED(status))
-		shell->exit_code = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		shell->exit_code = 128 + WTERMSIG(status);
+	handle_child_status(shell, status);
 }

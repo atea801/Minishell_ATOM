@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/08 13:20:31 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/08 15:10:00 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ int	main(int ac, char **av, char **env)
 	// create_minimal_env(&env_head);
 	// else
 	init_all(&shell.env, &t_head, env, &t_head_2);
+	setup_signals_prompt();
 	my_readline(ac, av, &shell);
 	free_all(t_head, shell.env, t_head_2);
 	// rl_clear_history();

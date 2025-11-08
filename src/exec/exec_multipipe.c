@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:32:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/08 13:09:47 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/08 15:18:35 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void	execute_multipipe(t_minishell *shell, t_cmd *cmd, char **env)
 			return ;
 		if (pids[i] == 0)
 		{
+			restore_default_signals();
 			setup_pipe_redirections(pipes, i, num_cmd, current);
 			execute_child(shell, current, cmd, env);
 		}

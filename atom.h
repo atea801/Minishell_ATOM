@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/08 13:25:23 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/08 15:26:31 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <signal.h>
 # include <stdbool.h>
 # include <stddef.h>
 # include <stdio.h>
@@ -39,6 +40,8 @@
 // 	REDIR_IN
 // 	NB_FLAG;
 // }	t_flag;
+
+// volatile sig_atomic_t	g_signal_received;
 
 typedef struct s_token
 {
@@ -398,10 +401,10 @@ void					setup_pipe_redirections(int **pipes, int cmd_index,
 int						check_pid_error(int **pipes, int num_cmd);
 int						cleanup_on_error(int **pipes, pid_t *pids, int num_cmd,
 							t_minishell *shell);
-int						handle_fork_error(pid_t pid, int *p_fd);
 void					multi_heredoc_readline(char *line, char *delimiter,
 							int *p_fd, t_atom_env *env);
 void					last_heredoc_checker(t_cmd *cmd, int *p_fd, int index);
+void					handle_child_status(t_minishell *shell, int status);
 
 // exec_heredoc.c
 int						heredoc_detected(t_token_2 *token2);
@@ -417,6 +420,14 @@ int						count_and_extract_heredocs(t_cmd *cmd);
 void					multiple_heredoc_gestion(t_cmd *cmd, t_atom_env *env,
 							int index);
 void					exec_multiple_heredoc(t_cmd *cmd, t_atom_env *env);
+
+/************************************************************************
+ *								SIGNALS									*
+ ************************************************************************/
+// signals.c
+void					handle_sigint_prompt(int sig);
+void					setup_signals_prompt(void);
+void					restore_default_signals(void);
 
 /************************************************************************
  *								MYPRINTLIST								*
