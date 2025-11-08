@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_2_check_valide.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 19:12:52 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/06 13:49:44 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/08 14:19:43 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,17 @@ int	parse_redir_alone(t_token **token_2)
 	if (!t_head_2 || !t_head_2->type || !t_head_2->next)
 		return (0);
 	if ((ft_strcmp(t_head_2->type, "REDIR_IN") == 0
-			|| (ft_strcmp(t_head_2->type, "REDIR_OUT") == 0))
+			|| ft_strcmp(t_head_2->type, "REDIR_OUT") == 0
+			|| ft_strcmp(t_head_2->type, "HEREDOC") == 0
+			|| ft_strcmp(t_head_2->type, "APPEND") == 0)
 		&& t_head_2->next == NULL)
 		return (1);
 	while (t_head_2->next && t_head_2->next->type)
 		t_head_2 = t_head_2->next;
 	if ((ft_strcmp(t_head_2->type, "REDIR_IN") == 0)
-		|| (ft_strcmp(t_head_2->type, "REDIR_OUT") == 0))
+		|| (ft_strcmp(t_head_2->type, "REDIR_OUT") == 0)
+		|| (ft_strcmp(t_head_2->type, "HEREDOC") == 0)
+		|| (ft_strcmp(t_head_2->type, "APPEND") == 0))
 		return (1);
 	return (0);
 }
@@ -62,7 +66,7 @@ char	*check_pipe(t_token *token_2)
 		if (ft_strcmp(current->type, "PIPE") == 0 && current->next
 			&& current->next->type && ft_strcmp(current->next->type,
 				"PIPE") == 0)
-			return ("||");
+			return ("|");
 		if (!current->next)
 			break ;
 		current = current->next;
@@ -125,19 +129,21 @@ int	check_all(t_minishell *shell, t_token **token_head)
 	pf = check_pipe(*token_head);
 	if (pf)
 	{
-		printf("atom: syntax error near unexpected token `%s'\n", pf);
-		shell->exit_code = 258;
+		printf("Minishell: syntax error near unexpected token `%s'\n", pf);
+		shell->exit_code = 2;
 		return (1);
 	}
-	if (parse_redir_alone(token_head))
-	{
-		printf("atom: syntax error near unexpected token `newline'\n");
-		shell->exit_code = 258;
-		return (1);
-	}
+	// Vérifier d'abord les erreurs de redirection malformées (><, <>, etc.)
 	if (check_redir(token_head))
 	{
-		shell->exit_code = 258;
+		shell->exit_code = 2;
+		return (1);
+	}
+	// Ensuite vérifier les redirections seules (sans argument)
+	if (parse_redir_alone(token_head))
+	{
+		printf("Minishell: syntax error near unexpected token `newline'\n");
+		shell->exit_code = 2;
 		return (1);
 	}
 	return (0);
