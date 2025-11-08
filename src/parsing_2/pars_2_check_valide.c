@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_2_check_valide.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 19:12:52 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/23 15:57:31 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/06 13:49:44 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,36 +50,25 @@ int	parse_redir_alone(t_token **token_2)
  */
 char	*check_pipe(t_token *token_2)
 {
-	t_token	*t_head_2;
+	t_token	*current;
 
-	t_head_2 = token_2;
-	if (!t_head_2 || !t_head_2->type)
+	if (!token_2 || !token_2->type)
 		return (NULL);
-	while (t_head_2 && t_head_2->type)
+	if (ft_strcmp(token_2->type, "PIPE") == 0)
+		return (token_2->value);
+	current = token_2;
+	while (current && current->type)
 	{
-		if (ft_strcmp(t_head_2->type, "PIPE") == 0 && t_head_2->next
-			&& t_head_2->next->type && ft_strcmp(t_head_2->next->type,
+		if (ft_strcmp(current->type, "PIPE") == 0 && current->next
+			&& current->next->type && ft_strcmp(current->next->type,
 				"PIPE") == 0)
 			return ("||");
-		t_head_2 = t_head_2->next;
+		if (!current->next)
+			break ;
+		current = current->next;
 	}
-	t_head_2 = token_2;
-	if (t_head_2 && t_head_2->type && ft_strcmp(t_head_2->type, "PIPE") == 0)
-	{
-		if (t_head_2->value)
-			return (t_head_2->value);
-		else
-			return ("|");
-	}
-	while (t_head_2 && t_head_2->next && t_head_2->next->type)
-		t_head_2 = t_head_2->next;
-	if (t_head_2 && t_head_2->type && ft_strcmp(t_head_2->type, "PIPE") == 0)
-	{
-		if (t_head_2->value)
-			return (t_head_2->value);
-		else
-			return ("|");
-	}
+	if (current && current->type && ft_strcmp(current->type, "PIPE") == 0)
+		return (current->value);
 	return (NULL);
 }
 
@@ -107,61 +96,6 @@ t_token	*check_error(t_token *token_head)
 	return (NULL);
 }
 
-/**
- * @brief Vérifie la validité globale de la liste de tokens.
- *
- * - Appelle les différents checkers pour valider la syntaxe des tokens
- * @param token_2
- * @return int
- */
-// int	check_all(t_minishell *shell, t_token **token_head)
-// {
-// 	t_token	*t_head_1;
-// 	char	*pf;
-
-// 	if (!token_head || !*token_head)
-// 		return (0);
-// 	t_head_1 = *token_head;
-// 	pf = check_pipe(t_head_1);
-// 	if (pf)
-// 	{
-// 		printf("atom: syntax error near unexpected token `%s'\n", pf);
-// 		shell->exit_code = 258;
-// 		return (1);
-// 	}
-// 	else if ((parse_redir_alone(&t_head_1) > 0))
-// 	{
-// 		printf("atom: syntax error near unexpected token `newline'\n");
-// 		shell->exit_code = 258;
-// 		return (2);
-// 	}
-// 	return (0);
-// }
-
-// int	check_redir(t_token **token_head)
-// {
-// 	t_token	*t_head_1;
-// 	char	*pf;
-
-// 	if (!token_head || !*token_head)
-// 		return (0);
-// 	t_head_1 = *token_head;
-// 	pf = check_pipe(t_head_1);
-// 	if (check_error(t_head_1))
-// 	{
-// 		if (t_head_1 && t_head_1->value && (ft_strchr(t_head_1->value, '>')
-// || ft_strchr(t_head_1->value, '<')))
-// 			print_redir_error(&t_head_1);
-// 		// else
-// 		// {
-// 		// 	printf("atom: syntax error near unexpected token `%s'\n", pf);
-// 		// 	shell->exit_code = 258;
-// 		// }
-// 		return (1);
-// 	}
-// 	return (0);
-// }
-
 int	check_redir(t_token **token_head)
 {
 	t_token	*error_token;
@@ -171,12 +105,10 @@ int	check_redir(t_token **token_head)
 	error_token = check_error(*token_head);
 	if (!error_token)
 		return (0);
-	// Vérifier que value existe ET n'est pas vide
 	if (!error_token->value || error_token->value[0] == '\0')
 		return (0);
-	// ft_strchr securise
-	if (ft_strchr(error_token->value, '<') 
-		|| ft_strchr(error_token->value, '>'))
+	if (ft_strchr(error_token->value, '<') || ft_strchr(error_token->value,
+			'>'))
 	{
 		print_redir_error(&error_token);
 		return (1);
@@ -186,12 +118,10 @@ int	check_redir(t_token **token_head)
 
 int	check_all(t_minishell *shell, t_token **token_head)
 {
-	char *pf;
+	char	*pf;
 
 	if (!token_head || !*token_head)
 		return (0);
-
-	// Vérifier les erreurs de pipes
 	pf = check_pipe(*token_head);
 	if (pf)
 	{
@@ -199,21 +129,16 @@ int	check_all(t_minishell *shell, t_token **token_head)
 		shell->exit_code = 258;
 		return (1);
 	}
-
-	// Vérifier les redirections seules
 	if (parse_redir_alone(token_head))
 	{
 		printf("atom: syntax error near unexpected token `newline'\n");
 		shell->exit_code = 258;
 		return (1);
 	}
-
-	// Vérifier les erreurs de chevrons
 	if (check_redir(token_head))
 	{
 		shell->exit_code = 258;
 		return (1);
 	}
-
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/07 13:33:20 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/08 13:20:31 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 	int			parsing_res;
 	t_token		*t_head;
 	t_token_2	*t_head_2;
+	t_cmd		*current;
 
 	t_head = NULL;
 	t_head_2 = NULL;
@@ -90,9 +91,13 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 			free_token_2_list(&t_head_2);
 			t_head_2 = NULL;
 		}
+		if (shell->cmd)
+		{
+			free_cmd_list(shell->cmd);
+			shell->cmd = NULL;
+		}
 		shell->tok1 = NULL;
 		shell->tok2 = NULL;
-		shell->cmd = NULL;
 		shell->should_execute = false;
 		prompt = get_dynamic_prompt();
 		input = readline(prompt);
@@ -102,6 +107,11 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 				free(input);
 			free(prompt);
 			printf("exit\n");
+			if (shell->cmd)
+			{
+				free_cmd_list(shell->cmd);
+				shell->cmd = NULL;
+			}
 			free_env_tab(env_tab);
 			break ;
 		}
@@ -133,6 +143,13 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 			current_env_tab = env_list_to_tab_new(shell->env);
 			if (current_env_tab)
 			{
+				current = shell->cmd;
+				while (current)
+				{
+					if (current->here_doc == 1)
+						here_doc_infile(current, shell->env);
+					current = current->next;
+				}
 				if (shell->cmd->next)
 					execute_multipipe(shell, shell->cmd, current_env_tab);
 				else
@@ -160,11 +177,6 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 			free(input);
 		if (res)
 			free(res);
-		if (shell->cmd)
-		{
-			free_cmd_list(shell->cmd);
-			shell->cmd = NULL;
-		}
 		free(prompt);
 	}
 }
@@ -174,7 +186,6 @@ int	main(int ac, char **av, char **env)
 	t_minishell	shell;
 	t_token		*t_head;
 	t_token_2	*t_head_2;
-
 
 	shell.tok1 = NULL;
 	shell.tok2 = NULL;

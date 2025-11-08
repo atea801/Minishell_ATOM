@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 18:18:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/05 18:56:10 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/07 17:54:47 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,8 +175,12 @@ void	set_cmd_redirection(t_cmd *cmd, char *type, char *file)
 	else if (ft_strcmp(type, "HEREDOC") == 0)
 	{
 		if (cmd->heredoc_delim)
-			free(cmd->heredoc_delim);
-		cmd->heredoc_delim = ft_strdup(file);
+			free_heredoc_delims(cmd->heredoc_delim);
+		cmd->heredoc_delim = malloc(sizeof(char *) * 2);
+		if (!cmd->heredoc_delim)
+			return ;
+		cmd->heredoc_delim[0] = ft_strdup(file);
+		cmd->heredoc_delim[1] = NULL;
 		cmd->here_doc = 1;
 	}
 }
