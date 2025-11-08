@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 19:27:38 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/05 20:21:36 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/08 10:46:46 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,14 +99,14 @@ void	expand_all_vars(t_minishell *shell, t_token_2 *token)
 	i = 0;
 	while (s[i])
 	{
-		// if (s[i] == '$' && (s[i + 1] == '?' || ft_isalnum(s[i + 1])
-		// 		|| s[i + 1] == '_'))
 		if (s[i] == '\\' && s[i + 1] == '$')
 		{
 			res = handle_escaped_dollar(&s, &i, res);
 			if (!res)
-				return (free(token->value), (void)0);
+			return (free(token->value), (void)0);
 		}
+		// else if (s[i] == '$' && (s[i + 1] == '?' || ft_isalnum(s[i + 1])
+		// 		|| s[i + 1] == '_'))
 		else if (s[i] == '$')
 		{
 			res = handle_dollar(shell, &s, &i, res);
