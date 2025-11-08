@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:30:07 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/10 18:20:09 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/08 13:54:54 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*add_redir_space(char *input)
 	len = ft_strlen(input) * 3 + 1;
 	res = malloc(len);
 	if (!res)
-		return (perror("erreur malloc"), NULL);
+		return (perror("Minishell: erreur malloc"), NULL);
 	while (input[i])
 	{
 		add_space_before_redir(input, res, i, &j);

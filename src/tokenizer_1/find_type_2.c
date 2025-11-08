@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_type_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 13:01:05 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/23 18:36:14 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/08 16:06:32 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,18 @@ char	*type_expand(char *res)
 	int	i;
 
 	i = 0;
+	if (!res)
+		return (NULL);
+	
+	// Vérifier si c'est exactement $?
+	if (ft_strcmp(res, "$?") == 0)
+		return ("EXPAND");
+	
+	// Vérifier si le token contient $? (comme $?$ ou $?hello)
 	while (res[i])
 	{
 		if (res[i] == '$' && res[i + 1] == '?')
-			return ("$?");
+			return ("EXPAND");
 		i++;
 	}
 	return (NULL);

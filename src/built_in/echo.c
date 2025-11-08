@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 13:05:59 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/08 11:47:43 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/08 14:51:37 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,26 +93,34 @@ int	search_dollar_in_list(t_token *tok1)
 
 int	restore_dollar_in_argv(t_minishell *shell)
 {
-	int	start_arg;
-	int	dollar_tok1;
-	int	dollar_pos;
-	int	argv_index;
+	int		start_arg;
+	t_token	*current;
+	int		argv_index;
 
 	if (!shell || !shell->tok1 || !shell->cmd || !shell->cmd->argv)
 		return (0);
-	dollar_tok1 = search_dollar_in_list(shell->tok1);
-	if (dollar_tok1 < 0)
-		return (0);
 	start_arg = echo_parser(shell->cmd);
-	dollar_pos = dollar_tok1 - start_arg;
-	argv_index = start_arg + dollar_pos;
-	if (argv_index >= start_arg && argv_index < shell->cmd->argc)
+	current = shell->tok1;
+	argv_index = 0;
+	while (current && argv_index < start_arg)
 	{
-		free(shell->cmd->argv[argv_index]);
-		shell->cmd->argv[argv_index] = ft_strdup("$");
-		return (1);
+		if (current->value && (ft_strcmp(current->value, "echo") == 0
+				|| (current->value[0] == '-')))
+			argv_index++;
+		current = current->next;
 	}
-	return (0);
+	argv_index = start_arg;
+	while (current && argv_index < shell->cmd->argc)
+	{
+		if (current->value && ft_strcmp(current->value, "$") == 0)
+		{
+			free(shell->cmd->argv[argv_index]);
+			shell->cmd->argv[argv_index] = ft_strdup("$");
+		}
+		current = current->next;
+		argv_index++;
+	}
+	return (1);
 }
 
 int	builtin_echo(t_minishell *shell)
@@ -125,8 +133,6 @@ int	builtin_echo(t_minishell *shell)
 	if (ft_strcmp(shell->cmd->argv[0], "echo") != 0)
 		return (1);
 	restore_dollar_in_argv(shell);
-	if (check_echo_dollar(shell))
-		return (0);
 	i = 1;
 	flag = 0;
 	if (echo_parser(shell->cmd) > 1)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/08 15:10:00 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/08 16:43:51 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 	(void)argv;
 	if (!env_tab)
 	{
-		ft_putstr_fd("Error: failed to convert env to tab\n", 2);
+		ft_putstr_fd("Minishell: Error: failed to convert env to tab\n", 2);
 		return ;
 	}
 	// print_env_tab(env_tab);
@@ -116,6 +116,13 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 			break ;
 		}
 		res = parsing_1(shell, input);
+		if (!res)
+		{
+			if (input)
+				free(input);
+			free(prompt);
+			continue ;
+		}
 		// printf("res : %s\n", res);
 		if (!res)
 		{
@@ -127,7 +134,7 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 		res_to_tokenizer1(&t_head, &t_head_2, res);
 		shell->tok1 = t_head;
 		shell->tok2 = t_head_2;
-		// print_token_list(shell->tok1);
+		print_token_list(shell->tok1);
 		parsing_res = parsing_2(shell, t_head, t_head_2);
 		if (parsing_res == 0)
 		{
@@ -135,8 +142,8 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 			check_expendable(res, shell->tok2);
 			expand_all_tokens(shell, shell->tok2);
 			token_2_to_cmd(&shell->cmd, &shell->tok2);
-			// print_token_2_list(shell->tok2);
-			// print_cmd_list(shell->cmd);
+			print_token_2_list(shell->tok2);
+			print_cmd_list(shell->cmd);
 		}
 		if (shell->should_execute && shell->cmd)
 		{

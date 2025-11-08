@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 13:20:49 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/23 14:39:21 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/08 14:08:54 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ void	print_redir_error(t_token **error_token)
 		return ;
 	if (!(*error_token)->value)
 	{
-		printf("atom: syntax error\n");
+		printf("Minishell: syntax error\n");
 		return ;
 	}
-	printf("atom: syntax error near unexpected token `%s'\n",
+	printf("Minishell: syntax error near unexpected token `%s'\n",
 		(*error_token)->value);
 }
 
