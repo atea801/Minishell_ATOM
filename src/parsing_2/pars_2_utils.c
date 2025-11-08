@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 12:42:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/05 18:50:50 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/06 13:50:49 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,3 +117,4 @@ int	count_args_to_pipe(t_token_2 *token_2)
 	}
 	return (count);
 }
+

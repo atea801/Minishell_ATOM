@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 19:27:38 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/08 10:46:46 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/08 13:21:35 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void	expand_all_vars(t_minishell *shell, t_token_2 *token)
 	char	*s;
 	int		i;
 
+	if (ft_strcmp(token->type, "HEREDOC") == 0)
+		return ;
 	res = ft_strdup("");
 	if (!res)
 		return ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   src_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 16:35:16 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/06 11:27:12 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/07 17:54:59 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,11 @@ void	free_cmd_list(t_cmd *cmd_list)
 		if (cmd_list->outfile)
 			free(cmd_list->outfile);
 		if (cmd_list->heredoc_delim)
-			free(cmd_list->heredoc_delim);
+			free_heredoc_delims(cmd_list->heredoc_delim);
+		if (cmd_list->fd_in != -1)
+			close(cmd_list->fd_in);
+		if (cmd_list->fd_out != -1)
+			close(cmd_list->fd_out);
 		free(cmd_list);
 		cmd_list = tmp;
 	}

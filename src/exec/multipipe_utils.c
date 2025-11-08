@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_utils_2.c                                     :+:      :+:    :+:   */
+/*   multipipe_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:50:49 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/05 14:20:28 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/08 11:32:04 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,14 @@ void	close_all_pipes(int **pipes, int num_pipes)
 	}
 }
 
-void	setup_pipe_redirections(int **pipes, int cmd_index, int num_cmds)
+void	setup_pipe_redirections(int **pipes, int cmd_index, int num_cmds,
+		t_cmd *cmd)
 {
-	if (cmd_index > 0)
+	if (cmd_index > 0 && cmd->fd_in == -1)
 	{
 		dup2(pipes[cmd_index - 1][0], STDIN_FILENO);
 	}
-	if (cmd_index < num_cmds - 1)
+	if (cmd_index < num_cmds - 1 && cmd->fd_out == -1)
 	{
 		dup2(pipes[cmd_index][1], STDOUT_FILENO);
 	}
