@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 14:55:34 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/23 13:53:22 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/08 14:06:07 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,17 @@ int	parsing_2(t_minishell *shell, t_token *token_head, t_token_2 *token_2)
 	t_token_2	*t_head_2;
 	t_token		*t_head_1;
 	int			error;
-	int			redir_err;
 
 	t_head_1 = token_head;
 	t_head_2 = token_2;
 	error = check_all(shell, &t_head_1);
-	redir_err = check_redir(&t_head_1);
-	if (error == 1 || redir_err == 1)
+	if (error == 1)
 		return (1);
 	else if (error == 0)
 		tokenizer_2(t_head_1, t_head_2);
 	else if (error == 2)
 	{
-		print_redir_error(&t_head_1);
+		// check_all() a déjà géré les erreurs, pas besoin de print_redir_error()
 		return (2);
 	}
 	return (0);
