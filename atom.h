@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/08 11:32:37 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/08 13:25:23 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,9 +327,9 @@ int						execute_builtin(t_minishell *shell);
 int						is_builtin(char *cmd);
 
 // echo.c
-int						builtin_echo(t_cmd *cmd);
+int						builtin_echo(t_minishell *shell);
 int						echo_parser(t_cmd *cmd);
-int						echo_completed(t_cmd *cmd);
+int						echo_completed(t_minishell *shell);
 
 // pwd.c
 int						builtin_pwd(t_minishell *shell);
