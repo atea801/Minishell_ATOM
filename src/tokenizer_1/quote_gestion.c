@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 17:35:21 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/05 16:15:00 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/08 16:06:30 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ int	handle_quote(t_token **token, char *str, int *start, int end)
 
 /**
  * @brief Gere les cas normaux qui ne sont pas entre des quotes
+ * Sépare spécialement $?$ en deux tokens : $? et $
  *
  * @param token
  * @param str
@@ -143,10 +144,27 @@ void	handle_general(t_token **token, char *str, int *start, int i)
 	j = 0;
 	while (res[j] && res[j] == ' ')
 		j++;
-	if (res[j] != '\0')  // Si on trouve un caractère non-espace
-		put_token(token, res);
+	if (res[j] == '\0')  // Si c'est que des espaces
+	{
+		free(res);
+		(*start) = i + 1;
+		return ;
+	}
+	
+	// Cas spécial : séparer $? suivi de n'importe quoi ($?$, $??, $?hello, etc.)
+	if (ft_strlen(res) >= 3 && res[0] == '$' && res[1] == '?' && res[2] != '\0')
+	{
+		char *first_token = ft_strdup("$?");
+		char *remaining = ft_strdup(res + 2); // Tout ce qui suit $?
+		
+		put_token(token, first_token);
+		put_token(token, remaining);
+		free(res);
+	}
 	else
-		free(res);  // Libérer si c'est que des espaces
+	{
+		put_token(token, res);
+	}
 	(*start) = i + 1;
 }
 

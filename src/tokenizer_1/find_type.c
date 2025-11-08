@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:18:07 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/07 11:14:13 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/08 16:06:31 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ char	*type_heredoc(char *res)
 
 /**
  * @brief Détermine le type du token en appelant successivement
- * les fonctions de type (redir, pipe, mot)
+ * les fonctions de type (expand, redir, pipe, mot)
  *
  * @param res
  * @return char* (nom du type ou NULL si inconnu)
@@ -120,6 +120,10 @@ char	*get_token_type(char *res)
 {
 	char	*type;
 
+	// Vérifier d'abord les expansions spéciales ($?)
+	type = type_expand(res);
+	if (type)
+		return (type);
 	type = type_redir(res);
 	if (type)
 		return (type);
@@ -127,9 +131,6 @@ char	*get_token_type(char *res)
 	if (type)
 		return (type);
 	type = type_pipe(res);
-	if (type)
-		return (type);
-	type = type_expand(res);
 	if (type)
 		return (type);
 	type = type_mot(res);
