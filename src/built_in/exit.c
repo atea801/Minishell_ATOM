@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 14:20:58 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/06 11:27:03 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/08 16:20:28 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ int	builtin_exit(t_minishell *shell)
 	}
 	if (!ft_is_numeric(shell->cmd->argv[1]))
 	{
-		write(2, "Atom: exit: ", 12);
+		write(2, "Minishell: exit: ", 12);
 		write(2, shell->cmd->argv[1], ft_strlen(shell->cmd->argv[1]));
 		write(2, ": numeric argument required\n", 28);
 		shell->exit_code = 2;
 		shell->should_exit = true;
-		return (0);
+		return (2);
 	}
 	code = ft_atoi(shell->cmd->argv[1]);
 	if (code < 0)
@@ -64,5 +64,5 @@ int	builtin_exit(t_minishell *shell)
 		code = code % 256;
 	shell->exit_code = code;
 	shell->should_exit = true;
-	return (0);
+	return (code);
 }
