@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:30:31 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/09 12:17:50 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/09 13:21:02 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ static int	cd_special_dash_check_oldpwd(char	*oldpwd_env)
 }
 
 /**
- * @brief Gere le cas cd - : aller dans oldpwd, affiche le nouveau cwd sur stdout 
- * et met a jour les variab;es d'env
+ * @brief Gere le cas cd - : aller dans oldpwd, affiche le nouveau 
+ * cwd sur stdout et met a jour les variab;es d'env
  * 
  * cd - = repertoire precedent d'ou le oldpwd
  * @param shell 
