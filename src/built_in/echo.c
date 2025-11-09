@@ -6,12 +6,11 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 13:05:59 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/09 13:02:25 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/09 13:21:25 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
-
 
 /**
  * @brief Gestion cas speacial avec $ 
