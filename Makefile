@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+         #
+#    By: aautret <aautret@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/11/08 13:55:19 by tlorette         ###   ########.fr        #
+#    Updated: 2025/11/09 12:58:30 by aautret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ SRC = src/parsing_1/parsing_1.c \
 		src/built_in/built_in_dispatcher.c \
 		src/built_in/built_in.c \
 		src/built_in/echo.c \
+		src/built_in/echo_utils.c \
 		src/built_in/pwd.c \
 		src/built_in/env.c \
 		src/built_in/exit.c \

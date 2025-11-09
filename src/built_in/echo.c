@@ -6,43 +6,25 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 13:05:59 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/08 14:51:37 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/09 13:02:25 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
+
 /**
- * @brief Parse les options -n de la commande echo
+ * @brief Gestion cas speacial avec $ 
  *
- * Parcourt les arguments pour identifier les flags
-	-n valides (suppression du newline).
- * S'arrête au premier argument qui n'est pas un flag
-	-n ou qui ne commence pas par '-'.
- *
- * @param cmd Structure contenant la commande et ses arguments
-
-	* @return Index du premier argument non-flag (où commencent les textes à afficher)
- * @example echo_parser(cmd) retourne 2 pour "echo -n hello world"
+ * - Si l'appel echo ne recoit que ce $ comme unique argument
+ *  (apres des flags aussi)
+ * 
+ * - On affiche $ avc ou sans newline selon presence de -n
+ * 
+ * @param shell 
+ * @note but = gestion du cas echo $
+ * @return int 1 = cas special detecte et traite 
  */
-int	echo_parser(t_cmd *cmd)
-{
-	int	i;
-	int	j;
-
-	i = 1;
-	while (cmd->argv[i] && cmd->argv[i][0] == '-')
-	{
-		j = 1;
-		while (cmd->argv[i][j] == 'n')
-			j++;
-		if (cmd->argv[i][j] != 0)
-			return (i);
-		i++;
-	}
-	return (i);
-}
-
 int	check_echo_dollar(t_minishell *shell)
 {
 	int		start_arg;
@@ -72,25 +54,23 @@ int	check_echo_dollar(t_minishell *shell)
 	return (0);
 }
 
-int	search_dollar_in_list(t_token *tok1)
-{
-	t_token	*token1;
-	int		count;
-
-	token1 = tok1;
-	count = 0;
-	if (!tok1)
-		return (0);
-	while (token1)
-	{
-		if (token1->value && ft_strcmp(token1->value, "$") == 0)
-			return (count);
-		token1 = token1->next;
-		count++;
-	}
-	return (-1);
-}
-
+/**
+ * @brief Apres les etapes d'expansion, 
+ * il faut restaurer les arg qui devaient contenir le symbole $ 
+ * (si ils ont ete supprimes)
+ * 
+ * - calcul l'index du premier argv
+ * 
+ * - parcours tok1 pour sauter les tok correspondant a echo  et les flags
+ * 
+ * - parcours et comparaison en simultane si token->value = "$"  -> restaure
+ * 
+ * @param shell 
+ * @note la fonciton modifie la shell->cmd->argv et alloue de nouvellle 
+ * chaine pour placer le $ 
+ * @return int 1 = en fin (si le spoineurs de base sont valides) / 
+ * 0 = si le spointeurs d'entree sont invlaides
+ */
 int	restore_dollar_in_argv(t_minishell *shell)
 {
 	int		start_arg;
@@ -123,6 +103,15 @@ int	restore_dollar_in_argv(t_minishell *shell)
 	return (1);
 }
 
+/**
+ * @brief mplémentation du builtin echo: gère les flags -n,
+ * restaure $ littéral si nécessaire, 
+ * imprime les arguments séparés par un espace, 
+ * et conditionnellement ajoute un newline.
+ * 
+ * @param shell 
+ * @return int 0 = success / 1 = entre invalide
+ */
 int	builtin_echo(t_minishell *shell)
 {
 	int	i;
@@ -152,6 +141,14 @@ int	builtin_echo(t_minishell *shell)
 	return (0);
 }
 
+/**
+ * @brief Parcourt la liste de commandes chaineeeds et 
+ * execute builtin_echo pour chaque elements
+ * 
+ * @param shell 
+ * @note modifie l'etat de cmd dans certains cas
+ * @return int toujours 0 sauf si shell-<cmd est NULL
+ */
 int	echo_completed(t_minishell *shell)
 {
 	if (!shell->cmd)

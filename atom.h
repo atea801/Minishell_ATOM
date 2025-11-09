@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/08 16:43:40 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/09 13:02:46 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -330,9 +330,14 @@ int						execute_builtin(t_minishell *shell);
 int						is_builtin(char *cmd);
 
 // echo.c
+int						check_echo_dollar(t_minishell *shell);
+int						restore_dollar_in_argv(t_minishell *shell);
 int						builtin_echo(t_minishell *shell);
-int						echo_parser(t_cmd *cmd);
 int						echo_completed(t_minishell *shell);
+
+// echo_utils.c
+int						echo_parser(t_cmd *cmd);
+int						search_dollar_in_list(t_token *tok1);
 
 // pwd.c
 int						builtin_pwd(t_minishell *shell);
