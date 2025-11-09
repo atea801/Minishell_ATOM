@@ -41,7 +41,7 @@
 // 	NB_FLAG;
 // }	t_flag;
 
-// volatile sig_atomic_t	g_signal_received;
+extern volatile sig_atomic_t	g_signal_received;
 
 typedef struct s_token
 {
@@ -428,6 +428,8 @@ void					exec_multiple_heredoc(t_cmd *cmd, t_atom_env *env);
 void					handle_sigint_prompt(int sig);
 void					setup_signals_prompt(void);
 void					restore_default_signals(void);
+void					handle_signals_heredoc(int sig);
+void					setup_signals_heredoc(void);
 
 /************************************************************************
  *								MYPRINTLIST								*
