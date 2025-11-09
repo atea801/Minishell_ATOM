@@ -6,12 +6,19 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 14:20:58 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/08 16:27:23 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/09 13:20:09 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
+/**
+ * @brief Verifie que l'arg est bien un code numeric 
+ * et ne contient pas de caractere non numeric
+ * 
+ * @param str 
+ * @return int 
+ */
 static int	ft_is_numeric(char *str)
 {
 	int	i;
@@ -32,6 +39,35 @@ static int	ft_is_numeric(char *str)
 	return (1);
 }
 
+/**
+ * @brief Affiche le bon message d'erruer si l'arg fourni n'est pas numeric
+ * 
+ * @param shell 
+ */
+static void	print_message_exit(t_minishell *shell)
+{
+	write(2, "Minishell: ", 11);
+	write(2, shell->cmd->argv[1], ft_strlen(shell->cmd->argv[1]));
+	write(2, ": numeric argument required\n", 28);
+	shell->exit_code = 2;
+	shell->should_exit = true;
+}
+
+/**
+ * @brief Calcul du code si code > 255
+ * 
+ * @param code 
+ * @return int 
+ */
+static int	calc_code(int code)
+{
+	if (code < 0)
+		code = (code % 256) + 256;
+	else
+		code = code % 256;
+	return (code);
+}
+
 int	builtin_exit(t_minishell *shell)
 {
 	int	code;
@@ -44,11 +80,7 @@ int	builtin_exit(t_minishell *shell)
 	}
 	if (!ft_is_numeric(shell->cmd->argv[1]))
 	{
-		write(2, "Minishell: ", 11);
-		write(2, shell->cmd->argv[1], ft_strlen(shell->cmd->argv[1]));
-		write(2, ": numeric argument required\n", 28);
-		shell->exit_code = 2;
-		shell->should_exit = true;
+		print_message_exit(shell);
 		return (2);
 	}
 	if (shell->cmd->argv[2])
@@ -58,10 +90,7 @@ int	builtin_exit(t_minishell *shell)
 		return (1);
 	}
 	code = ft_atoi(shell->cmd->argv[1]);
-	if (code < 0)
-		code = (code % 256) + 256;
-	else
-		code = code % 256;
+	code = calc_code(code);
 	shell->exit_code = code;
 	shell->should_exit = true;
 	return (code);
