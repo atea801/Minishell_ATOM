@@ -6,14 +6,75 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 14:07:37 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/08 16:16:45 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/09 14:17:38 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
+
+
 /**
- * @brief Affiche ;e repertoire de travail actuel
+ * @brief Permet de detecter les cas speciaux avec une option
+ *
+ *
+ * @param shell
+ * @return int
+ */
+static int	pwd_invalid_kind(char *arg)
+{
+	int	j;
+	int	dash_count;
+
+	if (!arg)
+		return (0);
+	if (ft_strcmp(arg, "--") == 0)
+		return (2);
+	dash_count = 0;
+	j = 0;
+	while (arg[j])
+	{
+		if (arg[j] == '-')
+			dash_count++;
+		j++;
+	}
+	if (dash_count >= 2)
+		return (2);
+	if (dash_count == 1)
+		return (1);
+	return (0);
+}
+
+int	pwd_parser(t_minishell *shell)
+{
+	int		kind;
+	char	*arg;
+
+	if (!shell || !shell->cmd || !shell->cmd->argv)
+		return (1);
+	arg = shell->cmd->argv[1];
+	if (!arg)
+		return (0);
+	kind = pwd_invalid_kind(arg);
+	if (kind == 2)
+	{
+		ft_putstr_fd("Minishell: pwd: --: invalid option\n", 2);
+		ft_putstr_fd("pwd: usage: pwd [-LP]\n", 2);
+		return (1);
+	}
+	if (kind == 1)
+	{
+		ft_putstr_fd("Minishell: pwd: ", 2);
+		ft_putstr_fd(arg, 2);
+		ft_putstr_fd(": invalid option\n", 2);
+		ft_putstr_fd("Minishell: usage: pwd [-LP]\n", 2);
+		return (1);
+	}
+	return (0);
+}
+
+/**
+ * @brief Affiche le repertoire de travail actuel
  *
  * @param cmd
  * @return int 0 == success 1 == erreur
@@ -37,46 +98,5 @@ int	builtin_pwd(t_minishell *shell)
 		return (1);
 	}
 	printf("%s\n", buffer);
-	return (0);
-}
-
-/**
- * @brief Permet de detecter les cas speciaux avec une option
- *
- *
- * @param shell
- * @return int
- */
-int	pwd_parser(t_minishell *shell)
-{
-	int	count;
-	int	i;
-	int	j;
-
-	count = 0;
-	i = 1;
-	j = 0;
-	if (!shell->cmd->argv[i])
-		return (0);
-	while (shell->cmd->argv[i][j])
-	{
-		if (shell->cmd->argv[i][j] == '-')
-			count++;
-		j++;
-	}
-	if (count >= 2)
-	{
-		write(2, "Minishell: pwd: --: invalid option\n", 30);
-		write(2, "pwd: usage: pwd [-LP]\n", 22);
-		return (1);
-	}
-	else if (count == 1)
-	{
-		write(2, "Minishell: pwd: ", 11);
-		write(2, shell->cmd->argv[i], ft_strlen(shell->cmd->argv[i]));
-		write(2, ": invalid option\n", 17);
-		write(2, "Minishell: usage: pwd [-LP]\n", 22);
-		return (1);
-	}
 	return (0);
 }
