@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 17:36:06 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/10 18:27:13 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/10 19:06:34 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,12 @@ void	fill_heredoc_append(t_token **token_1, t_token_2 **token_2)
 				"APPEND") == 0))
 	{
 		t_head_2->type = "APPEND";
-		t_head_2->value = copy_token_value(t_head_1->value);
+		t_head_2->value = NULL;
 	}
 	else if (t_head_1->type && (ft_strcmp(t_head_1->type, "HEREDOC") == 0))
 	{
 		t_head_2->type = "HEREDOC";
-		t_head_2->value = copy_token_value(t_head_1->value);
+		t_head_2->value = NULL;
 	}
 	if (t_head_1 && t_head_1->next && (ft_strcmp(t_head_1->type,
 				"APPEND_FILE") == 0))
@@ -116,12 +116,12 @@ void	fill_redirin_redirout(t_token **token_1, t_token_2 **token_2)
 	if (t_head_1->type && (ft_strcmp(t_head_1->type, "REDIR_IN") == 0))
 	{
 		t_head_2->type = "REDIR_IN";
-		t_head_2->value = copy_token_value(t_head_1->value);
+		t_head_2->value = NULL;
 	}
 	else if (t_head_1->type && (ft_strcmp(t_head_1->type, "REDIR_OUT") == 0))
 	{
 		t_head_2->type = "REDIR_OUT";
-		t_head_2->value = copy_token_value(t_head_1->value);
+		t_head_2->value = NULL;
 	}
 	else if (t_head_1->type && (ft_strcmp(t_head_1->type, "PIPE") == 0))
 	{
