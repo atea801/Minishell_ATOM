@@ -24,22 +24,22 @@ void	exec_heredoc(t_cmd *cmd, int *pipe_fd, t_atom_env *env)
 		while (1)
 		{
 			line = readline("> ");
-			if (!line)
-			{
-				ft_putstr_fd("minishell: warning: here-document delimited by end-of-file (wanted `", 2);
-				ft_putstr_fd(cmd->heredoc_delim[0], 2);
-				ft_putendl_fd("')", 2);
-				break;  // Sort de la boucle, continue l'exécution
-			}
 			if (g_signal_received == 2)
 			{
-				free(line);
+				if (line)
+					free(line);
 				close(pipe_fd[1]);
 				g_signal_received = 0;
-				exit (130);
+				break ;
 			}
 			if (!line)
+			{
+				ft_putstr_fd("minishell: warning: here-document delimited by end-of-file (wanted `",
+					2);
+				ft_putstr_fd(cmd->heredoc_delim[0], 2);
+				ft_putendl_fd("')", 2);
 				break ;
+			}
 			if (cmd->heredoc_delim && cmd->heredoc_delim[0]
 				&& ft_strcmp(cmd->heredoc_delim[0], line) == 0)
 			{
@@ -74,11 +74,17 @@ void	here_doc_infile(t_cmd *cmd, t_atom_env *env)
 	{
 		close(p_fd[1]);
 		waitpid(pid, &status, 0);
+		if (g_signal_received == 2)
+		{
+			close(p_fd[0]);
+			g_signal_received = 0;
+			return ;
+		}
 		if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
 		{
 			close(p_fd[0]);
 			g_signal_received = 0;
-			return;
+			return ;
 		}
 		if (cmd->fd_in != -1)
 			close(cmd->fd_in);
