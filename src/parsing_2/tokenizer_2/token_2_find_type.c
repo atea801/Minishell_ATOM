@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_2_find_type.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 17:36:06 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/05 16:15:50 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/10 18:27:13 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ void	fill_heredoc_append(t_token **token_1, t_token_2 **token_2)
 	t_head_2 = *token_2;
 	if (!token_1)
 		return ;
-	if (t_head_1->type && (ft_strcmp(t_head_1->type, "APPEND") == 0))
+	if (t_head_1 && t_head_1->next && (ft_strcmp(t_head_1->type,
+				"APPEND") == 0))
 	{
 		t_head_2->type = "APPEND";
 		t_head_2->value = copy_token_value(t_head_1->value);
@@ -87,6 +88,12 @@ void	fill_heredoc_append(t_token **token_1, t_token_2 **token_2)
 	else if (t_head_1->type && (ft_strcmp(t_head_1->type, "HEREDOC") == 0))
 	{
 		t_head_2->type = "HEREDOC";
+		t_head_2->value = copy_token_value(t_head_1->value);
+	}
+	if (t_head_1 && t_head_1->next && (ft_strcmp(t_head_1->type,
+				"APPEND_FILE") == 0))
+	{
+		t_head_2->type = "APPEND_FILE";
 		t_head_2->value = copy_token_value(t_head_1->value);
 	}
 }

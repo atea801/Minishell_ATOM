@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 10:54:05 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/05 20:15:58 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/10 18:28:23 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@ void	set_infile_outfile(t_token_2 **token_2)
 		if (ft_strcmp(t_head_2->type, "REDIR_OUT") == 0
 			&& ft_strcmp(t_head_2->next->type, "CMD") == 0)
 			t_head_2->next->type = "OUTFILE";
+		if (ft_strcmp(t_head_2->type, "APPEND") == 0
+			&& ft_strcmp(t_head_2->next->type, "CMD") == 0)
+			t_head_2->next->type = "APPEND_FILE";
 		t_head_2 = t_head_2->next;
 	}
 }
@@ -75,9 +78,8 @@ void	set_heredoc_delim(t_token_2 **token_2)
 	t_head_2 = *token_2;
 	while (t_head_2 && t_head_2->next && t_head_2->next->type)
 	{
-		if (t_head_2->type && t_head_2->next->type 
-			&& ft_strcmp(t_head_2->type, "HEREDOC") == 0
-			&& ft_strcmp(t_head_2->next->type, "CMD") == 0)
+		if (t_head_2->type && t_head_2->next->type && ft_strcmp(t_head_2->type,
+				"HEREDOC") == 0 && ft_strcmp(t_head_2->next->type, "CMD") == 0)
 			t_head_2->next->type = "HEREDOC_DELIM";
 		t_head_2 = t_head_2->next;
 	}
@@ -103,4 +105,31 @@ void	tokenizer_2(t_token *token_head, t_token_2 *token_2)
 	get_input_pos(&t_head_1, &t_head_2);
 	set_infile_outfile(&t_head_2);
 	set_heredoc_delim(&t_head_2);
+}
+
+void	set_cmd_heredoc_delim(t_cmd *cmd, char *file)
+{
+	char	**new_delims;
+	int		i;
+	int		count;
+
+	count = 0;
+	if (cmd->heredoc_delim)
+		while (cmd->heredoc_delim[count])
+			count++;
+	new_delims = malloc(sizeof(char *) * (count + 2));
+	if (!new_delims)
+		return ;
+	i = 0;
+	while (i < count)
+	{
+		new_delims[i] = cmd->heredoc_delim[i];
+		i++;
+	}
+	new_delims[count] = ft_strdup(file);
+	new_delims[count + 1] = NULL;
+	if (cmd->heredoc_delim)
+		free(cmd->heredoc_delim);
+	cmd->heredoc_delim = new_delims;
+	cmd->here_doc = 1;
 }

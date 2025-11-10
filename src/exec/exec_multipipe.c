@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:32:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/08 15:18:35 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/10 13:47:40 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	execute_child(t_minishell *shell, t_cmd *cmd, t_cmd *cmd_list,
 	handle_redirections(cmd);
 	close_unused_fds(cmd_list, cmd);
 	if (!cmd->argv || !cmd->argv[0])
-		exit (127);
+		exit(127);
 	if (is_builtin(cmd->argv[0]))
 	{
 		shell->exit_code = execute_builtin(shell);
@@ -66,12 +66,7 @@ void	wait_all_childrens(pid_t *pids, int num_cmds, t_minishell *shell)
 	{
 		waitpid(pids[i], &status, 0);
 		if (i == num_cmds - 1)
-		{
-			if (WIFEXITED(status))
-				shell->exit_code = WEXITSTATUS(status);
-			else if (WIFSIGNALED(status))
-				shell->exit_code = 128 + WTERMSIG(status);
-		}
+			handle_child_status(shell, status);
 		i++;
 	}
 }
@@ -95,6 +90,8 @@ void	execute_multipipe(t_minishell *shell, t_cmd *cmd, char **env)
 	t_cmd	*current;
 	int		i;
 
+	if (process_heredocs(cmd, shell) != 0)
+		return ;
 	num_cmd = count_commands(cmd);
 	if (!init_resources(&pipes, &pids, num_cmd))
 		return ;

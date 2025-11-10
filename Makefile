@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aautret <aautret@student.42.fr>            +#+  +:+       +#+         #
+#    By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/11/09 12:58:30 by aautret          ###   ########.fr        #
+#    Updated: 2025/11/10 16:45:13 by tlorette         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,8 +63,9 @@ SRC = src/parsing_1/parsing_1.c \
 		src/exec/exec_heredoc.c \
 		src/exec/exec_multiple_heredoc.c \
 		src/exec/redirections.c \
+		src/exec/signal_utils.c \
 		src/init.c\
-		src/signals/signals.c\
+		src/signals/setup_signals.c\
 		src/signals/signal_handler.c\
 		src/src_utils.c \
 		src/src_utils_2.c \

@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 15:52:23 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/08 11:12:23 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/10 14:47:36 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,64 +65,69 @@ int	count_and_extract_heredocs(t_cmd *cmd)
 	while (cmd)
 	{
 		count = 0;
-		i = -1;
-		while (cmd->argv && cmd->argv[++i])
+		if (cmd->heredoc_delim)
 		{
-			if (ft_strcmp(cmd->argv[i], "<<") == 0)
+			i = 0;
+			while (cmd->heredoc_delim[i])
+			{
 				count++;
+				i++;
+			}
 		}
 		cmd->count_heredocs = count;
-		if (count > 0)
-			cmd->heredoc_delim = extract_heredoc_delims(cmd);
-		else
-			cmd->heredoc_delim = NULL;
 		cmd = cmd->next;
 	}
 	return (1);
 }
 
-void	multiple_heredoc_gestion(t_cmd *cmd, t_atom_env *env, int index)
+int	multiple_heredoc_gestion(t_cmd *cmd, t_atom_env *env, int index)
 {
 	int		p_fd[2];
 	pid_t	pid;
 	char	*delimiter;
-	char	*line;
 
+	if (g_signal_received == 2)
+		return (1);
 	if (!cmd || !cmd->heredoc_delim || !cmd->heredoc_delim[index])
-		return ;
+		return (1);
 	delimiter = cmd->heredoc_delim[index];
 	if (pipe(p_fd) == -1)
-		return (perror("pipe"));
+		return (perror("pipe"), 1);
 	pid = fork();
 	if (pid == -1)
-		return (close(p_fd[0]), close(p_fd[1]), perror("fork"));
+		return (close(p_fd[0]), close(p_fd[1]), perror("fork"), 1);
 	if (pid == 0)
-	{
-		line = NULL;
-		multi_heredoc_readline(line, delimiter, p_fd, env);
-		exit(0);
-	}
-	else
-	{
-		last_heredoc_checker(cmd, p_fd, index);
-		wait(NULL);
-	}
+		handle_multi_heredoc_child(p_fd, delimiter, env);
+	last_heredoc_checker(cmd, p_fd, index);
+	if (multi_heredoc_signal_test(pid) == 1)
+		return (1);
+	return (0);
 }
 
-void	exec_multiple_heredoc(t_cmd *cmd, t_atom_env *env)
+int	exec_multiple_heredoc(t_cmd *cmd, t_atom_env *env)
 {
-	int	heredoc_index;
+	int		heredoc_index;
+	int		res;
+	t_cmd	*current;
 
-	while (cmd)
+	setup_signals_heredoc_parent();
+	current = cmd;
+	while (current)
 	{
 		heredoc_index = 0;
-		while (heredoc_index < cmd->count_heredocs)
+		while (heredoc_index < current->count_heredocs)
 		{
-			multiple_heredoc_gestion(cmd, env, heredoc_index);
+			res = multiple_heredoc_gestion(current, env, heredoc_index);
+			if (res != 0)
+			{
+				g_signal_received = 0;
+				setup_signals_prompt();
+				return (1);
+			}
 			heredoc_index++;
 		}
-		cmd = cmd->next;
+		current = current->next;
 	}
+	setup_signals_prompt();
+	return (0);
 }
-
-

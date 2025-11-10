@@ -21,35 +21,21 @@ void	exec_heredoc(t_cmd *cmd, int *pipe_fd, t_atom_env *env)
 	{
 		close(pipe_fd[0]);
 		setup_signals_heredoc();
+		line = NULL;
 		while (1)
 		{
-			line = readline("> ");
-			if (g_signal_received == 2)
-			{
-				if (line)
-					free(line);
-				close(pipe_fd[1]);
-				g_signal_received = 0;
-				break ;
-			}
+			line = heredoc_readline(&pipe_fd, cmd);
 			if (!line)
-			{
-				ft_putstr_fd("minishell: warning: here-document delimited by end-of-file (wanted `",
-					2);
-				ft_putstr_fd(cmd->heredoc_delim[0], 2);
-				ft_putendl_fd("')", 2);
 				break ;
-			}
-			if (cmd->heredoc_delim && cmd->heredoc_delim[0]
-				&& ft_strcmp(cmd->heredoc_delim[0], line) == 0)
-			{
-				free(line);
-				break ;
-			}
 			write_here_doc(line, pipe_fd, env);
 		}
 		setup_signals_prompt();
 		close(pipe_fd[1]);
+		if (g_signal_received == 2)
+		{
+			g_signal_received = 0;
+			exit(130);
+		}
 		exit(0);
 	}
 	exit(1);
@@ -72,23 +58,14 @@ void	here_doc_infile(t_cmd *cmd, t_atom_env *env)
 		exec_heredoc(cmd, p_fd, env);
 	else
 	{
-		close(p_fd[1]);
-		waitpid(pid, &status, 0);
-		if (g_signal_received == 2)
+		heredoc_signal_test(p_fd, pid, &status);
+		if (g_signal_received != 2 && !(WIFEXITED(status)
+				&& WEXITSTATUS(status) == 130))
 		{
-			close(p_fd[0]);
-			g_signal_received = 0;
-			return ;
+			if (cmd->fd_in != -1)
+				close(cmd->fd_in);
+			cmd->fd_in = p_fd[0];
 		}
-		if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
-		{
-			close(p_fd[0]);
-			g_signal_received = 0;
-			return ;
-		}
-		if (cmd->fd_in != -1)
-			close(cmd->fd_in);
-		cmd->fd_in = p_fd[0];
 	}
 }
 
@@ -111,4 +88,17 @@ void	write_here_doc(char *line, int *pipe_fd, t_atom_env *env)
 	ft_putstr_fd(line, pipe_fd[1]);
 	ft_putchar_fd('\n', pipe_fd[1]);
 	free(line);
+}
+
+int	process_heredocs(t_cmd *cmd, t_minishell *shell)
+{
+	int	result;
+
+	result = exec_multiple_heredoc(cmd, shell->env);
+	if (result != 0)
+	{
+		shell->exit_code = 130;
+		return (1);
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 11:42:37 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/08 15:25:42 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/10 18:54:19 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,21 @@ void	multi_heredoc_readline(char *line, char *delimiter, int *p_fd,
 	while (1)
 	{
 		line = readline("> ");
-		if (!line || ft_strcmp(delimiter, line) == 0)
+		if (g_signal_received == 2)
+		{
+			if (line)
+				free(line);
+			break ;
+		}
+		if (!line)
+		{
+			ft_putstr_fd("minishell: warning: here-document delimited ", 2);
+			ft_putstr_fd("by end-of-file (wanted `", 2);
+			ft_putstr_fd(delimiter, 2);
+			ft_putendl_fd("')", 2);
+			break ;
+		}
+		if (ft_strcmp(delimiter, line) == 0)
 		{
 			free(line);
 			break ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/08 16:43:51 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/10 14:47:44 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 	int			parsing_res;
 	t_token		*t_head;
 	t_token_2	*t_head_2;
-	t_cmd		*current;
+	// t_cmd		*current;
 
 	t_head = NULL;
 	t_head_2 = NULL;
@@ -150,17 +150,14 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 			current_env_tab = env_list_to_tab_new(shell->env);
 			if (current_env_tab)
 			{
-				current = shell->cmd;
-				while (current)
+				count_and_extract_heredocs(shell->cmd);
+				if (process_heredocs(shell->cmd, shell) == 0)
 				{
-					if (current->here_doc == 1)
-						here_doc_infile(current, shell->env);
-					current = current->next;
+					if (shell->cmd->next)
+						execute_multipipe(shell, shell->cmd, current_env_tab);
+					else
+						exec_single_cmd(shell, shell->cmd, current_env_tab);
 				}
-				if (shell->cmd->next)
-					execute_multipipe(shell, shell->cmd, current_env_tab);
-				else
-					exec_single_cmd(shell, shell->cmd, current_env_tab);
 				free_env_tab(current_env_tab);
 			}
 		}

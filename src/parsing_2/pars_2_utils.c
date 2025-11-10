@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 12:42:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/06 13:50:49 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/10 19:02:04 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,35 @@ int	count_cmd(t_token *token_head)
 	return (count);
 }
 
+static int	check_access_to_file(char *type, char *file)
+{
+	if (ft_strcmp(type, "INFILE") == 0)
+	{
+		if (access(file, F_OK) == -1 || access(file, R_OK) == -1)
+		{
+			perror(file);
+			return (-1);
+		}
+	}
+	else if (ft_strcmp(type, "OUTFILE") == 0)
+	{
+		if (access(file, F_OK) == 0 && access(file, W_OK) == -1)
+		{
+			perror(file);
+			return (-1);
+		}
+	}
+	else if (ft_strcmp(type, "APPEND") == 0)
+	{
+		if (access(file, F_OK) == 0 && access(file, W_OK) == -1)
+		{
+			perror(file);
+			return (-1);
+		}
+	}
+	return (0);
+}
+
 /**
  * @brief Ouvre un fichier selon son type et gère l'ancien fd
  *
@@ -46,6 +75,8 @@ int	open_redir_file(char *type, char *file, int *old_fd)
 {
 	int	fd;
 
+	if (check_access_to_file(type, file) == -1)
+		return (-1);
 	if (ft_strcmp(type, "INFILE") == 0)
 		fd = open(file, O_RDONLY);
 	else if (ft_strcmp(type, "OUTFILE") == 0)
@@ -117,4 +148,3 @@ int	count_args_to_pipe(t_token_2 *token_2)
 	}
 	return (count);
 }
-

@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 11:58:02 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/07 17:55:22 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/10 18:31:41 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,10 @@ static int	add_cmd_arg(t_cmd *cmd, t_token_2 *token, int index)
 	return (0);
 }
 
-static void	process_current_redirection(t_cmd *cmd, t_token_2 *token)
+void	process_current_redirection(t_cmd *cmd, t_token_2 *token)
 {
 	if (ft_strcmp(token->type, "HEREDOC_DELIM") == 0)
-	{
-		if (cmd->heredoc_delim)
-			free_heredoc_delims(cmd->heredoc_delim);
-		cmd->heredoc_delim = malloc(sizeof(char *) * 2);
-		if (!cmd->heredoc_delim)
-			return ;
-		cmd->heredoc_delim[0] = ft_strdup(token->value);
-		cmd->heredoc_delim[1] = NULL;
-		cmd->here_doc = 1;
-	}
+		set_cmd_heredoc_delim(cmd, token->value);
 	else if (ft_strcmp(token->type, "APPEND") == 0)
 		cmd->append = 1;
 	else if (ft_strcmp(token->type, "INFILE") == 0)
@@ -66,6 +57,13 @@ static void	process_current_redirection(t_cmd *cmd, t_token_2 *token)
 			free(cmd->outfile);
 		cmd->outfile = ft_strdup(token->value);
 		cmd->append = 0;
+	}
+	else if (ft_strcmp(token->type, "APPEND_FILE") == 0)
+	{
+		if (cmd->outfile)
+			free(cmd->outfile);
+		cmd->outfile = ft_strdup(token->value);
+		cmd->append = 1;
 	}
 }
 
