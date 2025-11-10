@@ -15,16 +15,13 @@
 void	check_all_redirections(t_token_2 *token_2)
 {
 	t_token_2	*current;
-	t_token_2	*prev;
 
 	if (!token_2)
 		return ;
 	current = token_2;
-	prev = NULL;
 	while (current)
 	{
 		if (ft_strcmp(current->type, "INFILE") == 0)
-			prev = current;
 		current = current->next;
 	}
 }

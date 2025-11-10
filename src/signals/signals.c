@@ -49,3 +49,26 @@ void	restore_default_signals(void)
 	sigaction(SIGINT, &sa_sigprompt, NULL);
 	sigaction(SIGQUIT, &sa_sigprompt, NULL);
 }
+
+void	handle_signals_heredoc(int sig)
+{
+	(void)sig;
+
+	write(1, "\n", 1);
+	g_signal_received = 2;
+}
+
+void	setup_signals_heredoc(void)
+{
+		struct sigaction	sa_int;
+		struct sigaction	sa_quit;
+
+		sa_int.sa_handler = handle_signals_heredoc;
+		sa_quit.sa_handler = SIG_IGN;
+		sigemptyset(&sa_int.sa_mask);
+		sigemptyset(&sa_quit.sa_mask);
+		sa_int.sa_flags = 0;
+		sa_quit.sa_flags = 0;
+		sigaction(SIGINT, &sa_int, NULL);
+		sigaction(SIGQUIT, &sa_quit, NULL);
+}

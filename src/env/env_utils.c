@@ -54,11 +54,9 @@ char	*get_key(char *env_line)
  */
 char	*get_value(char *env_line)
 {
-	int		i;
 	char	*equal_pos;
 	char	*value;
 
-	i = 0;
 	equal_pos = ft_strchr(env_line, '=');
 	if (equal_pos == 0)
 		return (NULL);
