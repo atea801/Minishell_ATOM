@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/11 16:08:31 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/11 17:39:02 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 	int			parsing_res;
 	t_token		*t_head;
 	t_token_2	*t_head_2;
-	// t_cmd		*current;
 
+	// t_cmd		*current;
 	t_head = NULL;
 	t_head_2 = NULL;
 	env_tab = env_list_to_tab_new(shell->env);
@@ -100,7 +100,9 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 		shell->tok2 = NULL;
 		shell->should_execute = false;
 		prompt = get_dynamic_prompt();
-		input = readline(prompt);
+		input = NULL;
+		if (isatty(STDIN_FILENO))
+			input = readline(prompt);
 		if (!input || ft_strcmp(input, "exit") == 0)
 		{
 			if (input)
