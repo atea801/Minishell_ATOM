@@ -6,12 +6,32 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 11:28:56 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/11 11:13:36 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/11 15:52:33 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
+int	check_speacial_unset(t_minishell *shell)
+{
+	int	i;
+
+	i = 1;
+	while (shell->cmd->argv[i])
+	{
+		if (shell->cmd->argv[i][0] == '-')
+		{
+			ft_putstr_fd("Minishell: unset: ", 2);
+			ft_putstr_fd(&shell->cmd->argv[i][0], 2);
+			ft_putstr_fd(&shell->cmd->argv[i][1], 2);
+			ft_putstr_fd(": invalid option\n", 2);
+			ft_putstr_fd("unset: usage: unset [-f] [-v] [-n] [name ...]\n", 2);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
 
 int	check_args_unset(char *str)
 {
@@ -19,7 +39,6 @@ int	check_args_unset(char *str)
 
 	if (!str || str[0] == '\0')
 		return (1);
-
 	i = 1;
 	if (str[0] == '_' || ft_isalpha((unsigned char)str[0]))
 	{
@@ -35,22 +54,6 @@ int	check_args_unset(char *str)
 	return (1);
 }
 
-int	check_valide_args_unset(t_minishell *shell)
-{
-	int	i;
-
-	i = 1;
-	while (shell->cmd->argv[i])
-	{
-		if (check_args_unset(shell->cmd->argv[i]) < 1)
-			i++;
-		else
-			return (1);
-	}
-	return (0);
-}
-
-
 int	builtin_unset(t_minishell *shell)
 {
 	int	i;
@@ -60,18 +63,28 @@ int	builtin_unset(t_minishell *shell)
 		shell->exit_code = 0;
 		return (0);
 	}
-	if (check_valide_args_unset(shell) != 0)
+	if (check_speacial_unset(shell) == 1)
 	{
-		printf("parsing args unset\n");
-		shell->exit_code = 1;
-		return (1);
+		// printf("parsing args speacial unset\n");
+		shell->exit_code = 0;
+		return (0);
 	}
-	i = 1;
-	while (shell->cmd->argv[i])
+	else
 	{
-		delete_node_list(&shell->env, shell->cmd->argv[i]);
-		printf("%s delete\n", shell->cmd->argv[i]);
-		i++;
+		i = 1;
+		while (shell->cmd->argv[i])
+		{
+			if (search_in_list(&shell->env, shell->cmd->argv[i]) != NULL
+				&& shell->cmd->argv[i])
+			{
+				if (check_args_unset(shell->cmd->argv[i]) == 0)
+				{
+					delete_node_list(&shell->env, shell->cmd->argv[i]);
+					printf("%s delete\n", shell->cmd->argv[i]);
+				}
+			}
+			i++;
+		}
 	}
 	shell->exit_code = 0;
 	return (0);
