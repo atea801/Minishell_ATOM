@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 13:40:32 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/08 16:43:18 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/11 11:00:15 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 /**
  * @brief Dispatche les appels des commande en fonction du built-in
  * detecte
- * 
- * @param cmd 
+ *
+ * @param cmd
  * @return int n'est jamais sence return 1 car call dans le cas ou
  * is_builin == 1
  */
@@ -32,9 +32,9 @@ int	execute_builtin(t_minishell *shell)
 		return (builtin_exit(shell));
 	if (ft_strcmp(shell->cmd->argv[0], "cd") == 0)
 		return (builtin_cd(shell));
+	if (ft_strcmp(shell->cmd->argv[0], "unset") == 0)
+		return (builtin_unset(shell));
 	// if (ft_strcmp(cmd->argv[0], "export") == 0)
 	// 	return (builtin_export(cmd));
-	// if (ft_strcmp(cmd->argv[0], "unset") == 0)
-	// 	return (builtin_unset(cmd));
 	return (1);
 }

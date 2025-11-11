@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 11:23:05 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/08 11:00:25 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/11 15:53:51 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*get_value(char *env_line)
 }
 
 /**
- * @brief Cherche une fonction dans l'env par nom de variable
+ * @brief Cherche cle dans l'env par nom de variable
 
  * 
  * @param env 
@@ -88,7 +88,10 @@ char	*search_in_list(t_atom_env **env, char *key)
 	while (searched_key)
 	{
 		if (searched_key->key && ft_strcmp(searched_key->key, k) == 0)
+		{
+			// printf("find %s\n", searched_key->key);
 			return (searched_key->value);
+		}
 		searched_key = searched_key->next;
 	}
 	return (NULL);
