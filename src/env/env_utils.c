@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 11:23:05 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/08 11:00:25 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/10 13:40:00 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*get_value(char *env_line)
 }
 
 /**
- * @brief Cherche une fonction dans l'env par nom de variable
+ * @brief Cherche cle dans l'env par nom de variable
 
  * 
  * @param env 
