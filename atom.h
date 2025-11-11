@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/11 11:12:57 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/11 16:03:21 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -390,8 +390,6 @@ int								cd_with_args(t_minishell *shell, char *old_pwd,
 
 // unset.c
 int								builtin_unset(t_minishell *shell);
-int								check_valide_args_unset(t_minishell *shell);
-int								check_args_unset(char *str);
 
 /************************************************************************
  *								EXEC									*

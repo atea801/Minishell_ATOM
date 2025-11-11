@@ -6,13 +6,13 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 11:28:56 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/11 15:52:33 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/11 16:03:06 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
-int	check_speacial_unset(t_minishell *shell)
+static int	check_speacial_unset(t_minishell *shell)
 {
 	int	i;
 
@@ -33,7 +33,7 @@ int	check_speacial_unset(t_minishell *shell)
 	return (0);
 }
 
-int	check_args_unset(char *str)
+static int	check_args_unset(char *str)
 {
 	int	i;
 
@@ -54,10 +54,28 @@ int	check_args_unset(char *str)
 	return (1);
 }
 
-int	builtin_unset(t_minishell *shell)
+static void	unset(t_minishell *shell)
 {
 	int	i;
 
+	i = 1;
+	while (shell->cmd->argv[i])
+	{
+		if (search_in_list(&shell->env, shell->cmd->argv[i]) != NULL
+			&& shell->cmd->argv[i])
+		{
+			if (check_args_unset(shell->cmd->argv[i]) == 0)
+			{
+				delete_node_list(&shell->env, shell->cmd->argv[i]);
+				printf("%s delete\n", shell->cmd->argv[i]);
+			}
+		}
+		i++;
+	}
+}
+
+int	builtin_unset(t_minishell *shell)
+{
 	if (!shell->cmd->argv[1])
 	{
 		shell->exit_code = 0;
@@ -65,27 +83,11 @@ int	builtin_unset(t_minishell *shell)
 	}
 	if (check_speacial_unset(shell) == 1)
 	{
-		// printf("parsing args speacial unset\n");
 		shell->exit_code = 0;
 		return (0);
 	}
 	else
-	{
-		i = 1;
-		while (shell->cmd->argv[i])
-		{
-			if (search_in_list(&shell->env, shell->cmd->argv[i]) != NULL
-				&& shell->cmd->argv[i])
-			{
-				if (check_args_unset(shell->cmd->argv[i]) == 0)
-				{
-					delete_node_list(&shell->env, shell->cmd->argv[i]);
-					printf("%s delete\n", shell->cmd->argv[i]);
-				}
-			}
-			i++;
-		}
-	}
+		unset(shell);
 	shell->exit_code = 0;
 	return (0);
 }
