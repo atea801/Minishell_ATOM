@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/18 15:31:08 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/19 11:11:38 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,9 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 	int			parsing_res;
 	t_token		*t_head;
 	t_token_2	*t_head_2;
+	size_t		len;
+	ssize_t		nread;
+
 	size_t		len;
 
 	// t_cmd		*current;
