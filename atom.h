@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/19 11:10:53 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/19 11:12:02 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -547,24 +547,14 @@ void							setup_pipe_redirections(int **pipes,
 									int cmd_index, int num_cmds, t_cmd *cmd);
 
 // multipipe_utils_2.c
+void							last_heredoc_checker(t_cmd *cmd, int *p_fd,
+									int index);
 int								check_pid_error(int **pipes, int num_cmd);
 int								cleanup_on_error(int **pipes, pid_t *pids,
 									int num_cmd, t_minishell *shell);
 void							multi_heredoc_readline(char *line,
 									char *delimiter, int *p_fd,
 									t_atom_env *env);
-void							last_heredoc_checker(t_cmd *cmd, int *p_fd,
-									int index);
-void							handle_child_status(t_minishell *shell,
-									int status);
-int								check_pid_error(int **pipes, int num_cmd);
-int								cleanup_on_error(int **pipes, pid_t *pids,
-									int num_cmd, t_minishell *shell);
-void							multi_heredoc_readline(char *line,
-									char *delimiter, int *p_fd,
-									t_atom_env *env);
-void							last_heredoc_checker(t_cmd *cmd, int *p_fd,
-									int index);
 void							handle_child_status(t_minishell *shell,
 									int status);
 
@@ -593,7 +583,7 @@ void							handle_multi_heredoc_child(int *p_fd,
 char							*heredoc_readline(int **pipe_fd, t_cmd *cmd);
 void							heredoc_signal_test(int *p_fd, pid_t pid,
 									int *status);
-int								multi_heredoc_signal_test(pid_t pid);
+int								multi_heredoc_signal_test(pid_t pid, int *p_fd);
 /************************************************************************
  *								SIGNALS									*
  ************************************************************************/
