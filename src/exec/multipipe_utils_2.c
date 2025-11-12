@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 11:42:37 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/10 18:54:19 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/12 17:31:38 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ void	multi_heredoc_readline(char *line, char *delimiter, int *p_fd,
 		{
 			if (line)
 				free(line);
-			break ;
+			close(p_fd[1]);
+			exit(130);
 		}
 		if (!line)
 		{
@@ -61,6 +62,12 @@ void	multi_heredoc_readline(char *line, char *delimiter, int *p_fd,
 
 void	last_heredoc_checker(t_cmd *cmd, int *p_fd, int index)
 {
+	if (!cmd)
+	{
+		if (p_fd && p_fd[0] != -1)
+			close(p_fd[0]);
+		return ;
+	}
 	close(p_fd[1]);
 	if (index == cmd->count_heredocs - 1)
 	{

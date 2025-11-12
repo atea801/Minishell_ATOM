@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 13:55:33 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/12 14:07:19 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/12 18:20:58 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	handle_signals_heredoc(int sig)
 {
 	(void)sig;
 	write(1, "\n", 1);
-	// g_signal_received = sig;
-	// close(STDIN_FILENO);
+	g_signal_received = sig;
+	close(4);
 	exit(130);
 }
 
