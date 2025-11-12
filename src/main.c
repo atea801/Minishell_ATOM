@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/12 11:02:39 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/12 14:55:32 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,43 +104,9 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 		shell->should_execute = false;
 		prompt = NULL;
 		input = NULL;
-		/* Handle interactive vs non-interactive mode */
+		prompt = get_dynamic_prompt();
 		if (isatty(STDIN_FILENO))
-		{
-			prompt = get_dynamic_prompt();
 			input = readline(prompt);
-			/* EOF (Ctrl-D) in interactive mode */
-			if (!input)
-			{
-				if (prompt)
-					free(prompt);
-				printf("exit\n");
-				if (shell->cmd)
-				{
-					free_cmd_list(shell->cmd);
-					shell->cmd = NULL;
-				}
-				free_env_tab(env_tab);
-				break ;
-			}
-		}
-		else
-		{
-			/* Non-interactive mode: read from pipe/redirection */
-			nread = getline(&input, &len, stdin);
-			if (nread == -1)
-			{
-				/* EOF reached */
-				if (input)
-					free(input);
-				input = NULL;
-				free_env_tab(env_tab);
-				break ;
-			}
-			/* Remove trailing newline from getline */
-			if (nread > 0 && input[nread - 1] == '\n')
-				input[nread - 1] = '\0';
-		}
 		if (!input || ft_strcmp(input, "exit") == 0)
 		{
 			if (input)
