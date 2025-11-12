@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/11 16:08:31 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/12 13:08:06 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,13 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 	int			parsing_res;
 	t_token		*t_head;
 	t_token_2	*t_head_2;
-	// t_cmd		*current;
+	size_t		len;
+	ssize_t		nread;
 
+	// t_cmd		*current;
 	t_head = NULL;
 	t_head_2 = NULL;
+	len = 0;
 	env_tab = env_list_to_tab_new(shell->env);
 	(void)ac;
 	(void)argv;
@@ -99,8 +102,45 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 		shell->tok1 = NULL;
 		shell->tok2 = NULL;
 		shell->should_execute = false;
-		prompt = get_dynamic_prompt();
-		input = readline(prompt);
+		prompt = NULL;
+		input = NULL;
+		/* Handle interactive vs non-interactive mode */
+		if (isatty(STDIN_FILENO))
+		{
+			prompt = get_dynamic_prompt();
+			input = readline(prompt);
+			/* EOF (Ctrl-D) in interactive mode */
+			if (!input)
+			{
+				if (prompt)
+					free(prompt);
+				printf("exit\n");
+				if (shell->cmd)
+				{
+					free_cmd_list(shell->cmd);
+					shell->cmd = NULL;
+				}
+				free_env_tab(env_tab);
+				break ;
+			}
+		}
+		else
+		{
+			/* Non-interactive mode: read from pipe/redirection */
+			nread = getline(&input, &len, stdin);
+			if (nread == -1)
+			{
+				/* EOF reached */
+				if (input)
+					free(input);
+				input = NULL;
+				free_env_tab(env_tab);
+				break ;
+			}
+			/* Remove trailing newline from getline */
+			if (nread > 0 && input[nread - 1] == '\n')
+				input[nread - 1] = '\0';
+		}
 		if (!input || ft_strcmp(input, "exit") == 0)
 		{
 			if (input)
@@ -161,6 +201,9 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 				free_env_tab(current_env_tab);
 			}
 		}
+		/* Restore prompt signals after command execution completes */
+		if (isatty(STDIN_FILENO))
+			setup_signals_prompt();
 		if (shell->should_exit)
 		{
 			if (input)
@@ -172,16 +215,20 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 				free_cmd_list(shell->cmd);
 				shell->cmd = NULL;
 			}
-			free(prompt);
+			if (prompt)
+				free(prompt);
 			free_env_tab(env_tab);
 			break ;
 		}
-		add_history(input);
+		/* Only add history in interactive mode */
+		if (isatty(STDIN_FILENO) && input && *input)
+			add_history(input);
 		if (input)
 			free(input);
 		if (res)
 			free(res);
-		free(prompt);
+		if (prompt)
+			free(prompt);
 	}
 }
 

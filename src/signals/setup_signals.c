@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 13:55:23 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/10 16:46:08 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/12 13:28:38 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	setup_signals_heredoc_parent(void)
 {
 	struct sigaction	sa_int;
 	struct sigaction	sa_quit;
+	struct sigaction	sa;
 
 	sa_int.sa_handler = handle_sigint_heredoc_parent;
 	sigemptyset(&sa_int.sa_mask);
@@ -68,4 +69,9 @@ void	setup_signals_heredoc_parent(void)
 	sa_quit.sa_flags = 0;
 	sigaction(SIGINT, &sa_int, NULL);
 	sigaction(SIGQUIT, &sa_quit, NULL);
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sa.sa_handler = SIG_IGN;
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
 }
