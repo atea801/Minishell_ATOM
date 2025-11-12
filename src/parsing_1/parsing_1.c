@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 12:10:28 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/08 13:55:14 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/12 11:08:35 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*parsing_1(t_minishell *shell, char *input)
 	free(res_1);
 	if (valide_quote(res_2))
 	{
-		write(2, "Minishell: unclosed quotes\n", 16);
+		ft_putstr_fd("Minishell: unclosed quotes\n", 2);
 		add_history(input);
 		free(res_2);
 		shell->exit_code = 258;
