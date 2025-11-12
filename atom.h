@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/11 16:08:04 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/12 16:13:30 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -398,6 +398,9 @@ int								echo_parser(t_cmd *cmd);
 int								search_dollar_in_list(t_token *tok1);
 int								echo_parser(t_cmd *cmd);
 int								search_dollar_in_list(t_token *tok1);
+
+// export.c
+int								builtin_export(t_minishell *shell);
 
 // pwd.c
 int								builtin_pwd(t_minishell *shell);
