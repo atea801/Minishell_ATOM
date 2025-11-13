@@ -6,13 +6,11 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 14:07:37 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/09 14:17:38 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/13 14:53:32 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
-
-
 
 /**
  * @brief Permet de detecter les cas speciaux avec une option
