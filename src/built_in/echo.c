@@ -6,23 +6,23 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 13:05:59 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/13 14:54:54 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/13 15:01:33 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
 /**
- * @brief Gestion cas speacial avec $ 
+ * @brief Gestion cas speacial avec $
  *
  * - Si l'appel echo ne recoit que ce $ comme unique argument
  *  (apres des flags aussi)
- * 
+ *
  * - On affiche $ avc ou sans newline selon presence de -n
- * 
- * @param shell 
+ *
+ * @param shell
  * @note but = gestion du cas echo $
- * @return int 1 = cas special detecte et traite 
+ * @return int 1 = cas special detecte et traite
  */
 int	check_echo_dollar(t_minishell *shell)
 {
@@ -51,21 +51,31 @@ int	check_echo_dollar(t_minishell *shell)
 	return (0);
 }
 
+static void	restore_dollar_utils(t_token *current, t_minishell *shell,
+		int argv_index)
+{
+	if (current->value && ft_strcmp(current->value, "$") == 0)
+	{
+		free(shell->cmd->argv[argv_index]);
+		shell->cmd->argv[argv_index] = ft_strdup("$");
+	}
+}
+
 /**
- * @brief Apres les etapes d'expansion, 
- * il faut restaurer les arg qui devaient contenir le symbole $ 
+ * @brief Apres les etapes d'expansion,
+ * il faut restaurer les arg qui devaient contenir le symbole $
  * (si ils ont ete supprimes)
- * 
+ *
  * - calcul l'index du premier argv
- * 
+ *
  * - parcours tok1 pour sauter les tok correspondant a echo  et les flags
- * 
+ *
  * - parcours et comparaison en simultane si token->value = "$"  -> restaure
- * 
- * @param shell 
- * @note la fonciton modifie la shell->cmd->argv et alloue de nouvellle 
- * chaine pour placer le $ 
- * @return int 1 = en fin (si le spoineurs de base sont valides) / 
+ *
+ * @param shell
+ * @note la fonciton modifie la shell->cmd->argv et alloue de nouvellle
+ * chaine pour placer le $
+ * @return int 1 = en fin (si le spoineurs de base sont valides) /
  * 0 = si le spointeurs d'entree sont invlaides
  */
 int	restore_dollar_in_argv(t_minishell *shell)
@@ -89,11 +99,7 @@ int	restore_dollar_in_argv(t_minishell *shell)
 	argv_index = start_arg;
 	while (current && argv_index < shell->cmd->argc)
 	{
-		if (current->value && ft_strcmp(current->value, "$") == 0)
-		{
-			free(shell->cmd->argv[argv_index]);
-			shell->cmd->argv[argv_index] = ft_strdup("$");
-		}
+		restore_dollar_utils(current, shell, argv_index);
 		current = current->next;
 		argv_index++;
 	}
@@ -102,11 +108,11 @@ int	restore_dollar_in_argv(t_minishell *shell)
 
 /**
  * @brief mplémentation du builtin echo: gère les flags -n,
- * restaure $ littéral si nécessaire, 
- * imprime les arguments séparés par un espace, 
+ * restaure $ littéral si nécessaire,
+ * imprime les arguments séparés par un espace,
  * et conditionnellement ajoute un newline.
- * 
- * @param shell 
+ *
+ * @param shell
  * @return int 0 = success / 1 = entre invalide
  */
 int	builtin_echo(t_minishell *shell)
@@ -139,10 +145,10 @@ int	builtin_echo(t_minishell *shell)
 }
 
 /**
- * @brief Parcourt la liste de commandes chaineeeds et 
+ * @brief Parcourt la liste de commandes chaineeeds et
  * execute builtin_echo pour chaque elements
- * 
- * @param shell 
+ *
+ * @param shell
  * @note modifie l'etat de cmd dans certains cas
  * @return int toujours 0 sauf si shell-<cmd est NULL
  */
