@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 11:28:56 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/11 16:30:15 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/13 14:58:25 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ static void	unset(t_minishell *shell)
 			if (check_args_unset(shell->cmd->argv[i]) == 0)
 			{
 				delete_node_list(&shell->env, shell->cmd->argv[i]);
-				// printf("%s delete\n", shell->cmd->argv[i]);
 			}
 		}
 		i++;
