@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 13:05:59 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/09 13:21:25 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/13 14:54:54 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,15 @@ int	check_echo_dollar(t_minishell *shell)
 
 	if (!shell || !shell->cmd || !shell->cmd->argv)
 		return (0);
-	// Vérifier dans tok1 (avant expansion) s'il y a un $ seul
 	current = shell->tok1;
 	while (current)
 	{
 		if (current->value && ft_strcmp(current->value, "$") == 0)
 		{
-			// Vérifier que c'est le seul argument après echo
 			start_arg = echo_parser(shell->cmd);
 			if (shell->cmd->argc == start_arg + 1)
 			{
-				if (start_arg > 1) // Il y a des flags -n
+				if (start_arg > 1)
 					printf("$");
 				else
 					printf("$\n");

@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 12:40:29 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/09 12:42:44 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/13 14:54:26 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
  * @brief Parse les options -n de la commande echo
  *
  * Parcourt les arguments pour identifier les flags
-	-n valides (suppression du newline).
+ * -n valides (suppression du newline).
  * S'arrête au premier argument qui n'est pas un flag
-	-n ou qui ne commence pas par '-'.
+ * -n ou qui ne commence pas par '-'.
  *
  * @param cmd Structure contenant la commande et ses arguments
-
-	* @return Index du premier argument non-flag (où commencent les textes à afficher)
+ * @return Index du premier argument non-flag (où commencent
+ les textes à afficher)
  * @example echo_parser(cmd) retourne 2 pour "echo -n hello world"
  */
 int	echo_parser(t_cmd *cmd)
@@ -44,13 +44,13 @@ int	echo_parser(t_cmd *cmd)
 }
 
 /**
- * @brief Cherche la première occurrence d'un token 
- * dont value est exactement "$" dans la liste tok1 et 
+ * @brief Cherche la première occurrence d'un token
+ * dont value est exactement "$" dans la liste tok1 et
  * retourne sa position (index).
- * 
- *  - Itère sur la liste et incrémente un compteur; 
+ *
+ *  - Itère sur la liste et incrémente un compteur;
  * si token->value est "$", retourne le compteur.
- * @param tok1 
+ * @param tok1
  * @return int index du token $ (0-based) s'il existe, -1 sinon.
  */
 int	search_dollar_in_list(t_token *tok1)
