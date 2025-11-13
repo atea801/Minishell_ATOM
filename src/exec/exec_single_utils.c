@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_single_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 10:49:30 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/06 11:32:05 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/13 15:22:40 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	secure_exec(t_cmd *cmd, char **tab_to_env)
 
 int	unfound_path(t_cmd *cmd, t_minishell *shell)
 {
+	ft_putstr_fd("Minishell: ", 2);
 	ft_putstr_fd(cmd->argv[0], 2);
 	ft_putstr_fd(": command not found\n", 2);
 	shell->exit_code = 127;
