@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 11:28:56 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/13 14:58:25 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/14 17:17:08 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ static int	check_speacial_unset(t_minishell *shell)
 		if (shell->cmd->argv[i][0] == '-')
 		{
 			ft_putstr_fd("Minishell: unset: ", 2);
-			ft_putstr_fd(&shell->cmd->argv[i][0], 2);
-			ft_putstr_fd(&shell->cmd->argv[i][1], 2);
+			write(2, &shell->cmd->argv[i][0], 1);
+			write(2, &shell->cmd->argv[i][1], 1);
 			ft_putstr_fd(": invalid option\n", 2);
 			ft_putstr_fd("unset: usage: unset [-f] [-v] [-n] [name ...]\n", 2);
 			return (1);
