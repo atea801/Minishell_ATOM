@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/13 16:33:57 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/18 17:22:36 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -460,14 +460,12 @@ void							redirect_input(char *file);
 void							redirect_output(char *file);
 void							redirect_append(char *file);
 void							handle_redirections(t_cmd *cmd);
-void							exec_single_cmd(t_minishell *shell, t_cmd *cmd,
-									char **tab_to_env);
+void							exec_single_cmd(t_minishell *shell, t_cmd *cmd);
 void							redirect_input(char *file);
 void							redirect_output(char *file);
 void							redirect_append(char *file);
 void							handle_redirections(t_cmd *cmd);
-void							exec_single_cmd(t_minishell *shell, t_cmd *cmd,
-									char **tab_to_env);
+
 
 // exec_single_utils.c
 int								check_fork_error(t_minishell *shell,
@@ -487,11 +485,9 @@ void							close_fds(t_cmd *cmd);
 void							wait_all_childrens(pid_t *pids, int num_cmds,
 									t_minishell *shell);
 void							execute_multipipe(t_minishell *shell,
-									t_cmd *cmd, char **env);
+									t_cmd *cmd);
 void							wait_all_childrens(pid_t *pids, int num_cmds,
 									t_minishell *shell);
-void							execute_multipipe(t_minishell *shell,
-									t_cmd *cmd, char **env);
 
 // multipipe_utils.c
 int								count_commands(t_cmd *cmd_list);
@@ -604,9 +600,8 @@ void							setup_pipe_redirections(int **pipes,
 									int cmd_index, int num_cmds, t_cmd *cmd);
 // exec_multipipe.c
 void							execute_multipipe(t_minishell *shell,
-									t_cmd *cmd, char **env);
-void							execute_multipipe(t_minishell *shell,
-									t_cmd *cmd, char **env);
+									t_cmd *cmd);
+
 
 /************************************************************************
  *								SRC										*

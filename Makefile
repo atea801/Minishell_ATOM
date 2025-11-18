@@ -6,7 +6,7 @@
 #    By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/11/18 11:25:45 by tlorette         ###   ########.fr        #
+#    Updated: 2025/11/18 17:01:41 by tlorette         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -118,7 +118,7 @@ ignore:
 
 val: $(NAME)
 	@if ! [ -f "ignore.supp" ]; then make ignore; fi
-	@valgrind --suppressions=./ignore.supp --leak-check=full --track-origins=yes --trace-children=yes --track-fds=yes -s ./$(NAME)
+	@valgrind --suppressions=./ignore.supp --leak-check=full --show-leak-kinds=all --track-origins=yes --trace-children=yes --track-fds=yes -s ./$(NAME)
 
 clean:
 	make -C libft clean
