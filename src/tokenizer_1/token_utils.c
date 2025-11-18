@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:34:48 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/23 12:58:51 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/18 14:39:38 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	copy_word(char *res, char *str, int end, int start)
  *
  * @param token
  * @param str
+ * @note ajout de l'initialisation de qote_type
  */
 int	put_token(t_token **token, char *res)
 {
@@ -54,6 +55,35 @@ int	put_token(t_token **token, char *res)
 	(*token)->value = NULL;
 	(*token)->head = NULL;
 	(*token)->type = NULL;
+	(*token)->quote_type = 0;
+	return (0);
+}
+
+/**
+ * @brief Set token.value, token.type et token.quote_type, 
+ * puis passe au token suivant
+ * 
+ * Version moderne qui gère les quotes directement sans marqueurs
+ *
+ * @param token
+ * @param res
+ * @param quote_type 0=normal, 1=single_quote, 2=double_quote
+ * @note // Initialisation quote_type
+ */
+int	put_token_with_quote(t_token **token, char *res, int quote_type)
+{
+	(*token)->value = res;
+	(*token)->type = get_token_type(res);
+	(*token)->quote_type = quote_type;
+	(*token)->next = malloc(sizeof(t_token));
+	if (!(*token)->next)
+		return (1);
+	(*token) = (*token)->next;
+	(*token)->next = NULL;
+	(*token)->value = NULL;
+	(*token)->head = NULL;
+	(*token)->type = NULL;
+	(*token)->quote_type = 0;
 	return (0);
 }
 

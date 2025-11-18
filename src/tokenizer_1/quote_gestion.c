@@ -6,16 +6,14 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 17:35:21 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/08 16:06:30 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/18 14:38:17 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
 /**
-
-	* @brief Dettecte si l'element suivant une double quote suivant une simple quote
-	/
+ * @brief Dettecte si l'element suivant une double quote suivant une simple quote
  * ou si l'element suivant une simple quote suivant une double quote
  *
  * - "' ou '" => return 1
@@ -34,10 +32,10 @@ int	quote_state(char c, char next)
  * @brief Permet de trouver la fin d'une quote apres avoir
  * detecter le debut d'une quote
  *
- *
-	- si le caractere a la position i est une double quote on avance jusqu'au prochain guillemet double
- *
-	- si le caractere a la position i est une simple quote on avance jusqu'au prochain guillemet simple
+ * - si le caractere a la position i est une double quote on avance
+ * jusqu'au prochain guillemet double
+ * - si le caractere a la position i est une simple quote on avance
+ * jusqu'au prochain guillemet simple
  *
  * @param str
  * @param i
@@ -64,9 +62,8 @@ int	skip_quote(char *str, int i)
  * @brief Utiliser quand on detecte des cas speciaux "' ou '"
  le texte entre le quotes est copie mais pas les quotes exterieurs
  *
- *
-
-	* == extraire dans les cas speciaux "' ou '" => on copie la sous chaine avec les quotes
+ * == extraire dans les cas speciaux "' ou '" => on copie la sous
+ * chaine avec les quotes
  * ("'hello'" => 'hello')
  * @param token
  * @param str
@@ -84,12 +81,11 @@ void	handle_quote_state(t_token **token, char *str, int *start, int end)
 
 /**
  * @brief Permet d'isoler et de stocker le mot entre guillemets,
-	on inclue pas les guillemets dans le token
+ * on inclue pas les guillemets dans le token
  *
-
-
-
-	* == extraire le texte situe a l'interieur des quotes simple ou double sans inclures les quotes dans le token
+ *
+ * == extraire le texte situe a l'interieur des quotes simple
+ * ou double sans inclures les quotes dans le token
  * @param token
  * @param str
  * @param start
@@ -98,24 +94,21 @@ void	handle_quote_state(t_token **token, char *str, int *start, int end)
 int	handle_quote(t_token **token, char *str, int *start, int end)
 {
 	char	*res;
-	char	*final_res;
+	int		quote_type;
 
 	res = malloc_token(end, *start + 1);
 	if (!res)
 		return (1);
 	copy_word(res, str, end, *start + 1);
-	
-	// Marquer les tokens entre guillemets simples avec un préfixe spécial
+	// Déterminer le type de quote directement
 	if (str[*start] == '\'')
-	{
-		final_res = ft_strjoin("__SINGLE_QUOTE__", res);
-		free(res);
-		if (!final_res)
-			return (1);
-		res = final_res;
-	}
-	
-	if (put_token(token, res))
+		quote_type = 1; // Single quote
+	else if (str[*start] == '"')
+		quote_type = 2; // Double quote
+	else
+		quote_type = 0; // Normal (pas de quotes)
+	// Utiliser la nouvelle fonction avec quote_type
+	if (put_token_with_quote(token, res, quote_type))
 		return (free(res), 1);
 	(*start) += 1;
 	return (0);
@@ -134,37 +127,34 @@ void	handle_general(t_token **token, char *str, int *start, int i)
 {
 	char	*res;
 	int		j;
+	char	*first_token;
+	char	*remaining;
 
 	if (*start > i)
 		return ;
 	res = malloc_token(i, *start);
 	copy_word(res, str, i, *start);
-	
 	// Vérifier si le token n'est pas vide ou ne contient que des espaces
 	j = 0;
 	while (res[j] && res[j] == ' ')
 		j++;
-	if (res[j] == '\0')  // Si c'est que des espaces
+	if (res[j] == '\0') // Si c'est que des espaces
 	{
 		free(res);
 		(*start) = i + 1;
 		return ;
 	}
-	
-	// Cas spécial : séparer $? suivi de n'importe quoi ($?$, $??, $?hello, etc.)
+	// Cas spécial : séparer $? suivi de n'importe quoi ($?$, $??, $?hello,etc.)
 	if (ft_strlen(res) >= 3 && res[0] == '$' && res[1] == '?' && res[2] != '\0')
 	{
-		char *first_token = ft_strdup("$?");
-		char *remaining = ft_strdup(res + 2); // Tout ce qui suit $?
-		
+		first_token = ft_strdup("$?");
+		remaining = ft_strdup(res + 2); // Tout ce qui suit $?
 		put_token(token, first_token);
 		put_token(token, remaining);
 		free(res);
 	}
 	else
-	{
 		put_token(token, res);
-	}
 	(*start) = i + 1;
 }
 
