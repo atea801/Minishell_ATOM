@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 11:42:37 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/12 17:31:38 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/18 11:56:08 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,35 +29,55 @@ int	cleanup_on_error(int **pipes, pid_t *pids, int num_cmd, t_minishell *shell)
 }
 
 void	multi_heredoc_readline(char *line, char *delimiter, int *p_fd,
-		t_atom_env *env)
+		t_minishell *shell)
 {
-	close(p_fd[0]);
 	while (1)
 	{
+		if (p_fd && p_fd[0] != -1)
+		{
+			close(p_fd[0]);
+			p_fd[0] = -1;
+		}
 		line = readline("> ");
 		if (g_signal_received == 2)
 		{
 			if (line)
 				free(line);
-			close(p_fd[1]);
+			close_fds(shell->cmd);
+			if (p_fd && p_fd[1] != -1)
+			{
+				close(p_fd[1]);
+				p_fd[1] = -1;
+			}
 			exit(130);
 		}
-		if (!line)
+		else if (!line)
 		{
 			ft_putstr_fd("minishell: warning: here-document delimited ", 2);
 			ft_putstr_fd("by end-of-file (wanted `", 2);
 			ft_putstr_fd(delimiter, 2);
 			ft_putendl_fd("')", 2);
+			close_fds(shell->cmd);
+			if (p_fd && p_fd[1] != -1)
+			{
+				close(p_fd[1]);
+				p_fd[1] = -1;
+			}
 			break ;
 		}
 		if (ft_strcmp(delimiter, line) == 0)
 		{
+			close_fds(shell->cmd);
 			free(line);
+			if (p_fd && p_fd[1] != -1)
+			{
+				close(p_fd[1]);
+				p_fd[1] = -1;
+			}
 			break ;
 		}
-		write_here_doc(line, p_fd, env);
+		write_here_doc(line, p_fd, shell->env);
 	}
-	close(p_fd[1]);
 }
 
 void	last_heredoc_checker(t_cmd *cmd, int *p_fd, int index)

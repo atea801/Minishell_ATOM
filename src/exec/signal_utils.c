@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 11:23:47 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/12 18:05:57 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/13 16:34:46 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	multi_heredoc_signal_test(pid_t pid, int *p_fd)
 	return (0);
 }
 
-void	handle_multi_heredoc_child(int *p_fd, char *delimiter, t_atom_env *env)
+void	handle_multi_heredoc_child(int *p_fd, char *delimiter, t_minishell *shell)
 {
 	char	*line;
 
@@ -83,7 +83,7 @@ void	handle_multi_heredoc_child(int *p_fd, char *delimiter, t_atom_env *env)
 	if (p_fd && p_fd[0] != -1)
 		close(p_fd[0]);
 	line = NULL;
-	multi_heredoc_readline(line, delimiter, p_fd, env);
+	multi_heredoc_readline(line, delimiter, p_fd, shell);
 	if (p_fd && p_fd[1] != -1)
 		close(p_fd[1]);
 	if (g_signal_received == 2)
