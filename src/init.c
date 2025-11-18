@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 16:00:00 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/05 17:32:08 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/18 14:02:59 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
  * 
  * @param token_head Pointeur vers le head de la liste de tokens
  * @return int 0 si succès, 1 si erreur
+ * @note Initialisation quote_type
  */
 int	init_token_1_only(t_token **token_head)
 {
@@ -25,6 +26,7 @@ int	init_token_1_only(t_token **token_head)
 		return (1);
 	(*token_head)->value = NULL;
 	(*token_head)->type = NULL;
+	(*token_head)->quote_type = 0;
 	(*token_head)->next = NULL;
 	return (0);
 }
@@ -34,6 +36,7 @@ int	init_token_1_only(t_token **token_head)
  * 
  * @param token_head Pointeur vers le head de la liste de tokens
  * @return int 0 si succès, 1 si erreur
+ * @note Initialisation quote_type
  */
 int	init_token_struct(t_token **token_head, t_token_2 **token_2)
 {
@@ -42,6 +45,7 @@ int	init_token_struct(t_token **token_head, t_token_2 **token_2)
 		return (1);
 	(*token_head)->value = NULL;
 	(*token_head)->type = NULL;
+	(*token_head)->quote_type = 0;
 	(*token_head)->next = NULL;
 	*token_2 = malloc(sizeof(t_token_2));
 	if (!*token_2)
