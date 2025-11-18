@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/12 16:13:30 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/18 14:17:43 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,43 @@
 
 extern volatile sig_atomic_t	g_signal_received;
 
+/****************************************************************************
+ *							QUOTE VALIDATION								*
+ ****************************************************************************/
+
+/**
+ * @brief États possibles pour la state machine de validation des quotes
+ *
+ * STATE_NORMAL: En dehors de toute quote
+ * STATE_SINGLE: À l'intérieur de quotes simples '...'
+ * STATE_DOUBLE: À l'intérieur de quotes doubles "..."
+ */
+typedef enum e_quote_state_simple
+{
+	STATE_NORMAL = 0,
+	STATE_SINGLE = 1,
+	STATE_DOUBLE = 2
+}								t_quote_state_simple;
+
+/**
+ * @brief Contexte de validation des quotes avec informations détaillées
+ *
+ * Pour diagnostic et debug si nécessaire
+ */
+typedef struct s_quote_context_simple
+{
+	t_quote_state_simple		current_state;
+	int error_pos;   // -1 si OK, sinon position erreur
+	char *error_msg; // Message d'erreur détaillé
+	char *input;     // Input analysé (pour debug)
+}								t_quote_context_simple;
+
 typedef struct s_token
 {
 	char						*head;
 	char						*value;
 	char						*type;
+	int quote_type; // 0=normal, 1=single_quote, 2=double_quote
 	struct s_token				*next;
 }								t_token;
 
@@ -187,7 +219,11 @@ int								handle_single_redir(char *input, char *res,
 int								is_redir(char c);
 
 // parsing_1.c
-int								valide_quote(char *str);
+// int								valide_quote(char *str);
+int								validate_quotes_improved(char *str); // Nouvelle version
+t_quote_context_simple			*analyze_quotes_detailed(char *input);
+char							*get_quote_error_message(t_quote_context_simple *ctx);
+void							free_quote_context_simple(t_quote_context_simple *ctx);
 char							*parsing_1(t_minishell *shell, char *input);
 
 /************************************************************************
@@ -225,6 +261,8 @@ void							print_token_list_type(t_token *head);
 void							copy_word(char *res, char *str, int end,
 									int start);
 int								put_token(t_token **token, char *res);
+int								put_token_with_quote(t_token **token, char *res,
+									int quote_type);
 void							print_token_2_list(t_token_2 *token_2);
 char							*malloc_token(int end, int start);
 
