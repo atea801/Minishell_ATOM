@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 19:27:38 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/08 13:21:35 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/18 13:56:18 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,20 @@ static char	*handle_dollar(t_minishell *shell, char **s, int *i, char *res)
 	return (res);
 }
 
+/**
+ * @brief 
+ * 
+ * @param shell 
+ * @param token 
+ * @note rajout du dernier if Permet de restaurer placeholders utilisees 
+ * pour proteger les '$' provenant de quotes simple lors de la tokenisation
+ */
 void	expand_all_vars(t_minishell *shell, t_token_2 *token)
 {
 	char	*res;
 	char	*s;
 	int		i;
+	int		k;
 
 	if (ft_strcmp(token->type, "HEREDOC") == 0)
 		return ;
@@ -105,7 +114,7 @@ void	expand_all_vars(t_minishell *shell, t_token_2 *token)
 		{
 			res = handle_escaped_dollar(&s, &i, res);
 			if (!res)
-			return (free(token->value), (void)0);
+				return (free(token->value), (void)0);
 		}
 		// else if (s[i] == '$' && (s[i + 1] == '?' || ft_isalnum(s[i + 1])
 		// 		|| s[i + 1] == '_'))
@@ -122,4 +131,14 @@ void	expand_all_vars(t_minishell *shell, t_token_2 *token)
 		res = ft_strjoin_free(res, ft_strdup(s));
 	free(token->value);
 	token->value = res;
+	if (token->value)
+	{
+		k = 0;
+		while (token->value[k])
+		{
+			if (token->value[k] == '\x07')
+				token->value[k] = '$';
+			k++;
+		}
+	}
 }
