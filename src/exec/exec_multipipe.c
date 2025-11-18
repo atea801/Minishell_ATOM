@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:32:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/12 17:46:51 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/18 11:56:45 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,29 @@ static void	close_unused_fds(t_cmd *cmd_list, t_cmd *current_cmd)
 	{
 		if (tmp != current_cmd)
 		{
-			if (tmp->fd_in != -1)
+			if (tmp->fd_in > 2)
+			{
 				close(tmp->fd_in);
-			if (tmp->fd_out != -1)
+				tmp->fd_in = -1;
+			}
+			if (tmp->fd_out > 2)
+			{
 				close(tmp->fd_out);
+				tmp->fd_out = -1;
+			}
 		}
 		tmp = tmp->next;
 	}
 }
 
 static void	execute_child(t_minishell *shell, t_cmd *cmd, t_cmd *cmd_list,
-		char **env)
+		char **env, int **pipes, int num_pipes)
 {
 	char	*path;
 
 	handle_redirections(cmd);
 	close_unused_fds(cmd_list, cmd);
+	close_all_pipes(pipes, num_pipes);
 	if (!cmd->argv || !cmd->argv[0])
 		exit(127);
 	if (is_builtin(cmd->argv[0]))
@@ -90,8 +97,6 @@ void	execute_multipipe(t_minishell *shell, t_cmd *cmd, char **env)
 	t_cmd	*current;
 	int		i;
 
-	if (process_heredocs(cmd, shell) != 0)
-		return ;
 	num_cmd = count_commands(cmd);
 	if (!init_resources(&pipes, &pids, num_cmd))
 		return ;
@@ -106,7 +111,16 @@ void	execute_multipipe(t_minishell *shell, t_cmd *cmd, char **env)
 		{
 			restore_default_signals();
 			setup_pipe_redirections(pipes, i, num_cmd, current);
-			execute_child(shell, current, cmd, env);
+			close_all_pipes(pipes, num_cmd - 1);
+			execute_child(shell, current, cmd, env, pipes, num_cmd - 1);
+		}
+		if (pids[i] > 0 && pipes && i >= 0 && i < num_cmd - 1 && pipes[i])
+		{
+			if (pipes[i][1] >= 0)
+			{
+				close(pipes[i][1]);
+				pipes[i][1] = -1;
+			}
 		}
 		current = current->next;
 	}
