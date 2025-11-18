@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/12 18:06:32 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/13 16:33:57 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -515,7 +515,7 @@ int								cleanup_on_error(int **pipes, pid_t *pids,
 									int num_cmd, t_minishell *shell);
 void							multi_heredoc_readline(char *line,
 									char *delimiter, int *p_fd,
-									t_atom_env *env);
+									t_minishell *shell);
 void							handle_child_status(t_minishell *shell,
 									int status);
 
@@ -534,17 +534,18 @@ void							free_heredoc_delims(char **delims);
 char							**extract_heredoc_delims(t_cmd *cmd);
 int								count_and_extract_heredocs(t_cmd *cmd);
 int								multiple_heredoc_gestion(t_cmd *cmd,
-									t_atom_env *env, int index);
+									t_minishell *shell, int index);
 int								exec_multiple_heredoc(t_cmd *cmd,
-									t_atom_env *env);
+									t_minishell *shell);
 
 // exec_signals_utils.c
 void							handle_multi_heredoc_child(int *p_fd,
-									char *delimiter, t_atom_env *env);
+									char *delimiter, t_minishell *shell);
 char							*heredoc_readline(int **pipe_fd, t_cmd *cmd);
 void							heredoc_signal_test(int *p_fd, pid_t pid,
 									int *status);
 int								multi_heredoc_signal_test(pid_t pid, int *p_fd);
+
 /************************************************************************
  *								SIGNALS									*
  ************************************************************************/
