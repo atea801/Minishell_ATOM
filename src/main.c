@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/12 16:35:10 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/18 15:31:08 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,6 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 			free(prompt);
 			continue ;
 		}
-		// printf("res : %s\n", res);
 		if (!res)
 		{
 			if (input)

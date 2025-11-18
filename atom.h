@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/18 14:17:43 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/18 14:46:34 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,8 +221,6 @@ int								is_redir(char c);
 // parsing_1.c
 // int								valide_quote(char *str);
 int								validate_quotes_improved(char *str); // Nouvelle version
-t_quote_context_simple			*analyze_quotes_detailed(char *input);
-char							*get_quote_error_message(t_quote_context_simple *ctx);
 void							free_quote_context_simple(t_quote_context_simple *ctx);
 char							*parsing_1(t_minishell *shell, char *input);
 
