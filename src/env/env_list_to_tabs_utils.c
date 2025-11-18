@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 10:02:06 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/05 15:11:37 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/18 17:50:47 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	free_allocated_tab(char **tab, int i)
 
 void	fill_up_box_tabs(t_atom_env *env_list, char **tab, int count)
 {
-	int i;
-	int j;
-	int k;
+	int	i;
+	int	j;
+	int	k;
 
 	i = 0;
 	while (env_list && i < count)
