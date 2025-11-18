@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 12:10:28 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/12 11:08:35 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/18 14:31:50 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,69 @@
  * @param str
  * @return int
  */
-int	valide_quote(char *str)
-{
-	int	i;
-	int	flag_open;
+// int	valide_quote(char *str)
+// {
+// 	int	i;
+// 	int	flag_open;
 
+// 	i = 0;
+// 	flag_open = 0;
+// 	while (str[i])
+// 	{
+// 		if (str[i] == 39 || str[i] == 34)
+// 			flag_open++;
+// 		i++;
+// 	}
+// 	if (flag_open % 2 != 0)
+// 		return (1);
+// 	return (0);
+// }
+
+/**
+ * @brief Version améliorée de valide_quote avec state machine
+ * 
+ * AMÉLIORATION MAJEURE : Au lieu de compter les quotes, utilise une 
+ * state machine qui comprend les règles d'imbrication bash
+ * 
+ * RÈGLES GÉRÉES :
+ * - Dans des quotes simples : les doubles sont littérales  
+ * - Dans des quotes doubles : les simples sont littérales
+ * - Détection précise des quotes non fermées
+ *
+ * @param str Chaîne à valider
+ * @return int 1 si quotes non fermées, 0 si OK (MÊME INTERFACE que l'original)
+ */
+int	validate_quotes_improved(char *str)
+{
+	t_quote_state_simple	state;
+	int						i;
+
+	if (!str)
+		return (1);
 	i = 0;
-	flag_open = 0;
+	state = STATE_NORMAL;
 	while (str[i])
 	{
-		if (str[i] == 39 || str[i] == 34)
-			flag_open++;
+		if (str[i] == '\'' && state != STATE_DOUBLE)
+		{
+			// Toggle state pour quotes simples (sauf si dans doubles)
+			if (state == STATE_SINGLE)
+				state = STATE_NORMAL;
+			else
+				state = STATE_SINGLE;
+		}
+		else if (str[i] == '"' && state != STATE_SINGLE)
+		{
+			// Toggle state pour quotes doubles (sauf si dans simples)
+			if (state == STATE_DOUBLE)
+				state = STATE_NORMAL;
+			else
+				state = STATE_DOUBLE;
+		}
 		i++;
 	}
-	if (flag_open % 2 != 0)
+	// Retourne 1 si pas fermé (comme l'original)
+	if (state != STATE_NORMAL)
 		return (1);
 	return (0);
 }
@@ -48,6 +97,7 @@ int	valide_quote(char *str)
  *
  * @param input
  * @return char*
+ * @note Utilisation de la version améliorée dans le if
  */
 char	*parsing_1(t_minishell *shell, char *input)
 {
@@ -55,10 +105,9 @@ char	*parsing_1(t_minishell *shell, char *input)
 	char	*res_2;
 
 	res_1 = add_space_to_operator(input);
-	// printf("%s\n", res_1);
 	res_2 = clear_input(res_1);
 	free(res_1);
-	if (valide_quote(res_2))
+	if (validate_quotes_improved(res_2))
 	{
 		ft_putstr_fd("Minishell: unclosed quotes\n", 2);
 		add_history(input);
