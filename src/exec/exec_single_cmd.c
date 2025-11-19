@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_single_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 15:44:26 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/18 17:44:12 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/19 11:43:37 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ void	exec_single_cmd(t_minishell *shell, t_cmd *cmd)
 
 	if (!cmd || !cmd->argv || !cmd->argv[0])
 		return ;
-	tab_to_env = env_list_to_tab(shell->env);
+	tab_to_env = NULL;
+	// tab_to_env = env_list_to_tab(shell->env);
 	if (is_builtin(cmd->argv[0]) == 1)
 	{
 		shell->exit_code = execute_builtin(shell);
