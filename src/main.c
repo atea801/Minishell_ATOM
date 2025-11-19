@@ -6,12 +6,19 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/19 11:13:50 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/19 16:09:41 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
+/**
+ * @brief Get the dynamic prompt object
+ * 
+ * @return char* 
+ * @note prompt = ft_strjoin(directory, " > ");
+
+ */
 char	*get_dynamic_prompt(void)
 {
 	char	*cwd;
@@ -60,28 +67,19 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 {
 	char		*input;
 	char		*res;
-	char		**env_tab;
 	char		*prompt;
 	int			parsing_res;
 	t_token		*t_head;
 	t_token_2	*t_head_2;
 	size_t		len;
-	ssize_t		nread;
-
-	size_t		len;
+	// ssize_t		nread;
 
 	// t_cmd		*current;
 	t_head = NULL;
 	t_head_2 = NULL;
 	len = 0;
-	env_tab = env_list_to_tab_new(shell->env);
 	(void)ac;
 	(void)argv;
-	if (!env_tab)
-	{
-		ft_putstr_fd("Minishell: Error: failed to convert env to tab\n", 2);
-		return ;
-	}
 	while (1)
 	{
 		if (t_head)
@@ -118,7 +116,6 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 				free_cmd_list(shell->cmd);
 				shell->cmd = NULL;
 			}
-			free_env_tab(env_tab);
 			break ;
 		}
 		res = parsing_1(shell, input);
@@ -161,7 +158,6 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 					exec_single_cmd(shell, shell->cmd);
 			}
 		}
-		/* Restore prompt signals after command execution completes */
 		if (isatty(STDIN_FILENO))
 			setup_signals_prompt();
 		if (shell->should_exit)
@@ -177,10 +173,8 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 			}
 			if (prompt)
 				free(prompt);
-			free_env_tab(env_tab);
 			break ;
 		}
-		/* Only add history in interactive mode */
 		if (isatty(STDIN_FILENO) && input && *input)
 			add_history(input);
 		if (input)
