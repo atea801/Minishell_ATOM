@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:18:07 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/08 16:06:31 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/19 16:02:13 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@
  * exemples :
  *
  *- accepte echo file.txt -l -w grep ...
+
+ if ((res[i] >= 'a' && res[i] <= 'z') || (res[i] >= '0' && res[i] <= '9')
+			|| (res[i] >= 'A' && res[i] <= 'Z') || res[i] == '-'
+			|| res[i] == '.' || res[i] == ':' || res[i] == '/' || res[i] == '_'
+			|| res[i] == '~' || res[i] == '\'' || res[i] == '"' || res[i] == '$'
+			|| res[i] == '=' || res[i] == '+' || res[i] == '@' || res[i] == '%'
+			|| res[i] == ',' || res[i] == '(' || res[i] == ')')
  *
  * @param res
  * @return char*
@@ -33,11 +40,10 @@ char	*type_mot(char *res)
 	{
 		if ((res[i] >= 'a' && res[i] <= 'z') || (res[i] >= '0' && res[i] <= '9')
 			|| (res[i] >= 'A' && res[i] <= 'Z') || res[i] == '-'
-			|| res[i] == '.' || res[i] == ':' || res[i] == '/'
-			|| res[i] == '_' || res[i] == '~' || res[i] == '\''
-			|| res[i] == '"' || res[i] == '$' || res[i] == '='
-			|| res[i] == '+' || res[i] == '@' || res[i] == '%'
-			|| res[i] == ',')
+			|| res[i] == '.' || res[i] == ':' || res[i] == '/' || res[i] == '_'
+			|| res[i] == '~' || res[i] == '\'' || res[i] == '"' || res[i] == '$'
+			|| res[i] == '=' || res[i] == '+' || res[i] == '@' || res[i] == '%'
+			|| res[i] == ',' || res[i] == '(' || res[i] == ')')
 			return ("MOT");
 	}
 	return (NULL);
