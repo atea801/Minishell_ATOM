@@ -6,14 +6,14 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 10:00:00 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/18 14:48:41 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/19 10:51:58 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../atom.h"
 
 /**
- * @brief Drop-in replacement pour valide_quote()
+ * @brief Verifie si la chaine contient des quotes non fermees 
  * 
  * AMÉLIORATION MAJEURE : Au lieu de compter les quotes, on utilise une 
  * state machine qui comprend les règles d'imbrication
@@ -24,7 +24,7 @@
  * - Détection précise des quotes non fermées
  * 
  * @param input Chaîne à valider
- * @return int 1 si quotes non fermées, 0 si OK (MÊME INTERFACE que l'original)
+ * @return int 1 si quotes non fermées, 0 toutes les quotes sont fermees
  */
 int	validate_quotes_improved(char *input)
 {
@@ -55,7 +55,7 @@ int	validate_quotes_improved(char *input)
 		}
 		i++;
 	}
-	// Retourne 1 si pas fermé (comme l'original)
+	// Retourne 1 si pas fermé (comme avant)
 	if (state != STATE_NORMAL)
 		return (1);
 	return (0);
