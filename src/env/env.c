@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:47:58 by codespace         #+#    #+#             */
-/*   Updated: 2025/10/05 18:03:22 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/19 13:13:21 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 /**
  * @brief Assigne la structure d'environnement et la rempli au fur et a mesure
- * 
- * @param env 
- * @param env_line 
+ *
+ * @param env
+ * @param env_line
  */
-void	put_key_and_value(t_atom_env **env, char *env_line)
+void	put_key_and_value(t_atom_env **env, char *env_line, int islast)
 {
 	(*env)->key = get_key(env_line);
 	(*env)->value = get_value(env_line);
@@ -26,72 +26,44 @@ void	put_key_and_value(t_atom_env **env, char *env_line)
 		(*env)->has_value = true;
 	else
 		(*env)->has_value = false;
-	(*env)->next = malloc(sizeof(t_atom_env));
-	if (!(*env)->next)
-		return ;
-	(*env) = (*env)->next;
-	(*env)->next = NULL;
-	(*env)->key = NULL;
-	(*env)->value = NULL;
-	(*env)->has_value = false;
-	(*env)->has_twin = false;
-	(*env)->size = 0;
+	if (!islast)
+	{
+		(*env)->next = malloc(sizeof(t_atom_env));
+		(*env)->next->next = NULL;
+		(*env)->next->key = NULL;
+		(*env)->next->value = NULL;
+		(*env)->next->has_value = false;
+		(*env)->next->has_twin = false;
+		(*env)->next->size = 0;
+		*env = (*env)->next;
+	}
 }
 
 /**
- * @brief Fonction principale qui recupere et creer la copie de 
+ * @brief Fonction principale qui recupere et creer la copie de
  * l'environnement dans notre liste chainee,
  * ligne par ligne
- * 
- * @param my_env 
- * @param env 
+ *
+ * @param my_env
+ * @param env
  */
 void	my_getenv(t_atom_env **my_env, char **env)
 {
-	int	i;
+	int			i;
+	int			count;
+	t_atom_env	*iter;
 
-	i = -1;
-	while (env[++i])
-		put_key_and_value(my_env, env[i]);
+	i = 0;
+	count = 0;
+	iter = *my_env;
+	while (env[count])
+		count++;
+	while (i < count)
+	{
+		put_key_and_value(&iter, env[i], i == count - 1);
+		i++;
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // int	check_special_case(char *env_line)
 // {

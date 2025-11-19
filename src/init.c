@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 16:00:00 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/18 14:02:59 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/19 16:25:03 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
  * @brief Initialise seulement une structure t_token (sans t_token_2)
- * 
+ *
  * @param token_head Pointeur vers le head de la liste de tokens
  * @return int 0 si succès, 1 si erreur
  * @note Initialisation quote_type
@@ -33,7 +33,7 @@ int	init_token_1_only(t_token **token_head)
 
 /**
  * @brief Initialise une structure t_token
- * 
+ *
  * @param token_head Pointeur vers le head de la liste de tokens
  * @return int 0 si succès, 1 si erreur
  * @note Initialisation quote_type
@@ -57,10 +57,9 @@ int	init_token_struct(t_token **token_head, t_token_2 **token_2)
 	return (0);
 }
 
-
 /**
  * @brief Initialise une structure t_atom_env
- * 
+ *
  * @param env_head Pointeur vers le head de la liste d'environnement
  * @return int 0 si succès, 1 si erreur
  */
@@ -80,7 +79,7 @@ int	init_env_struct(t_atom_env **env_head)
 
 /**
  * @brief Initialise une structure t_cmd
- * 
+ *
  * @param env_head Pointeur vers le head de la liste des commandes
  * @return int 0 si succès, 1 si erreur
  */
@@ -93,21 +92,19 @@ int	init_cmd_struct(t_cmd **cmd_list)
 }
 
 /**
- * @brief initalisation principale, avec appels sous fonctions pour 
+ * @brief initalisation principale, avec appels sous fonctions pour
  * initialiser la structure de l'environnement et la structure du token
- * 
- * 
+ *
+ *
  * POSSIBILITE D'AFFICHER L'ENVIRONNEMENT ICI = FONCTION A DECOMMENTER
- * 
- * @param env_head 
- * @param token_head 
- * @param env 
+ *
+ * @param env_head
+ * @param token_head
+ * @param env
  */
-void	init_all(t_atom_env **env_head, t_token **token_head,
-	char **env, t_token_2 **token_2)
+void	init_all(t_atom_env **env_head, t_token **token_head, char **env,
+		t_token_2 **token_2)
 {
-	t_atom_env	*env_struct;
-
 	if (init_token_struct(token_head, token_2) != 0)
 		return ;
 	if (init_env_struct(env_head) != 0)
@@ -115,10 +112,5 @@ void	init_all(t_atom_env **env_head, t_token **token_head,
 		free(*token_head);
 		return ;
 	}
-	// if (init_cmd_struct(cmd_list) != 0)
-	// 	return ;
-	env_struct = *env_head;
 	my_getenv(env_head, env);
-	*env_head = env_struct;
-	// print_env_list(*env_head);
 }

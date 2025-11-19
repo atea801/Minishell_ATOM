@@ -13,7 +13,8 @@
 
 #include "atom.h"
 
-void	exec_heredoc(t_cmd *cmd, int *pipe_fd, t_atom_env *env)
+void	exec_heredoc(t_cmd *cmd, int *pipe_fd, t_atom_env *env,
+		t_minishell *shell)
 {
 	char	*line;
 
@@ -34,14 +35,17 @@ void	exec_heredoc(t_cmd *cmd, int *pipe_fd, t_atom_env *env)
 		if (g_signal_received == 2)
 		{
 			g_signal_received = 0;
+			free_all_life(shell);
 			exit(130);
 		}
+		free_all_life(shell);
 		exit(0);
 	}
+	free_all_life(shell);
 	exit(1);
 }
 
-void	here_doc_infile(t_cmd *cmd, t_atom_env *env)
+void	here_doc_infile(t_cmd *cmd, t_atom_env *env, t_minishell *shell)
 {
 	int		p_fd[2];
 	pid_t	pid;
@@ -55,7 +59,7 @@ void	here_doc_infile(t_cmd *cmd, t_atom_env *env)
 	if (pid == -1)
 		return (close(p_fd[0]), close(p_fd[1]), perror("fork"));
 	if (pid == 0)
-		exec_heredoc(cmd, p_fd, env);
+		exec_heredoc(cmd, p_fd, env, shell);
 	else
 	{
 		heredoc_signal_test(p_fd, pid, &status);

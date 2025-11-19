@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:32:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/18 17:34:02 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/19 17:23:29 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,23 +47,29 @@ static void	execute_child(t_minishell *shell, t_cmd *cmd, t_cmd *cmd_list)
 	if (!cmd->argv || !cmd->argv[0])
 	{
 		free_env_tab(env);
+		free_all_life(shell);
 		exit(127);
 	}
 	if (is_builtin(cmd->argv[0]))
 	{
 		shell->exit_code = execute_builtin(shell);
+		free_env_tab(env);
+		free_all_life(shell);
 		exit(shell->exit_code);
 	}
 	path = find_command_path(cmd->argv[0], shell);
 	if (!path)
 	{
 		ft_putendl_fd(cmd->argv[0], 2);
+		free_env_tab(env);
+		free_all_life(shell);
 		exit(127);
 	}
 	execve(path, cmd->argv, env);
 	perror("execve");
 	free(path);
 	free_env_tab(env);
+	free_all_life(shell);
 	exit(126);
 }
 
@@ -116,6 +122,7 @@ void	execute_multipipe(t_minishell *shell, t_cmd *cmd)
 			restore_default_signals();
 			setup_pipe_redirections(pipes, i, num_cmd, current);
 			close_all_pipes(pipes, num_cmd - 1);
+			free_pipes(pipes, num_cmd - 1);
 			execute_child(shell, current, cmd);
 		}
 		if (pids[i] > 0 && pipes && i >= 0 && i < num_cmd - 1 && pipes[i])
