@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/19 16:50:32 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/19 18:37:19 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,8 @@ typedef struct s_shell_buffers
 	char						*prompt;
 	char						*input;
 	char						*res;
+	int							**pipes;
+	int							num_cmd;
 }								t_shell_buffers;
 
 typedef struct s_minishell
@@ -553,7 +555,7 @@ void							setup_pipe_redirections(int **pipes,
 void							last_heredoc_checker(t_cmd *cmd, int *p_fd,
 									int index);
 int								check_pid_error(int **pipes, int num_cmd);
-int								cleanup_on_error(int **pipes, pid_t *pids,
+int								cleanup_on_error(pid_t *pids,
 									int num_cmd, t_minishell *shell);
 void							multi_heredoc_readline(char *line,
 									char *delimiter, int *p_fd,
