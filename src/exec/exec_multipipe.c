@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:32:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/19 18:30:44 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/19 19:24:37 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ static void	execute_child(t_minishell *shell, t_cmd *cmd, t_cmd *cmd_list,
 	path = find_command_path(cmd->argv[0], shell);
 	if (!path)
 	{
-		ft_putendl_fd(cmd->argv[0], 2);
+		ft_putstr_fd(cmd->argv[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
 		free_env_tab(env);
 		free_all_life(shell);
 		free_pipes(shell->buffers.pipes, num_cmd - 1);
@@ -129,6 +130,7 @@ void	execute_multipipe(t_minishell *shell, t_cmd *cmd)
 			free(pids);
 			execute_child(shell, current, cmd, num_cmd);
 		}
+		current = current->next;
 		if (pids[i] > 0 && shell->buffers.pipes && i >= 0 && i < num_cmd - 1
 			&& shell->buffers.pipes[i])
 		{
@@ -138,7 +140,6 @@ void	execute_multipipe(t_minishell *shell, t_cmd *cmd)
 				shell->buffers.pipes[i][1] = -1;
 			}
 		}
-		current = current->next;
 	}
 	cleanup_on_error(pids, num_cmd, shell);
 }
