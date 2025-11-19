@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:30:07 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/08 13:54:54 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/19 10:59:32 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ char	*add_pipe_space(char *input)
 	res[j] = '\0';
 	return (res);
 }
+
 /**
  * @brief Ajoute des espaces autour des opérateurs de redirection et 
  * de pipe.

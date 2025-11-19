@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/19 11:03:14 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/19 11:09:35 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,7 @@ int								is_redir(char c);
 
 // parsing_1.c
 // int								valide_quote(char *str);
-int								validate_quotes_improved(char *str); // Nouvelle version
+int								validate_quotes_improved(char *str);
 void							free_quote_context_simple(t_quote_context_simple *ctx);
 char							*parsing_1(t_minishell *shell, char *input);
 
