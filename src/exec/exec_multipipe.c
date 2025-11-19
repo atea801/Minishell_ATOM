@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:32:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/10 13:47:40 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/18 17:34:02 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,34 @@ static void	close_unused_fds(t_cmd *cmd_list, t_cmd *current_cmd)
 	{
 		if (tmp != current_cmd)
 		{
-			if (tmp->fd_in != -1)
+			if (tmp->fd_in > 2)
+			{
 				close(tmp->fd_in);
-			if (tmp->fd_out != -1)
+				tmp->fd_in = -1;
+			}
+			if (tmp->fd_out > 2)
+			{
 				close(tmp->fd_out);
+				tmp->fd_out = -1;
+			}
 		}
 		tmp = tmp->next;
 	}
 }
 
-static void	execute_child(t_minishell *shell, t_cmd *cmd, t_cmd *cmd_list,
-		char **env)
+static void	execute_child(t_minishell *shell, t_cmd *cmd, t_cmd *cmd_list)
 {
 	char	*path;
+	char	**env;
 
+	env = env_list_to_tab_new(shell->env);
 	handle_redirections(cmd);
 	close_unused_fds(cmd_list, cmd);
 	if (!cmd->argv || !cmd->argv[0])
+	{
+		free_env_tab(env);
 		exit(127);
+	}
 	if (is_builtin(cmd->argv[0]))
 	{
 		shell->exit_code = execute_builtin(shell);
@@ -53,6 +63,7 @@ static void	execute_child(t_minishell *shell, t_cmd *cmd, t_cmd *cmd_list,
 	execve(path, cmd->argv, env);
 	perror("execve");
 	free(path);
+	free_env_tab(env);
 	exit(126);
 }
 
@@ -82,7 +93,7 @@ static int	init_resources(int ***pipes, pid_t **pids, int num_cmd)
 	return (1);
 }
 
-void	execute_multipipe(t_minishell *shell, t_cmd *cmd, char **env)
+void	execute_multipipe(t_minishell *shell, t_cmd *cmd)
 {
 	int		num_cmd;
 	int		**pipes;
@@ -90,8 +101,6 @@ void	execute_multipipe(t_minishell *shell, t_cmd *cmd, char **env)
 	t_cmd	*current;
 	int		i;
 
-	if (process_heredocs(cmd, shell) != 0)
-		return ;
 	num_cmd = count_commands(cmd);
 	if (!init_resources(&pipes, &pids, num_cmd))
 		return ;
@@ -106,7 +115,16 @@ void	execute_multipipe(t_minishell *shell, t_cmd *cmd, char **env)
 		{
 			restore_default_signals();
 			setup_pipe_redirections(pipes, i, num_cmd, current);
-			execute_child(shell, current, cmd, env);
+			close_all_pipes(pipes, num_cmd - 1);
+			execute_child(shell, current, cmd);
+		}
+		if (pids[i] > 0 && pipes && i >= 0 && i < num_cmd - 1 && pipes[i])
+		{
+			if (pipes[i][1] >= 0)
+			{
+				close(pipes[i][1]);
+				pipes[i][1] = -1;
+			}
 		}
 		current = current->next;
 	}

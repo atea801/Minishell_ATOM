@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/18 15:31:08 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/19 11:05:50 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 	char		*res;
 	char		**env_tab;
 	char		*prompt;
-	char		**current_env_tab;
 	int			parsing_res;
 	t_token		*t_head;
 	t_token_2	*t_head_2;
@@ -72,6 +71,7 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 	t_head = NULL;
 	t_head_2 = NULL;
 	len = 0;
+	len = 0;
 	env_tab = env_list_to_tab_new(shell->env);
 	(void)ac;
 	(void)argv;
@@ -80,7 +80,6 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 		ft_putstr_fd("Minishell: Error: failed to convert env to tab\n", 2);
 		return ;
 	}
-	// print_env_tab(env_tab);
 	while (1)
 	{
 		if (t_head)
@@ -151,20 +150,18 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 		}
 		if (shell->should_execute && shell->cmd)
 		{
-			current_env_tab = env_list_to_tab_new(shell->env);
-			if (current_env_tab)
+			count_and_extract_heredocs(shell->cmd);
+			if (process_heredocs(shell->cmd, shell) == 0)
 			{
-				count_and_extract_heredocs(shell->cmd);
-				if (process_heredocs(shell->cmd, shell) == 0)
-				{
-					if (shell->cmd->next)
-						execute_multipipe(shell, shell->cmd, current_env_tab);
-					else
-						exec_single_cmd(shell, shell->cmd, current_env_tab);
-				}
-				free_env_tab(current_env_tab);
+				if (shell->cmd->next)
+					execute_multipipe(shell, shell->cmd);
+				else
+					exec_single_cmd(shell, shell->cmd);
 			}
 		}
+		/* Restore prompt signals after command execution completes */
+		if (isatty(STDIN_FILENO))
+			setup_signals_prompt();
 		/* Restore prompt signals after command execution completes */
 		if (isatty(STDIN_FILENO))
 			setup_signals_prompt();
@@ -181,9 +178,14 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 			}
 			if (prompt)
 				free(prompt);
+			if (prompt)
+				free(prompt);
 			free_env_tab(env_tab);
 			break ;
 		}
+		/* Only add history in interactive mode */
+		if (isatty(STDIN_FILENO) && input && *input)
+			add_history(input);
 		/* Only add history in interactive mode */
 		if (isatty(STDIN_FILENO) && input && *input)
 			add_history(input);
@@ -191,6 +193,8 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 			free(input);
 		if (res)
 			free(res);
+		if (prompt)
+			free(prompt);
 		if (prompt)
 			free(prompt);
 	}
@@ -214,11 +218,15 @@ int	main(int ac, char **av, char **env)
 	init_all(&shell.env, &t_head, env, &t_head_2);
 	setup_signals_prompt();
 	my_readline(ac, av, &shell);
-	free_all(t_head, shell.env, t_head_2);
-	// rl_clear_history();
-	// if (token_head || token_2)
-	// 	free_token_list(token_head, token_2);
-	// if (env_head)
-	// 	free_env_list(env_head);
+	// free_all(t_head, shell.env, t_head_2);
+	if (t_head)
+		free_token_1_only(t_head);
+	if (t_head_2)
+		free_token_2_list(&t_head_2);
+	if (shell.cmd)
+		free_cmd_list(shell.cmd);
+	if (shell.env)
+		free_env_list(shell.env);
+	rl_clear_history();
 	return (shell.exit_code);
 }

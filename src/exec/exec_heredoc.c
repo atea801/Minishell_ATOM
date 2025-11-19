@@ -74,6 +74,7 @@ void	write_here_doc(char *line, int *pipe_fd, t_atom_env *env)
 	char	*expanded;
 	char	*var_value;
 
+	close(pipe_fd[0]);
 	if (line[0] == '$' && line[1] != '\0')
 	{
 		var_value = search_in_list(&env, line);
@@ -84,17 +85,21 @@ void	write_here_doc(char *line, int *pipe_fd, t_atom_env *env)
 		free(line);
 		line = expanded;
 	}
-	printf("%s\n", line);
 	ft_putstr_fd(line, pipe_fd[1]);
 	ft_putchar_fd('\n', pipe_fd[1]);
 	free(line);
+	if (pipe_fd && pipe_fd[1] != -1)
+	{
+		close(pipe_fd[1]);
+		pipe_fd[1] = -1;
+	}
 }
 
 int	process_heredocs(t_cmd *cmd, t_minishell *shell)
 {
 	int	result;
 
-	result = exec_multiple_heredoc(cmd, shell->env);
+	result = exec_multiple_heredoc(cmd, shell);
 	if (result != 0)
 	{
 		shell->exit_code = 130;

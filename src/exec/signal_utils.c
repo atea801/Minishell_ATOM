@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 11:23:47 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/10 14:25:40 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/13 16:34:46 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ char	*heredoc_readline(int **pipe_fd, t_cmd *cmd)
 	{
 		if (line)
 			free(line);
-		close((*pipe_fd)[1]);
-		g_signal_received = 0;
+		if (pipe_fd && *pipe_fd && (*pipe_fd)[1] != -1)
+			close((*pipe_fd)[1]);
+		// g_signal_received = 0;
 		return (NULL);
 	}
 	if (!line)
@@ -52,24 +53,39 @@ char	*heredoc_readline(int **pipe_fd, t_cmd *cmd)
 	return (line);
 }
 
-int	multi_heredoc_signal_test(pid_t pid)
+int	multi_heredoc_signal_test(pid_t pid, int *p_fd)
 {
 	int	status;
 
 	waitpid(pid, &status, 0);
-	if (g_signal_received == 2 || (WIFEXITED(status)
-			&& WEXITSTATUS(status) == 130))
+	if ((WIFEXITED(status) && WEXITSTATUS(status) == 130)
+		|| (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT))
+	{
+		if (p_fd)
+		{
+			if (p_fd[0] != -1)
+				close(p_fd[0]);
+			if (p_fd[1] != -1)
+				close(p_fd[1]);
+		}
+		g_signal_received = 0;
 		return (1);
+	}
+	g_signal_received = 0;
 	return (0);
 }
 
-void	handle_multi_heredoc_child(int *p_fd, char *delimiter, t_atom_env *env)
+void	handle_multi_heredoc_child(int *p_fd, char *delimiter, t_minishell *shell)
 {
 	char	*line;
 
 	setup_signals_heredoc();
+	if (p_fd && p_fd[0] != -1)
+		close(p_fd[0]);
 	line = NULL;
-	multi_heredoc_readline(line, delimiter, p_fd, env);
+	multi_heredoc_readline(line, delimiter, p_fd, shell);
+	if (p_fd && p_fd[1] != -1)
+		close(p_fd[1]);
 	if (g_signal_received == 2)
 		exit(130);
 	exit(0);

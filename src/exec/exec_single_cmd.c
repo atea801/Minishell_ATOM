@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 15:44:26 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/10 18:55:59 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/18 17:44:12 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,15 @@ void	handle_redirections(t_cmd *cmd)
 	}
 }
 
-void	exec_single_cmd(t_minishell *shell, t_cmd *cmd, char **tab_to_env)
+void	exec_single_cmd(t_minishell *shell, t_cmd *cmd)
 {
 	pid_t	pid;
 	int		status;
+	char	**tab_to_env;
 
 	if (!cmd || !cmd->argv || !cmd->argv[0])
 		return ;
+	tab_to_env = env_list_to_tab(shell->env);
 	if (is_builtin(cmd->argv[0]) == 1)
 	{
 		shell->exit_code = execute_builtin(shell);
@@ -89,10 +91,12 @@ void	exec_single_cmd(t_minishell *shell, t_cmd *cmd, char **tab_to_env)
 	if (pid == 0)
 	{
 		restore_default_signals();
+		tab_to_env = env_list_to_tab(shell->env);
 		secure_exec(cmd, tab_to_env);
 	}
 	close_fds(cmd);
 	free(cmd->path);
+	free_env_tab(tab_to_env);
 	waitpid(pid, &status, 0);
 	handle_child_status(shell, status);
 }
