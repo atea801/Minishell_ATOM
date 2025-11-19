@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/19 18:37:19 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/19 18:51:37 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -555,8 +555,8 @@ void							setup_pipe_redirections(int **pipes,
 void							last_heredoc_checker(t_cmd *cmd, int *p_fd,
 									int index);
 int								check_pid_error(int **pipes, int num_cmd);
-int								cleanup_on_error(pid_t *pids,
-									int num_cmd, t_minishell *shell);
+int								cleanup_on_error(pid_t *pids, int num_cmd,
+									t_minishell *shell);
 void							multi_heredoc_readline(char *line,
 									char *delimiter, int *p_fd,
 									t_minishell *shell);
@@ -665,10 +665,7 @@ int								init_token_1_only(t_token **token_head);
 
 // main.c
 char							*get_dynamic_prompt(void);
-void							res_to_tokenizer1(t_token **t_head,
-									t_token_2 **t_head_2, char *res);
-void							res_to_tokenizer1(t_token **t_head,
-									t_token_2 **t_head_2, char *res);
+void							res_to_tokenizer1(t_minishell *shell);
 void							my_readline(int ac, char **argv,
 									t_minishell *shell);
 

@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/19 18:32:15 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/19 18:55:51 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,37 +37,33 @@ char	*get_dynamic_prompt(void)
 	return (prompt);
 }
 
-void	res_to_tokenizer1(t_token **t_head, t_token_2 **t_head_2, char *res)
+void	res_to_tokenizer1(t_minishell *shell)
 {
-	if (res)
+	if (shell->buffers.res)
 	{
-		if (*t_head)
+		if (shell->tok1)
 		{
-			free_token_1_only(*t_head);
-			*t_head = NULL;
+			free_token_1_only(shell->tok1);
+			shell->tok1 = NULL;
 		}
-		if (*t_head_2)
+		if (shell->tok2)
 		{
-			free_token_2_list(t_head_2);
-			*t_head_2 = NULL;
+			free_token_2_list(&shell->tok2);
+			shell->tok2 = NULL;
 		}
-		init_token_struct(t_head, t_head_2);
-		tokenizer(*t_head, res);
-		set_token_error(t_head);
+		init_token_struct(&shell->tok1, &shell->tok2);
+		tokenizer(shell->tok1, shell->buffers.res);
+		set_token_error(&shell->tok1);
 	}
 }
 
 void	my_readline(int ac, char **argv, t_minishell *shell)
 {
-	int			parsing_res;
-	t_token		*t_head;
-	t_token_2	*t_head_2;
-	size_t		len;
+	int		parsing_res;
+	size_t	len;
 
 	// char		**env_tab;
 	// t_cmd		*current;
-	t_head = NULL;
-	t_head_2 = NULL;
 	len = 0;
 	len = 0;
 	(void)ac;
@@ -82,15 +78,15 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 	// }
 	while (1)
 	{
-		if (t_head)
+		if (shell->tok1)
 		{
-			free_token_1_only(t_head);
-			t_head = NULL;
+			free_token_1_only(shell->tok1);
+			(shell->tok1) = NULL;
 		}
-		if (t_head_2)
+		if (shell->tok2)
 		{
-			free_token_2_list(&t_head_2);
-			t_head_2 = NULL;
+			free_token_2_list(&shell->tok2);
+			shell->tok2 = NULL;
 		}
 		if (shell->cmd)
 		{
@@ -105,7 +101,8 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 		shell->buffers.prompt = get_dynamic_prompt();
 		if (isatty(STDIN_FILENO))
 			shell->buffers.input = readline(shell->buffers.prompt);
-		if (!shell->buffers.input || ft_strcmp(shell->buffers.input, "exit") == 0)
+		if (!shell->buffers.input || ft_strcmp(shell->buffers.input,
+				"exit") == 0)
 		{
 			if (shell->buffers.input)
 				free(shell->buffers.input);
@@ -136,11 +133,9 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 				free(shell->buffers.prompt);
 			continue ;
 		}
-		res_to_tokenizer1(&t_head, &t_head_2, shell->buffers.res);
-		shell->tok1 = t_head;
-		shell->tok2 = t_head_2;
+		res_to_tokenizer1(shell);
 		// print_token_list(shell->tok1);
-		parsing_res = parsing_2(shell, t_head, t_head_2);
+		parsing_res = parsing_2(shell, shell->tok1, shell->tok2);
 		if (parsing_res == 0)
 		{
 			shell->should_execute = true;
@@ -194,8 +189,6 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 int	main(int ac, char **av, char **env)
 {
 	t_minishell	shell;
-	t_token		*t_head;
-	t_token_2	*t_head_2;
 
 	shell.tok1 = NULL;
 	shell.tok2 = NULL;
@@ -206,13 +199,13 @@ int	main(int ac, char **av, char **env)
 	// if (!env || !env[0])
 	// create_minimal_env(&env_head);
 	// else
-	init_all(&shell.env, &t_head, env, &t_head_2);
+	init_all(&shell.env, &shell.tok1, env, &shell.tok2);
 	setup_signals_prompt();
 	my_readline(ac, av, &shell);
-	if (t_head)
-		free_token_1_only(t_head);
-	if (t_head_2)
-		free_token_2_list(&t_head_2);
+	if (shell.tok1)
+		free_token_1_only(shell.tok1);
+	if (shell.tok2)
+		free_token_2_list(&shell.tok2);
 	if (shell.cmd)
 		free_cmd_list(shell.cmd);
 	if (shell.env)
