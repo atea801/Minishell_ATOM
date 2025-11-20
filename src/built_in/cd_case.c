@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:30:31 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/20 11:10:41 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/20 11:14:43 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,8 @@ int	cd_with_args(t_minishell *shell, char *old_pwd, char *new_pwd)
 	}
 	if (chdir(path) != 0)
 	{
-		perror("Minishell: cd");
+		ft_putstr_fd("Minishell : cd :", 2);
+		perror(path);
 		cd_with_args_free(old_pwd, path);
 		return (1);
 	}
