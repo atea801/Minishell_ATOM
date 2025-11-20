@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/20 11:04:15 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/20 11:14:50 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -509,7 +509,7 @@ void							redirect_input(char *file);
 void							redirect_output(char *file);
 void							redirect_append(char *file);
 void							handle_redirections(t_cmd *cmd);
-void							exec_single_cmd(t_minishell *shell, t_cmd *cmd);
+void							exec_single_cmd(t_minishell *shell);
 void							redirect_input(char *file);
 void							redirect_output(char *file);
 void							redirect_append(char *file);

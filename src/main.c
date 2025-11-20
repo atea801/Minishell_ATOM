@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/19 18:55:51 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/20 11:15:20 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 				if (shell->cmd->next)
 					execute_multipipe(shell, shell->cmd);
 				else
-					exec_single_cmd(shell, shell->cmd);
+					exec_single_cmd(shell);
 			}
 		}
 		/* Restore prompt signals after command execution completes */
