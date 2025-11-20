@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 16:35:16 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/07 17:54:59 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/19 18:39:13 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,4 +110,18 @@ void	free_env_tab(char **tab_env)
 		i++;
 	}
 	free(tab_env);
+}
+
+void	free_all_life(t_minishell *shell)
+{
+	free_env_list(shell->env);
+	free_cmd_list(shell->cmd);
+	free_token_1_only(shell->tok1);
+	free_token_2_list(&shell->tok2);
+	if (shell->buffers.prompt)
+		free(shell->buffers.prompt);
+	if (shell->buffers.input)
+		free(shell->buffers.input);
+	if (shell->buffers.res)
+		free(shell->buffers.res);
 }

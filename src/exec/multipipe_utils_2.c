@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 11:42:37 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/18 11:56:08 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/19 18:13:18 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int	check_pid_error(int **pipes, int num_cmd)
 	return (0);
 }
 
-int	cleanup_on_error(int **pipes, pid_t *pids, int num_cmd, t_minishell *shell)
+int	cleanup_on_error(pid_t *pids, int num_cmd, t_minishell *shell)
 {
-	close_all_pipes(pipes, num_cmd - 1);
+	close_all_pipes(shell->buffers.pipes, num_cmd - 1);
 	wait_all_childrens(pids, num_cmd, shell);
-	free_pipes(pipes, num_cmd - 1);
+	free_pipes(shell->buffers.pipes, num_cmd - 1);
 	free(pids);
 	return (1);
 }
@@ -49,6 +49,7 @@ void	multi_heredoc_readline(char *line, char *delimiter, int *p_fd,
 				close(p_fd[1]);
 				p_fd[1] = -1;
 			}
+			free_all_life(shell);
 			exit(130);
 		}
 		else if (!line)

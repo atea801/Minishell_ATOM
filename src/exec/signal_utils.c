@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 11:23:47 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/13 16:34:46 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/19 16:32:34 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ char	*heredoc_readline(int **pipe_fd, t_cmd *cmd)
 			free(line);
 		if (pipe_fd && *pipe_fd && (*pipe_fd)[1] != -1)
 			close((*pipe_fd)[1]);
-		// g_signal_received = 0;
 		return (NULL);
 	}
 	if (!line)
@@ -87,6 +86,10 @@ void	handle_multi_heredoc_child(int *p_fd, char *delimiter, t_minishell *shell)
 	if (p_fd && p_fd[1] != -1)
 		close(p_fd[1]);
 	if (g_signal_received == 2)
+	{
+		free_all_life(shell);
 		exit(130);
+	}
+	free_all_life(shell);
 	exit(0);
 }

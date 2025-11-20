@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:32:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/18 17:34:02 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/19 19:24:37 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ static void	close_unused_fds(t_cmd *cmd_list, t_cmd *current_cmd)
 	}
 }
 
-static void	execute_child(t_minishell *shell, t_cmd *cmd, t_cmd *cmd_list)
+static void	execute_child(t_minishell *shell, t_cmd *cmd, t_cmd *cmd_list,
+		int num_cmd)
 {
 	char	*path;
 	char	**env;
@@ -47,23 +48,34 @@ static void	execute_child(t_minishell *shell, t_cmd *cmd, t_cmd *cmd_list)
 	if (!cmd->argv || !cmd->argv[0])
 	{
 		free_env_tab(env);
+		free_all_life(shell);
+		free_pipes(shell->buffers.pipes, num_cmd - 1);
 		exit(127);
 	}
 	if (is_builtin(cmd->argv[0]))
 	{
 		shell->exit_code = execute_builtin(shell);
+		free_env_tab(env);
+		free_all_life(shell);
+		free_pipes(shell->buffers.pipes, num_cmd - 1);
 		exit(shell->exit_code);
 	}
 	path = find_command_path(cmd->argv[0], shell);
 	if (!path)
 	{
-		ft_putendl_fd(cmd->argv[0], 2);
+		ft_putstr_fd(cmd->argv[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+		free_env_tab(env);
+		free_all_life(shell);
+		free_pipes(shell->buffers.pipes, num_cmd - 1);
 		exit(127);
 	}
 	execve(path, cmd->argv, env);
 	perror("execve");
 	free(path);
 	free_env_tab(env);
+	free_all_life(shell);
+	free_pipes(shell->buffers.pipes, num_cmd - 1);
 	exit(126);
 }
 
@@ -96,37 +108,38 @@ static int	init_resources(int ***pipes, pid_t **pids, int num_cmd)
 void	execute_multipipe(t_minishell *shell, t_cmd *cmd)
 {
 	int		num_cmd;
-	int		**pipes;
 	pid_t	*pids;
 	t_cmd	*current;
 	int		i;
 
 	num_cmd = count_commands(cmd);
-	if (!init_resources(&pipes, &pids, num_cmd))
+	if (!init_resources(&shell->buffers.pipes, &pids, num_cmd))
 		return ;
 	current = cmd;
 	i = -1;
 	while (++i < num_cmd && current)
 	{
 		pids[i] = fork();
-		if (pids[i] == -1 && cleanup_on_error(pipes, pids, i, shell))
+		if (pids[i] == -1 && cleanup_on_error(pids, i, shell))
 			return ;
 		if (pids[i] == 0)
 		{
 			restore_default_signals();
-			setup_pipe_redirections(pipes, i, num_cmd, current);
-			close_all_pipes(pipes, num_cmd - 1);
-			execute_child(shell, current, cmd);
-		}
-		if (pids[i] > 0 && pipes && i >= 0 && i < num_cmd - 1 && pipes[i])
-		{
-			if (pipes[i][1] >= 0)
-			{
-				close(pipes[i][1]);
-				pipes[i][1] = -1;
-			}
+			setup_pipe_redirections(shell->buffers.pipes, i, num_cmd, current);
+			close_all_pipes(shell->buffers.pipes, num_cmd - 1);
+			free(pids);
+			execute_child(shell, current, cmd, num_cmd);
 		}
 		current = current->next;
+		if (pids[i] > 0 && shell->buffers.pipes && i >= 0 && i < num_cmd - 1
+			&& shell->buffers.pipes[i])
+		{
+			if (shell->buffers.pipes[i][1] >= 0)
+			{
+				close(shell->buffers.pipes[i][1]);
+				shell->buffers.pipes[i][1] = -1;
+			}
+		}
 	}
-	cleanup_on_error(pipes, pids, num_cmd, shell);
+	cleanup_on_error(pids, num_cmd, shell);
 }

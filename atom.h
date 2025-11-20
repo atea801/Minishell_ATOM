@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/19 11:09:35 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/20 11:04:15 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,12 +119,22 @@ typedef struct s_atom_env
 	struct s_atom_env			*next;
 }								t_atom_env;
 
+typedef struct s_shell_buffers
+{
+	char						*prompt;
+	char						*input;
+	char						*res;
+	int							**pipes;
+	int							num_cmd;
+}								t_shell_buffers;
+
 typedef struct s_minishell
 {
 	t_token						*tok1;
 	t_token_2					*tok2;
 	t_cmd						*cmd;
 	t_atom_env					*env;
+	t_shell_buffers				buffers;
 	int							exit_code;
 	bool						should_execute;
 	bool						should_exit;
@@ -180,7 +190,7 @@ char							*search_in_list(t_atom_env **env, char *key);
 
 // env.c
 void							put_key_and_value(t_atom_env **env,
-									char *env_line);
+									char *env_line, int islast);
 void							my_getenv(t_atom_env **my_env, char **env);
 
 /************************************************************************
@@ -505,7 +515,6 @@ void							redirect_output(char *file);
 void							redirect_append(char *file);
 void							handle_redirections(t_cmd *cmd);
 
-
 // exec_single_utils.c
 int								check_fork_error(t_minishell *shell,
 									t_cmd *cmd);
@@ -546,8 +555,8 @@ void							setup_pipe_redirections(int **pipes,
 void							last_heredoc_checker(t_cmd *cmd, int *p_fd,
 									int index);
 int								check_pid_error(int **pipes, int num_cmd);
-int								cleanup_on_error(int **pipes, pid_t *pids,
-									int num_cmd, t_minishell *shell);
+int								cleanup_on_error(pid_t *pids, int num_cmd,
+									t_minishell *shell);
 void							multi_heredoc_readline(char *line,
 									char *delimiter, int *p_fd,
 									t_minishell *shell);
@@ -557,8 +566,9 @@ void							handle_child_status(t_minishell *shell,
 // exec_heredoc.c
 int								heredoc_detected(t_token_2 *token2);
 void							exec_heredoc(t_cmd *cmd, int *pipe_fd,
-									t_atom_env *env);
-void							here_doc_infile(t_cmd *cmd, t_atom_env *env);
+									t_atom_env *env, t_minishell *shell);
+void							here_doc_infile(t_cmd *cmd, t_atom_env *env,
+									t_minishell *shell);
 void							write_here_doc(char *line, int *pipe_fd,
 									t_atom_env *env);
 int								process_heredocs(t_cmd *cmd,
@@ -602,23 +612,12 @@ void							print_env_tab(char **tab_env);
 void							print_cmd_list(t_cmd *cmd);
 void							print_token_2_list(t_token_2 *token_2);
 void							print_token_2_list_type(t_token_2 *token_2);
-void							print_env_list(t_atom_env *env_head);
-void							print_env_tab(char **tab_env);
-void							print_cmd_list(t_cmd *cmd);
-void							print_token_2_list(t_token_2 *token_2);
-void							print_token_2_list_type(t_token_2 *token_2);
 
 // my_print_list_2.c
 void							print_token_list(t_token *head);
 void							print_token_list_type(t_token *head);
-void							print_token_list(t_token *head);
-void							print_token_list_type(t_token *head);
 
 // exec_utils.c
-char							*find_command_path(char *cmd,
-									t_minishell *shell);
-char							**get_path(t_atom_env *env);
-void							free_tab(char **tab);
 char							*find_command_path(char *cmd,
 									t_minishell *shell);
 char							**get_path(t_atom_env *env);
@@ -631,28 +630,14 @@ void							free_pipes(int **pipes, int num_pipes);
 void							close_all_pipes(int **pipes, int num_pipes);
 void							setup_pipe_redirections(int **pipes,
 									int cmd_index, int num_cmds, t_cmd *cmd);
-int								count_commands(t_cmd *cmd_list);
-int								**create_pipes(int num_pipes);
-void							free_pipes(int **pipes, int num_pipes);
-void							close_all_pipes(int **pipes, int num_pipes);
-void							setup_pipe_redirections(int **pipes,
-									int cmd_index, int num_cmds, t_cmd *cmd);
 // exec_multipipe.c
 void							execute_multipipe(t_minishell *shell,
 									t_cmd *cmd);
-
 
 /************************************************************************
  *								SRC										*
  ************************************************************************/
 // init.c
-int								init_token_struct(t_token **token_head,
-									t_token_2 **token_2);
-int								init_env_struct(t_atom_env **env_head);
-int								init_cmd_struct(t_cmd **cmd_list);
-void							init_all(t_atom_env **env_head,
-									t_token **token_head, char **env,
-									t_token_2 **token_2);
 int								init_token_struct(t_token **token_head,
 									t_token_2 **token_2);
 int								init_env_struct(t_atom_env **env_head);
@@ -669,13 +654,7 @@ void							free_token_list(t_token *head,
 void							free_env_list(t_atom_env *head);
 void							free_cmd_list(t_cmd *cmd_list);
 void							free_env_tab(char **tab_env);
-void							free_all(t_token *token_head,
-									t_atom_env *env_head, t_token_2 *token_2);
-void							free_token_list(t_token *head,
-									t_token_2 *head_2);
-void							free_env_list(t_atom_env *head);
-void							free_cmd_list(t_cmd *cmd_list);
-void							free_env_tab(char **tab_env);
+void							free_all_life(t_minishell *shell);
 
 // src_utils_2.c
 void							free_token_1_only(t_token *head);
@@ -686,17 +665,7 @@ int								init_token_1_only(t_token **token_head);
 
 // main.c
 char							*get_dynamic_prompt(void);
-void							res_to_tokenizer1(t_token **t_head,
-									t_token_2 **t_head_2, char *res);
-void							res_to_tokenizer1(t_token **t_head,
-									t_token_2 **t_head_2, char *res);
-void							my_readline(int ac, char **argv,
-									t_minishell *shell);
-char							*get_dynamic_prompt(void);
-void							res_to_tokenizer1(t_token **t_head,
-									t_token_2 **t_head_2, char *res);
-void							res_to_tokenizer1(t_token **t_head,
-									t_token_2 **t_head_2, char *res);
+void							res_to_tokenizer1(t_minishell *shell);
 void							my_readline(int ac, char **argv,
 									t_minishell *shell);
 
