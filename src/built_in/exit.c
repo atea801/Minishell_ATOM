@@ -6,36 +6,45 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 14:20:58 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/20 13:17:03 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/21 17:19:04 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
+#include <limits.h>
 
 /**
- * @brief Verifie que l'arg est bien un code numeric
- * et ne contient pas de caractere non numeric
- *
- * @param str
- * @return int
+ * @brief Convertit une string en long avec detection d'overflow
+ * 
+ * @param str La string a convertir
+ * @param result Pointeur pour stocker le resultat
+ * @return int 1 si succès, 0 si overflow ou erreur
  */
-static int	ft_is_numeric(char *str)
+static int	ft_atol_safe(char *str, long *result)
 {
-	int	i;
+	long	res;
+	int		sign;
+	int		i;
 
+	res = 0;
+	sign = 1;
 	i = 0;
 	if (!str || !str[0])
 		return (0);
-	if (str[0] == '+' || str[0] == '-')
-		i++;
-	if (!str[i])
-		return (0);
+	if (str[i++] == '-')
+		sign = -1;
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
 			return (0);
+		if (sign == 1 && (res > (LONG_MAX - (str[i] - '0')) / 10))
+			return (0);
+		if (sign == -1 && (res > (-(LONG_MIN + (str[i] - '0'))) / 10))
+			return (0);
+		res = res * 10 + (str[i] - '0');
 		i++;
 	}
+	*result = res * sign;
 	return (1);
 }
 
@@ -70,7 +79,8 @@ static int	calc_code(int code)
 
 int	builtin_exit(t_minishell *shell)
 {
-	int	code;
+	long	code_long;
+	int		code;
 
 	printf("exit\n");
 	if (shell->cmd->argv[1] == NULL)
@@ -78,7 +88,7 @@ int	builtin_exit(t_minishell *shell)
 		shell->should_exit = true;
 		return (0);
 	}
-	if (!ft_is_numeric(shell->cmd->argv[1]))
+	if (!ft_atol_safe(shell->cmd->argv[1], &code_long))
 	{
 		print_message_exit(shell);
 		return (2);
@@ -89,7 +99,7 @@ int	builtin_exit(t_minishell *shell)
 		shell->exit_code = 1;
 		return (1);
 	}
-	code = ft_atoi(shell->cmd->argv[1]);
+	code = (int)code_long;
 	code = calc_code(code);
 	shell->exit_code = code;
 	shell->should_exit = true;
