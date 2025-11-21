@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multipipe_utils_2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 11:42:37 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/19 18:13:18 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/20 14:17:51 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	multi_heredoc_readline(char *line, char *delimiter, int *p_fd,
 		}
 		else if (!line)
 		{
-			ft_putstr_fd("minishell: warning: here-document delimited ", 2);
+			ft_putstr_fd("Minishell: warning: here-document delimited ", 2);
 			ft_putstr_fd("by end-of-file (wanted `", 2);
 			ft_putstr_fd(delimiter, 2);
 			ft_putendl_fd("')", 2);
