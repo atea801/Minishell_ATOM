@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/21 13:07:08 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/21 13:50:27 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -444,6 +444,8 @@ int								echo_parser(t_cmd *cmd);
 int								search_dollar_in_list(t_token *tok1);
 int								echo_parser(t_cmd *cmd);
 int								search_dollar_in_list(t_token *tok1);
+void							print_echo_args(t_cmd *cmd, int out_fd,
+									int start);
 
 // export.c
 int								builtin_export(t_minishell *shell);

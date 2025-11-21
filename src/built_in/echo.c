@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 13:05:59 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/13 15:01:33 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/21 13:50:03 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,12 +119,17 @@ int	builtin_echo(t_minishell *shell)
 {
 	int	i;
 	int	flag;
+	int	out_fd;
 
 	if (!shell->cmd || !shell->cmd->argv || !shell->cmd->argv[0])
 		return (1);
 	if (ft_strcmp(shell->cmd->argv[0], "echo") != 0)
 		return (1);
 	restore_dollar_in_argv(shell);
+	if (shell->cmd->fd_out != -1)
+		out_fd = shell->cmd->fd_out;
+	else
+		out_fd = 1;
 	i = 1;
 	flag = 0;
 	if (echo_parser(shell->cmd) > 1)
@@ -132,15 +137,9 @@ int	builtin_echo(t_minishell *shell)
 		flag = 1;
 		i = echo_parser(shell->cmd);
 	}
-	while (shell->cmd->argv[i])
-	{
-		printf("%s", shell->cmd->argv[i]);
-		if (shell->cmd->argv[i + 1])
-			printf(" ");
-		i++;
-	}
+	print_echo_args(shell->cmd, out_fd, i);
 	if (flag == 0)
-		printf("\n");
+		ft_putchar_fd('\n', out_fd);
 	return (0);
 }
 
