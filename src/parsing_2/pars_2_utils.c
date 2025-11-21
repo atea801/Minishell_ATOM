@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_2_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 12:42:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/21 11:14:45 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/21 14:59:20 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,30 +36,21 @@ int	count_cmd(t_token *token_head)
 
 static int	check_access_to_file(char *type, char *file)
 {
+	if (!file)
+		return (-1);
 	if (ft_strcmp(type, "INFILE") == 0)
 	{
 		if (access(file, F_OK) == -1 || access(file, R_OK) == -1)
-		{
-			perror(file);
-			return (-1);
-		}
+			return (perror(file), -1);
 	}
 	else if (ft_strcmp(type, "OUTFILE") == 0)
 	{
 		if (access(file, F_OK) == 0 && access(file, W_OK) == -1)
-		{
-			perror(file);
-			return (-1);
-		}
+			return (perror(file), -1);
 	}
 	else if (ft_strcmp(type, "APPEND") == 0)
-	{
 		if (access(file, F_OK) == 0 && access(file, W_OK) == -1)
-		{
-			perror(file);
-			return (-1);
-		}
-	}
+			return (perror(file), -1);
 	return (0);
 }
 
@@ -86,10 +77,7 @@ int	open_redir_file(char *type, char *file, int *old_fd)
 	else
 		return (-1);
 	if (fd == -1)
-	{
-		// perror(file);
 		return (-1);
-	}
 	if (*old_fd != -1)
 		close(*old_fd);
 	*old_fd = fd;
