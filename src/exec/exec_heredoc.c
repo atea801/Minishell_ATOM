@@ -13,72 +13,11 @@
 
 #include "atom.h"
 
-void	exec_heredoc(t_cmd *cmd, int *pipe_fd, t_atom_env *env,
-		t_minishell *shell)
-{
-	char	*line;
-
-	if (cmd->here_doc == 1)
-	{
-		close(pipe_fd[0]);
-		setup_signals_heredoc();
-		line = NULL;
-		while (1)
-		{
-			line = heredoc_readline(&pipe_fd, cmd);
-			if (!line)
-				break ;
-			write_here_doc(line, pipe_fd, env);
-		}
-		setup_signals_prompt();
-		close(pipe_fd[1]);
-		if (g_signal_received == 2)
-		{
-			g_signal_received = 0;
-			free_all_life(shell);
-			exit(130);
-		}
-		free_all_life(shell);
-		exit(0);
-	}
-	free_all_life(shell);
-	exit(1);
-}
-
-void	here_doc_infile(t_cmd *cmd, t_atom_env *env, t_minishell *shell)
-{
-	int		p_fd[2];
-	pid_t	pid;
-	int		status;
-
-	if (!cmd)
-		return ;
-	if (pipe(p_fd) == -1)
-		return (perror("pipe"));
-	pid = fork();
-	if (pid == -1)
-		return (close(p_fd[0]), close(p_fd[1]), perror("fork"));
-	if (pid == 0)
-		exec_heredoc(cmd, p_fd, env, shell);
-	else
-	{
-		heredoc_signal_test(p_fd, pid, &status);
-		if (g_signal_received != 2 && !(WIFEXITED(status)
-				&& WEXITSTATUS(status) == 130))
-		{
-			if (cmd->fd_in != -1)
-				close(cmd->fd_in);
-			cmd->fd_in = p_fd[0];
-		}
-	}
-}
-
 void	write_here_doc(char *line, int *pipe_fd, t_atom_env *env)
 {
 	char	*expanded;
 	char	*var_value;
 
-	close(pipe_fd[0]);
 	if (line[0] == '$' && line[1] != '\0')
 	{
 		var_value = search_in_list(&env, line);
@@ -92,11 +31,6 @@ void	write_here_doc(char *line, int *pipe_fd, t_atom_env *env)
 	ft_putstr_fd(line, pipe_fd[1]);
 	ft_putchar_fd('\n', pipe_fd[1]);
 	free(line);
-	if (pipe_fd && pipe_fd[1] != -1)
-	{
-		close(pipe_fd[1]);
-		pipe_fd[1] = -1;
-	}
 }
 
 int	process_heredocs(t_cmd *cmd, t_minishell *shell)

@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 18:18:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/10 18:30:09 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/21 13:18:26 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,36 +51,24 @@ t_cmd	*init_new_node_cmd(char **argv)
 	new_node = ft_calloc(1, sizeof(t_cmd));
 	if (!new_node)
 		return (NULL);
-	i = 0;
+	i = -1;
 	if (argv)
-	{
-		while (argv[i])
-			i++;
-	}
-	new_node->argc = i;
+		while (argv[++i])
+			new_node->argc = i;
 	new_node->argv = ft_calloc(i + 1, sizeof(char *));
 	if (!new_node->argv)
-	{
-		free(new_node);
-		return (NULL);
-	}
-	i = 0;
+		return (free(new_node), NULL);
+	i = -1;
 	if (argv)
 	{
-		while (argv[i])
+		while (argv[++i])
 		{
 			new_node->argv[i] = ft_strdup(argv[i]);
 			if (!new_node->argv[i])
-			{
-				free_init_new_node_cmd(new_node);
-				return (NULL);
-			}
-			i++;
+				return (free_init_new_node_cmd(new_node), NULL);
 		}
 	}
-	new_node->fd_in = -1;
-	new_node->fd_out = -1;
-	return (new_node);
+	return (new_node->fd_in = -1, new_node->fd_out = -1, new_node);
 }
 
 /**
