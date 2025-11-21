@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 18:18:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/14 14:23:35 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/21 13:27:49 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,17 @@ t_atom_env	*init_new_node_env(char *key, char *value)
 		return (NULL);
 	}
 	new_node->has_twin = false;
-	new_node->has_value = false;
 	new_node->next = NULL;
-	if (value)
+	if (value && value[0] != '\0')
+	{
+		new_node->has_value = true;
 		new_node->size = ft_strlen(value);
+	}
 	else
+	{
+		new_node->has_value = false;
 		new_node->size = 0;
+	}
 	return (new_node);
 }
 

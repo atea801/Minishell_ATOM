@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/20 14:16:29 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/21 13:27:52 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,10 +196,14 @@ int	main(int ac, char **av, char **env)
 	shell.exit_code = 0;
 	shell.should_execute = false;
 	shell.should_exit = false;
-	// if (!env || !env[0])
-	// create_minimal_env(&env_head);
-	// else
-	init_all(&shell.env, &shell.tok1, env, &shell.tok2);
+	if (!env || !env[0])
+	{
+		init_token_struct(&shell.tok1, &shell.tok2);
+		shell.env = NULL;
+		create_minimal_env(&shell.env);
+	}
+	else
+		init_all(&shell.env, &shell.tok1, env, &shell.tok2);
 	setup_signals_prompt();
 	my_readline(ac, av, &shell);
 	if (shell.tok1)
