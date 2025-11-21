@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_single_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 15:44:26 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/21 14:08:56 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/21 15:23:41 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,11 @@ void	exec_single_cmd(t_minishell *shell)
 
 	if (!shell->cmd || !shell->cmd->argv || !shell->cmd->argv[0])
 		return ;
+	if (shell->cmd->has_redir_error)
+	{
+		shell->exit_code = 1;
+		return ;
+	}
 	tab_to_env = NULL;
 	if (is_builtin(shell->cmd->argv[0]) == 1)
 	{

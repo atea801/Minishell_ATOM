@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_2_cmd_node.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 18:18:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/21 13:18:26 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/21 15:21:26 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ t_cmd	*init_new_node_cmd(char **argv)
 				return (free_init_new_node_cmd(new_node), NULL);
 		}
 	}
-	return (new_node->fd_in = -1, new_node->fd_out = -1, new_node);
+	new_node->fd_in = -1;
+	new_node->fd_out = -1;
+	new_node->has_redir_error = 0;
+	return (new_node);
 }
 
 /**

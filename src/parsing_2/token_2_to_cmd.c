@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_2_to_cmd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 11:58:02 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/10 18:31:41 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/21 15:21:26 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	fill_cmd_until_pipe(t_cmd *cmd, t_token_2 **t_head_2)
 	{
 		cmd->fd_in = -1;
 		cmd->fd_out = -1;
+		cmd->has_redir_error = 1;
 	}
 	i = 0;
 	while (*t_head_2 && (*t_head_2)->type && ft_strcmp((*t_head_2)->type,
