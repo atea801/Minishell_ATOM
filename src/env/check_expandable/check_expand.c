@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_expand.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 19:27:38 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/18 13:56:18 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/21 14:02:35 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,59 +86,52 @@ static char	*handle_dollar(t_minishell *shell, char **s, int *i, char *res)
 	return (res);
 }
 
+static char	*expand_vars_loop(t_minishell *shell, char *s, char *res)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == '\\' && s[i + 1] == '$')
+			res = handle_escaped_dollar(&s, &i, res);
+		else if (s[i] == '$')
+			res = handle_dollar(shell, &s, &i, res);
+		else
+			i++;
+		if (!res)
+			return (NULL);
+	}
+	if (*s)
+		res = ft_strjoin_free(res, ft_strdup(s));
+	return (res);
+}
+
 /**
- * @brief 
- * 
- * @param shell 
- * @param token 
- * @note rajout du dernier if Permet de restaurer placeholders utilisees 
+ * @brief
+ *
+ * @param shell
+ * @param token
+ * @note rajout du dernier if Permet de restaurer placeholders utilisees
  * pour proteger les '$' provenant de quotes simple lors de la tokenisation
  */
 void	expand_all_vars(t_minishell *shell, t_token_2 *token)
 {
 	char	*res;
-	char	*s;
-	int		i;
 	int		k;
 
 	if (ft_strcmp(token->type, "HEREDOC") == 0)
 		return ;
-	res = ft_strdup("");
+	res = expand_vars_loop(shell, token->value, ft_strdup(""));
 	if (!res)
-		return ;
-	s = token->value;
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == '\\' && s[i + 1] == '$')
-		{
-			res = handle_escaped_dollar(&s, &i, res);
-			if (!res)
-				return (free(token->value), (void)0);
-		}
-		// else if (s[i] == '$' && (s[i + 1] == '?' || ft_isalnum(s[i + 1])
-		// 		|| s[i + 1] == '_'))
-		else if (s[i] == '$')
-		{
-			res = handle_dollar(shell, &s, &i, res);
-			if (!res)
-				return (free(token->value), (void)0);
-		}
-		else
-			i++;
-	}
-	if (*s)
-		res = ft_strjoin_free(res, ft_strdup(s));
+		return (free(token->value), (void)0);
 	free(token->value);
 	token->value = res;
-	if (token->value)
+	k = 0;
+	while (token->value && token->value[k])
 	{
-		k = 0;
-		while (token->value[k])
-		{
-			if (token->value[k] == '\x07')
-				token->value[k] = '$';
-			k++;
-		}
+		if (token->value[k] == '\x07')
+			token->value[k] = '$';
+		k++;
 	}
 }
