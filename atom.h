@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/21 13:50:27 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/21 15:21:26 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_cmd
 	int							fd_out;
 	int							argc;
 	int							count_heredocs;
+	int							has_redir_error;
 	struct s_cmd				*next;
 }								t_cmd;
 
