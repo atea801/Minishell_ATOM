@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multipipe_utils_2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 11:42:37 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/20 14:17:51 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/21 13:21:20 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,48 +33,20 @@ void	multi_heredoc_readline(char *line, char *delimiter, int *p_fd,
 {
 	while (1)
 	{
-		if (p_fd && p_fd[0] != -1)
-		{
-			close(p_fd[0]);
-			p_fd[0] = -1;
-		}
 		line = readline("> ");
 		if (g_signal_received == 2)
 		{
-			if (line)
-				free(line);
-			close_fds(shell->cmd);
-			if (p_fd && p_fd[1] != -1)
-			{
-				close(p_fd[1]);
-				p_fd[1] = -1;
-			}
-			free_all_life(shell);
+			free_and_close_before_ctrlc(shell, line, p_fd);
 			exit(130);
 		}
 		else if (!line)
 		{
-			ft_putstr_fd("Minishell: warning: here-document delimited ", 2);
-			ft_putstr_fd("by end-of-file (wanted `", 2);
-			ft_putstr_fd(delimiter, 2);
-			ft_putendl_fd("')", 2);
-			close_fds(shell->cmd);
-			if (p_fd && p_fd[1] != -1)
-			{
-				close(p_fd[1]);
-				p_fd[1] = -1;
-			}
+			write_ctrld_error_msg(shell, delimiter, p_fd);
 			break ;
 		}
 		if (ft_strcmp(delimiter, line) == 0)
 		{
-			close_fds(shell->cmd);
-			free(line);
-			if (p_fd && p_fd[1] != -1)
-			{
-				close(p_fd[1]);
-				p_fd[1] = -1;
-			}
+			free_and_close_before_delim(shell, line, p_fd);
 			break ;
 		}
 		write_here_doc(line, p_fd, shell->env);

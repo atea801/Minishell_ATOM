@@ -6,19 +6,11 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 16:35:16 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/19 18:39:13 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/21 12:39:28 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
-
-void	free_all(t_token *token_head, t_atom_env *env_head, t_token_2 *token_2)
-{
-	if (token_head)
-		free_token_list(token_head, token_2);
-	if (env_head)
-		free_env_list(env_head);
-}
 
 void	free_token_list(t_token *head, t_token_2 *head_2)
 {

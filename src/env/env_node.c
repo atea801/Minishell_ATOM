@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_node.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 18:18:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/14 14:23:35 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/21 13:10:18 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,6 @@ void	delete_node_list(t_atom_env **env, char *key)
 	if (!env || !*env || !key)
 		return ;
 	current = *env;
-	previous = NULL;
 	while (current)
 	{
 		if (current->key && ft_strcmp(current->key, key) == 0)

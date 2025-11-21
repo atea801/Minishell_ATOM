@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/20 11:14:50 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/21 13:07:08 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -562,10 +562,17 @@ void							multi_heredoc_readline(char *line,
 									t_minishell *shell);
 void							handle_child_status(t_minishell *shell,
 									int status);
+// multipipe_utils_3.c
+void							write_ctrld_error_msg(t_minishell *shell,
+									char *delimiter, int *p_fd);
+void							free_and_close_before_ctrlc(t_minishell *shell,
+									char *line, int *p_fd);
+void							free_and_close_before_delim(t_minishell *shell,
+									char *line, int *p_fd);
 
 // exec_heredoc.c
 int								heredoc_detected(t_token_2 *token2);
-void							exec_heredoc(t_cmd *cmd, int *pipe_fd,
+int								exec_heredoc(t_cmd *cmd, int *pipe_fd,
 									t_atom_env *env, t_minishell *shell);
 void							here_doc_infile(t_cmd *cmd, t_atom_env *env,
 									t_minishell *shell);

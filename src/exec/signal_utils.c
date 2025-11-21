@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 11:23:47 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/19 16:32:34 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/21 13:13:07 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	heredoc_signal_test(int *p_fd, pid_t pid, int *status)
 {
-	close(p_fd[1]);
 	waitpid(pid, status, 0);
 	if (g_signal_received == 2 || (WIFEXITED(*status)
 			&& WEXITSTATUS(*status) == 130))
@@ -49,6 +48,7 @@ char	*heredoc_readline(int **pipe_fd, t_cmd *cmd)
 	if (cmd->heredoc_delim && cmd->heredoc_delim[0]
 		&& ft_strcmp(cmd->heredoc_delim[0], line) == 0)
 		return (free(line), NULL);
+	printf("LINE = %s", line);
 	return (line);
 }
 
@@ -74,13 +74,12 @@ int	multi_heredoc_signal_test(pid_t pid, int *p_fd)
 	return (0);
 }
 
-void	handle_multi_heredoc_child(int *p_fd, char *delimiter, t_minishell *shell)
+void	handle_multi_heredoc_child(int *p_fd, char *delimiter,
+		t_minishell *shell)
 {
 	char	*line;
 
 	setup_signals_heredoc();
-	if (p_fd && p_fd[0] != -1)
-		close(p_fd[0]);
 	line = NULL;
 	multi_heredoc_readline(line, delimiter, p_fd, shell);
 	if (p_fd && p_fd[1] != -1)
