@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 15:44:26 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/20 11:15:07 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/21 14:08:56 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,3 @@ void	exec_single_cmd(t_minishell *shell)
 	waitpid(pid, &status, 0);
 	handle_child_status(shell, status);
 }
-
-// void	close_free_wait(t_minishell *shell, char **tab_to_env, int status)
-// {
-	
-// }

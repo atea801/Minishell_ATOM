@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/21 13:50:27 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/21 13:58:12 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -401,8 +401,8 @@ void							set_cmd_heredoc_delim(t_cmd *cmd, char *file);
 // check_expand.c
 void							expand_all_vars(t_minishell *shell,
 									t_token_2 *token);
-void							expand_all_vars(t_minishell *shell,
-									t_token_2 *token);
+void							expander(t_minishell *shell, char *res, char *s,
+									int i);
 
 // expand_utils.c
 void							expand_all_tokens(t_minishell *shell,
