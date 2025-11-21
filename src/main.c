@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/21 13:37:36 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/21 17:05:44 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,8 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 				free(shell->buffers.prompt);
 			continue ;
 		}
+		if (g_signal_received == 1)
+			shell->exit_code = 130;
 		res_to_tokenizer1(shell);
 		// print_token_list(shell->tok1);
 		parsing_res = parsing_2(shell, shell->tok1, shell->tok2);

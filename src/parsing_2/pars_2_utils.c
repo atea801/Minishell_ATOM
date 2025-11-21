@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 12:42:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/21 14:59:20 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/21 16:48:21 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,15 @@ int	count_cmd(t_token *token_head)
 
 static int	check_access_to_file(char *type, char *file)
 {
+	struct stat	sb;
+
 	if (!file)
 		return (-1);
+	if (stat(file, &sb) == 0 && S_ISDIR(sb.st_mode))
+	{
+		ft_putendl_fd("Error: Is a directory", 2);
+		return (-1);
+	}
 	if (ft_strcmp(type, "INFILE") == 0)
 	{
 		if (access(file, F_OK) == -1 || access(file, R_OK) == -1)
@@ -49,8 +56,10 @@ static int	check_access_to_file(char *type, char *file)
 			return (perror(file), -1);
 	}
 	else if (ft_strcmp(type, "APPEND") == 0)
+	{
 		if (access(file, F_OK) == 0 && access(file, W_OK) == -1)
 			return (perror(file), -1);
+	}
 	return (0);
 }
 
