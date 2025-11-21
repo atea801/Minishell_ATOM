@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 12:40:29 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/13 14:54:26 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/21 13:50:14 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,18 @@ int	search_dollar_in_list(t_token *tok1)
 		count++;
 	}
 	return (-1);
+}
+
+void	print_echo_args(t_cmd *cmd, int out_fd, int start)
+{
+	int	i;
+
+	i = start;
+	while (cmd->argv[i])
+	{
+		ft_putstr_fd(cmd->argv[i], out_fd);
+		if (cmd->argv[i + 1])
+			ft_putchar_fd(' ', out_fd);
+		i++;
+	}
 }
