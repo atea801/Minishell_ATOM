@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 13:51:19 by tlorette          #+#    #+#             */
-/*   Updated: 2025/10/05 11:17:20 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/21 13:27:51 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,15 @@
  *
  * @param env
  */
-void	create_minimal_env(t_atom_env **env)
+void	create_minimal_env(t_atom_env	**env)
 {
 	char	*cwd;
 	char	*minishell_path;
-
 	// char	*username;
 	// char	*path_home;
+
 	cwd = getcwd(NULL, 0);
 	minishell_path = ft_strjoin(cwd, "/minishell");
-
 	// username = get_username(cwd);
 	// path_home = get_home(cwd);
 	// add_node_to_end(env, "USER", username);
@@ -37,8 +36,9 @@ void	create_minimal_env(t_atom_env **env)
 	add_node_to_end(env, "_", minishell_path);
 	add_node_to_end(env, "OLDPWD", "");
 	free(cwd);
-	// 	free(username);
-	// 	free(path_home);
+	// free(username);
+	// free(path_home);
+	free(minishell_path);
 }
 
 /**

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_2_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 12:42:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/10 19:02:04 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/21 11:14:45 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	open_redir_file(char *type, char *file, int *old_fd)
 		return (-1);
 	if (fd == -1)
 	{
-		perror(file);
+		// perror(file);
 		return (-1);
 	}
 	if (*old_fd != -1)
