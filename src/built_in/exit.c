@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 14:20:58 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/21 17:19:04 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/21 17:37:24 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,24 @@ static int	ft_atol_safe(char *str, long *result)
 	i = 0;
 	if (!str || !str[0])
 		return (0);
-	if (str[i++] == '-')
-		sign = -1;
+	if (str[i] == '+' || str[i] == '-')
+		if (str[i++] == '-')
+			sign = -1;
+	if (!str[i])
+		return (0);
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
 			return (0);
-		if (sign == 1 && (res > (LONG_MAX - (str[i] - '0')) / 10))
+		if (res > LONG_MAX / 10)
 			return (0);
-		if (sign == -1 && (res > (-(LONG_MIN + (str[i] - '0'))) / 10))
-			return (0);
+		if (res == LONG_MAX / 10)
+		{
+			if (sign == 1 && (str[i] - '0') > LONG_MAX % 10)
+				return (0);
+			if (sign == -1 && (str[i] - '0') > -(LONG_MIN % 10))
+				return (0);
+		}
 		res = res * 10 + (str[i] - '0');
 		i++;
 	}
