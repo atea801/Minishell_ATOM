@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:18:07 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/21 15:00:56 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/22 12:36:31 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ char	*type_redir(char *res)
  */
 char	*type_heredoc(char *res)
 {
+	if (res[0] == '<' && res[1] == '<' && res[2] == '<' && res[3] == '\0')
+		return ("HERESTRING");
 	if (res[0] == '<' && res[1] == '<' && res[2] == '\0')
 		return ("HEREDOC");
 	if (res[0] == '>' && res[1] == '>' && res[2] == '\0')

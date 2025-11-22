@@ -6,11 +6,11 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 10:00:00 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/19 10:51:58 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/22 11:35:37 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../atom.h"
+#include "atom.h"
 
 /**
  * @brief Verifie si la chaine contient des quotes non fermees 

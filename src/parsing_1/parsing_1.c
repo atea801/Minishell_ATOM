@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 12:10:28 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/18 14:47:24 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/22 14:24:05 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@
 
 /**
  * @brief Version améliorée de valide_quote avec state machine
- * 
- * AMÉLIORATION MAJEURE : Au lieu de compter les quotes, utilise une 
+ *
+ * AMÉLIORATION MAJEURE : Au lieu de compter les quotes, utilise une
  * state machine qui comprend les règles d'imbrication bash
- * 
+ *
  * RÈGLES GÉRÉES :
- * - Dans des quotes simples : les doubles sont littérales  
+ * - Dans des quotes simples : les doubles sont littérales
  * - Dans des quotes doubles : les simples sont littérales
  * - Détection précise des quotes non fermées
  *
@@ -88,6 +88,23 @@ int	validate_quotes_improved(char *str)
 	return (0);
 }
 
+static int	valide_pipe(char *str)
+{
+	int	count;
+	int	i;
+
+	i = 0;
+	count = 0;
+	while (str[i++])
+	{
+		if (str[i] == '|' && (str[i + 1] == ' ' || str[i + 1] == '\0'))
+			count++;
+	}
+	if (count >= 2)
+		return (1);
+	return (0);
+}
+
 /**
  * @brief Premier passage du parsing
  *
@@ -107,6 +124,14 @@ char	*parsing_1(t_minishell *shell, char *input)
 	res_1 = add_space_to_operator(input);
 	res_2 = clear_input(res_1);
 	free(res_1);
+	if (valide_pipe(res_2))
+	{
+		ft_putstr_fd("Minishell: syntax error near unexpected token `||'\n", 2);
+		add_history(input);
+		free(res_2);
+		shell->exit_code = 2;
+		return (NULL);
+	}
 	if (validate_quotes_improved(res_2))
 	{
 		ft_putstr_fd("Minishell: unclosed quotes\n", 2);
