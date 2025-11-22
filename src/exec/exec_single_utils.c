@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 10:49:30 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/22 16:35:06 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/22 17:00:48 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,16 @@ int	check_fork_error(t_minishell *shell, t_cmd *cmd)
 
 void	secure_exec(t_cmd *cmd, char **tab_to_env)
 {
+	struct stat	path_stat;
+
+	if (stat(cmd->path, &path_stat) == 0 && S_ISDIR(path_stat.st_mode))
+	{
+		ft_putstr_fd("Minishell: ", 2);
+		ft_putstr_fd(cmd->argv[0], 2);
+		ft_putstr_fd(": Is a directory\n", 2);
+		free(cmd->path);
+		exit(126);
+	}
 	execve(cmd->path, cmd->argv, tab_to_env);
 	perror(cmd->argv[0]);
 	free(cmd->path);
