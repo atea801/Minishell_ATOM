@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 12:10:28 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/22 14:24:05 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/22 14:47:41 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,12 @@ static int	valide_pipe(char *str)
 
 	i = 0;
 	count = 0;
-	while (str[i++])
+	while (str[++i])
 	{
-		if (str[i] == '|' && (str[i + 1] == ' ' || str[i + 1] == '\0'))
+		if (str[i] == '|')
 			count++;
 	}
-	if (count >= 2)
+	if (count > 1)
 		return (1);
 	return (0);
 }
