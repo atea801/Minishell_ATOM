@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 11:42:37 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/21 17:48:39 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/22 16:15:55 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,31 @@ int	check_pid_error(int **pipes, int num_cmd)
 	return (0);
 }
 
+void	close_all_cmd_fds(t_cmd *cmd_list)
+{
+	t_cmd	*current;
+
+	current = cmd_list;
+	while (current)
+	{
+		if (current->fd_in != -1)
+		{
+			close(current->fd_in);
+			current->fd_in = -1;
+		}
+		if (current->fd_out != -1)
+		{
+			close(current->fd_out);
+			current->fd_out = -1;
+		}
+		current = current->next;
+	}
+}
+
 int	cleanup_on_error(pid_t *pids, int num_cmd, t_minishell *shell)
 {
 	close_all_pipes(shell->buffers.pipes, num_cmd - 1);
+	close_all_cmd_fds(shell->cmd);
 	wait_all_childrens(pids, num_cmd, shell);
 	free_pipes(shell->buffers.pipes, num_cmd - 1);
 	free(pids);
@@ -51,7 +73,11 @@ void	multi_heredoc_readline(char *line, char *delimiter, int *p_fd,
 		}
 		write_here_doc(line, p_fd, shell->env);
 	}
-	close(p_fd[1]);
+	if (p_fd && p_fd[1] != -1)
+	{
+		close(p_fd[1]);
+		p_fd[1] = -1;
+	}
 }
 
 void	last_heredoc_checker(t_cmd *cmd, int *p_fd, int index)
@@ -73,23 +99,4 @@ void	last_heredoc_checker(t_cmd *cmd, int *p_fd, int index)
 		close(p_fd[0]);
 }
 
-void	handle_child_status(t_minishell *shell, int status)
-{
-	if (WIFEXITED(status))
-		shell->exit_code = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-	{
-		if (WTERMSIG(status) == SIGQUIT)
-		{
-			write(1, "Quit (core dumped)\n", 19);
-			shell->exit_code = 131;
-		}
-		else if (WTERMSIG(status) == SIGINT)
-		{
-			write(1, "\n", 1);
-			shell->exit_code = 130;
-		}
-		else
-			shell->exit_code = 128 + WTERMSIG(status);
-	}
-}
+

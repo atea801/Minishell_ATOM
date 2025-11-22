@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 15:44:26 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/21 17:52:17 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/22 16:15:20 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,37 +72,24 @@ void	exec_single_cmd(t_minishell *shell)
 {
 	pid_t	pid;
 	int		status;
-	char	**tab_to_env;
 
 	if (!shell->cmd || !shell->cmd->argv || !shell->cmd->argv[0])
 		return ;
 	if (shell->cmd->has_redir_error)
-	{
-		shell->exit_code = 1;
-		return ;
-	}
-	tab_to_env = NULL;
+		return (shell->exit_code = 1, close_fds(shell->cmd));
 	if (is_builtin(shell->cmd->argv[0]) == 1)
-	{
-		shell->exit_code = execute_builtin(shell);
-		return ;
-	}
+		return (shell->exit_code = execute_builtin(shell),
+			close_fds(shell->cmd));
 	if (!init_cmd_path(shell->cmd, shell))
-		return ;
+		return (close_fds(shell->cmd));
 	pid = fork();
 	if (pid == -1)
-		if (!check_fork_error(shell, shell->cmd))
-			return ;
+		return (check_fork_error(shell, shell->cmd), close_fds(shell->cmd));
 	if (pid == 0)
-	{
-		restore_default_signals();
-		handle_redirections(shell->cmd);
-		tab_to_env = env_list_to_tab(shell->env);
-		secure_exec(shell->cmd, tab_to_env);
-	}
+		exec_single_cmd_child(shell);
 	close_fds(shell->cmd);
 	free(shell->cmd->path);
-	free_env_tab(tab_to_env);
 	waitpid(pid, &status, 0);
 	handle_child_status(shell, status);
 }
+

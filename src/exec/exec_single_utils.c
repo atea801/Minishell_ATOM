@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 10:49:30 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/21 15:08:39 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/22 14:47:16 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	check_fork_error(t_minishell *shell, t_cmd *cmd)
 
 void	secure_exec(t_cmd *cmd, char **tab_to_env)
 {
-	handle_redirections(cmd);
 	execve(cmd->path, cmd->argv, tab_to_env);
 	perror(cmd->argv[0]);
 	free(cmd->path);
