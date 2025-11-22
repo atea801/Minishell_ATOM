@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 15:52:23 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/21 11:32:37 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/22 14:42:01 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,11 @@ int	multiple_heredoc_gestion(t_cmd *cmd, t_minishell *shell, int index)
 	if (pid == 0)
 		handle_multi_heredoc_child(p_fd, delimiter, shell);
 	last_heredoc_checker(cmd, p_fd, index);
-	if (index == cmd->count_heredocs - 1 && cmd->fd_in != -1)
-	{
-		close(cmd->fd_in);
-		cmd->fd_in = -1;
-	}
+	// if (index == cmd->count_heredocs - 1 && cmd->fd_in != -1)
+	// {
+	// 	close(cmd->fd_in);
+	// 	cmd->fd_in = -1;
+	// }
 	if (multi_heredoc_signal_test(pid, p_fd) == 1)
 		return (1);
 	return (0);
