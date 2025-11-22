@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_multipipe.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:32:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/22 15:42:01 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/22 17:08:14 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ static void	execute_child(t_minishell *shell, t_cmd *cmd, t_cmd *cmd_list,
 	env = env_list_to_tab_new(shell->env);
 	handle_redirections(cmd);
 	close_unused_fds(cmd_list, cmd);
-	if (!cmd->argv || !cmd->argv[0])
+	if (!cmd->argv || !cmd->argv[0] || !cmd->argv[0][0])
 	{
 		free_env_tab(env);
 		free_all_life(shell);
 		free_pipes(shell->buffers.pipes, num_cmd - 1);
-		exit(127);
+		exit(0);
 	}
 	if (is_builtin(cmd->argv[0]))
 		clean_built_in_checker(shell, env, num_cmd);
