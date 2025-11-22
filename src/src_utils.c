@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   src_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 16:35:16 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/22 16:26:58 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/22 16:48:40 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
+
+void	free_and_close_cmd(t_cmd *cmd_list)
+{
+	if (cmd_list->infile)
+		free(cmd_list->infile);
+	if (cmd_list->outfile)
+		free(cmd_list->outfile);
+	if (cmd_list->heredoc_delim)
+		free_heredoc_delims(cmd_list->heredoc_delim);
+	if (cmd_list->fd_in != -1)
+		close(cmd_list->fd_in);
+	if (cmd_list->fd_out != -1)
+		close(cmd_list->fd_out);
+}
 
 void	free_token_list(t_token *head, t_token_2 *head_2)
 {
@@ -117,18 +131,4 @@ void	free_all_life(t_minishell *shell)
 		free(shell->buffers.input);
 	if (shell->buffers.res)
 		free(shell->buffers.res);
-}
-
-free_and_close_cmd(t_cmd *cmd_list)
-{
-	if (cmd_list->infile)
-		free(cmd_list->infile);
-	if (cmd_list->outfile)
-		free(cmd_list->outfile);
-	if (cmd_list->heredoc_delim)
-		free_heredoc_delims(cmd_list->heredoc_delim);
-	if (cmd_list->fd_in != -1)
-		close(cmd_list->fd_in);
-	if (cmd_list->fd_out != -1)
-		close(cmd_list->fd_out);
 }
