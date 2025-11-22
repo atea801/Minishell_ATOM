@@ -6,50 +6,56 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 13:20:49 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/08 14:08:54 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/22 13:58:19 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
-// void	print_redir_error(t_token **t_head)
-// {
-// 	t_token	*t_error;
-
-// 	t_error = *t_head;
-// 	while (t_error)
-// 	{
-// 		if (check_redir_in(t_error) == 1 || check_redir_alone(t_error) == 1)
-// 			write(2, "ATOM : syntax error near unexpected token `<'\n", 47);
-// 		else if (check_redir_in(t_error) == 2
-// 			|| check_redir_alone(t_error) == 2)
-// 			write(2, "ATOM : syntax error near unexpected token `<<'\n", 48);
-// 		else if (check_redir_alone(t_error) == 3
-// 			|| check_redir_out(t_error) == 3)
-// 			write(2, "ATOM : syntax error near unexpected token `>'\n", 47);
-// 		else if (check_redir_out(t_error) == 4
-// 			|| check_redir_alone(t_error) == 4)
-// 			write(2, "ATOM : syntax error near unexpected token `>>'\n", 48);
-// 		else if (check_redir_alone(t_error) == 5
-// 			|| check_only_redir(t_error) == 5)
-// 			write(2, "ATOM : syntax error near unexpected token `newline'\n",
-// 				53);
-// 		t_error = t_error->next;
-// 	}
-// }
-
-void	print_redir_error(t_token **error_token)
+/**
+ * @brief Affiche le message d'erreur approprié pour un token de redirection malformé
+ * 
+ * Analyse la valeur du token ERROR et détermine quel opérateur de redirection
+ * est en cause pour afficher le bon message d'erreur.
+ * Gère les cas: <<<, <<, >>, <>, <, >
+ * 
+ * @param t_head Pointeur vers le token ERROR contenant la redirection malformée
+ */
+void	print_redir_error(t_token **t_head)
 {
-	if (!error_token || !*error_token)
+	t_token	*t_error;
+	char	*val;
+
+	if (!t_head || !*t_head || !(*t_head)->value)
 		return ;
-	if (!(*error_token)->value)
-	{
-		printf("Minishell: syntax error\n");
-		return ;
-	}
-	printf("Minishell: syntax error near unexpected token `%s'\n",
-		(*error_token)->value);
+	t_error = *t_head;
+	val = t_error->value;
+	if (ft_strcmp(val, "<>") == 0)
+		write(2, "Minishell: syntax error near unexpected token `newline'\n", 57);
+	else if (ft_strncmp(val, "<<<", 3) == 0)
+		write(2, "Minishell: syntax error near unexpected token `<<<'\n", 53);
+	else if (ft_strncmp(val, "<<", 2) == 0)
+		write(2, "Minishell: syntax error near unexpected token `<<'\n", 52);
+	else if (ft_strncmp(val, ">>", 2) == 0)
+		write(2, "Minishell: syntax error near unexpected token `>>'\n", 52);
+	else if (val[0] == '<')
+		write(2, "Minishell: syntax error near unexpected token `<'\n", 51);
+	else if (val[0] == '>')
+		write(2, "Minishell: syntax error near unexpected token `>'\n", 51);
 }
+
+// void	print_redir_error(t_token **error_token)
+// {
+// 	if (!error_token || !*error_token)
+// 		return ;
+// 	if (!(*error_token)->value)
+// 	{
+// 		printf("Minishell: syntax error\n");
+// 		return ;
+// 	}
+// 	printf("Minishell: syntax error near unexpected token `%s'\n",
+// 		(*error_token)->value);
+// }
 
 int	check_redir_in(t_token *t_head)
 {
