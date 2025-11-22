@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 12:10:28 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/22 14:47:41 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/22 17:20:03 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,18 +90,26 @@ int	validate_quotes_improved(char *str)
 
 static int	valide_pipe(char *str)
 {
-	int	count;
 	int	i;
 
 	i = 0;
-	count = 0;
-	while (str[++i])
+	while (str[i] && str[i] == ' ')
+		i++;
+	if (str[i] == '|')
+		return (1);
+	while (str[i])
 	{
 		if (str[i] == '|')
-			count++;
+		{
+			i++;
+			while (str[i] && str[i] == ' ')
+				i++;
+			if (str[i] == '|' || str[i] == '\0')
+				return (1);
+		}
+		else
+			i++;
 	}
-	if (count > 1)
-		return (1);
 	return (0);
 }
 
