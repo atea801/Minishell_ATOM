@@ -157,6 +157,10 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 				else
 					exec_single_cmd(shell);
 			}
+			else
+			{
+				close_all_cmd_fds(shell->cmd);
+			}
 		}
 		/* Restore prompt signals after command execution completes */
 		if (isatty(STDIN_FILENO))

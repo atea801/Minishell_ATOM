@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/21 16:48:59 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/22 15:02:32 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -559,6 +559,7 @@ void							setup_pipe_redirections(int **pipes,
 void							last_heredoc_checker(t_cmd *cmd, int *p_fd,
 									int index);
 int								check_pid_error(int **pipes, int num_cmd);
+void							close_all_cmd_fds(t_cmd *cmd_list);
 int								cleanup_on_error(pid_t *pids, int num_cmd,
 									t_minishell *shell);
 void							multi_heredoc_readline(char *line,

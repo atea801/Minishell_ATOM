@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multipipe_utils_3.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 13:20:42 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/22 14:34:41 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/22 15:01:58 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,15 @@
 void	write_ctrld_error_msg(t_minishell *shell, char *delimiter, int *p_fd)
 {
 	(void)shell;
-	(void)p_fd;
 	ft_putstr_fd("minishell: warning: here-document delimited ", 2);
 	ft_putstr_fd("by end-of-file (wanted `", 2);
 	ft_putstr_fd(delimiter, 2);
 	ft_putendl_fd("')", 2);
-	// if (p_fd && p_fd[1] != -1)
-	// {
-	// 	close(p_fd[1]);
-	// 	p_fd[1] = -1;
-	// }
-	// if (p_fd && p_fd[0])
-	// {
-	// 	close(p_fd[0]);
-	// 	p_fd[0] = -1;
-	// }
-	// close_fds(shell->cmd);
+	if (p_fd && p_fd[1] != -1)
+	{
+		close(p_fd[1]);
+		p_fd[1] = -1;
+	}
 }
 
 void	free_and_close_before_ctrlc(t_minishell *shell, char *line, int *p_fd)
@@ -42,28 +35,16 @@ void	free_and_close_before_ctrlc(t_minishell *shell, char *line, int *p_fd)
 		close(p_fd[1]);
 		p_fd[1] = -1;
 	}
-	// if (p_fd && p_fd[0])
-	// {
-	// 	close(p_fd[0]);
-	// 	p_fd[0] = -1;
-	// }
-	// close_fds(shell->cmd);
 	free_all_life(shell);
 }
 
 void	free_and_close_before_delim(t_minishell *shell, char *line, int *p_fd)
 {
+	(void)shell;
 	free(line);
 	if (p_fd && p_fd[1] != -1)
 	{
 		close(p_fd[1]);
 		p_fd[1] = -1;
 	}
-	(void)shell;
-	// if (p_fd && p_fd[0])
-	// {
-	// 	close(p_fd[0]);
-	// 	p_fd[0] = -1;
-	// }
-	// close_fds(shell->cmd);
 }

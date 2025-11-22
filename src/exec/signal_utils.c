@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 11:23:47 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/21 17:44:43 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/22 15:02:10 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,7 @@ int	multi_heredoc_signal_test(pid_t pid, int *p_fd)
 	if ((WIFEXITED(status) && WEXITSTATUS(status) == 130)
 		|| (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT))
 	{
-		if (p_fd)
-		{
-			if (p_fd[0] != -1)
-				close(p_fd[0]);
-			if (p_fd[1] != -1)
-				close(p_fd[1]);
-		}
+		(void)p_fd;
 		g_signal_received = 0;
 		return (1);
 	}
@@ -80,6 +74,8 @@ void	handle_multi_heredoc_child(int *p_fd, char *delimiter,
 	char	*line;
 
 	setup_signals_heredoc();
+	if (p_fd && p_fd[0] != -1)
+		close(p_fd[0]);
 	line = NULL;
 	multi_heredoc_readline(line, delimiter, p_fd, shell);
 	if (p_fd && p_fd[1] != -1)

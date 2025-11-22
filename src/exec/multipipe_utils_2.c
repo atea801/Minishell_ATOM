@@ -19,9 +19,31 @@ int	check_pid_error(int **pipes, int num_cmd)
 	return (0);
 }
 
+void	close_all_cmd_fds(t_cmd *cmd_list)
+{
+	t_cmd	*current;
+
+	current = cmd_list;
+	while (current)
+	{
+		if (current->fd_in != -1)
+		{
+			close(current->fd_in);
+			current->fd_in = -1;
+		}
+		if (current->fd_out != -1)
+		{
+			close(current->fd_out);
+			current->fd_out = -1;
+		}
+		current = current->next;
+	}
+}
+
 int	cleanup_on_error(pid_t *pids, int num_cmd, t_minishell *shell)
 {
 	close_all_pipes(shell->buffers.pipes, num_cmd - 1);
+	close_all_cmd_fds(shell->cmd);
 	wait_all_childrens(pids, num_cmd, shell);
 	free_pipes(shell->buffers.pipes, num_cmd - 1);
 	free(pids);
