@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_2_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 12:42:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/21 16:48:21 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/22 16:36:17 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	count_cmd(t_token *token_head)
 	return (count);
 }
 
-static int	check_access_to_file(char *type, char *file)
+int	check_access_to_file(char *type, char *file)
 {
 	struct stat	sb;
 
