@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 11:42:37 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/22 14:23:05 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/22 16:15:55 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,23 +99,4 @@ void	last_heredoc_checker(t_cmd *cmd, int *p_fd, int index)
 		close(p_fd[0]);
 }
 
-void	handle_child_status(t_minishell *shell, int status)
-{
-	if (WIFEXITED(status))
-		shell->exit_code = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-	{
-		if (WTERMSIG(status) == SIGQUIT)
-		{
-			write(1, "Quit (core dumped)\n", 19);
-			shell->exit_code = 131;
-		}
-		else if (WTERMSIG(status) == SIGINT)
-		{
-			write(1, "\n", 1);
-			shell->exit_code = 130;
-		}
-		else
-			shell->exit_code = 128 + WTERMSIG(status);
-	}
-}
+

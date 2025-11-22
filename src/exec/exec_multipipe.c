@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:32:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/21 13:21:04 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/22 15:42:01 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,24 +53,10 @@ static void	execute_child(t_minishell *shell, t_cmd *cmd, t_cmd *cmd_list,
 		exit(127);
 	}
 	if (is_builtin(cmd->argv[0]))
-	{
-		shell->exit_code = execute_builtin(shell);
-		free_env_tab(env);
-		free_all_life(shell);
-		free_pipes(shell->buffers.pipes, num_cmd - 1);
-		exit(shell->exit_code);
-	}
+		clean_built_in_checker(shell, env, num_cmd);
 	path = find_command_path(cmd->argv[0], shell);
 	if (!path)
-	{
-		ft_putstr_fd("Minishell : ", 2);
-		ft_putstr_fd(cmd->argv[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
-		free_env_tab(env);
-		free_all_life(shell);
-		free_pipes(shell->buffers.pipes, num_cmd - 1);
-		exit(127);
-	}
+		path_not_found_exe_child(shell, cmd, num_cmd, env);
 	execve(path, cmd->argv, env);
 	perror("execve");
 	free(path);
@@ -125,22 +111,12 @@ void	execute_multipipe(t_minishell *shell, t_cmd *cmd)
 			return ;
 		if (pids[i] == 0)
 		{
-			restore_default_signals();
-			setup_pipe_redirections(shell->buffers.pipes, i, num_cmd, current);
-			close_all_pipes(shell->buffers.pipes, num_cmd - 1);
+			inside_child_security(shell, current, num_cmd, i);
 			free(pids);
 			execute_child(shell, current, cmd, num_cmd);
 		}
 		current = current->next;
-		if (pids[i] > 0 && shell->buffers.pipes && i >= 0 && i < num_cmd - 1
-			&& shell->buffers.pipes[i])
-		{
-			if (shell->buffers.pipes[i][1] >= 0)
-			{
-				close(shell->buffers.pipes[i][1]);
-				shell->buffers.pipes[i][1] = -1;
-			}
-		}
+		close_all_buffer_pipes(shell, pids, num_cmd, i);
 	}
 	cleanup_on_error(pids, num_cmd, shell);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/22 15:02:32 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/22 16:01:12 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -540,6 +540,10 @@ void							execute_multipipe(t_minishell *shell,
 									t_cmd *cmd);
 void							wait_all_childrens(pid_t *pids, int num_cmds,
 									t_minishell *shell);
+void							close_all_buffer_pipes(t_minishell *shell,
+									pid_t *pids, int num_cmd, int i);
+void							inside_child_security(t_minishell *shell,
+									t_cmd *current, int num_cmd, int i);
 
 // multipipe_utils.c
 int								count_commands(t_cmd *cmd_list);
@@ -574,6 +578,10 @@ void							free_and_close_before_ctrlc(t_minishell *shell,
 									char *line, int *p_fd);
 void							free_and_close_before_delim(t_minishell *shell,
 									char *line, int *p_fd);
+void							path_not_found_exe_child(t_minishell *shell,
+									t_cmd *cmd, int num_cmd, char **env);
+void							clean_built_in_checker(t_minishell *shell,
+									char **env, int num_cmd);
 
 // exec_heredoc.c
 int								heredoc_detected(t_token_2 *token2);
@@ -585,6 +593,8 @@ void							write_here_doc(char *line, int *pipe_fd,
 									t_atom_env *env);
 int								process_heredocs(t_cmd *cmd,
 									t_minishell *shell);
+void							secure_fd_in_after_heredoc(t_cmd *cmd,
+									int index);
 
 // exec_multiple_heredoc.c
 void							free_heredoc_delims(char **delims);
@@ -602,6 +612,7 @@ char							*heredoc_readline(int **pipe_fd, t_cmd *cmd);
 void							heredoc_signal_test(int *p_fd, pid_t pid,
 									int *status);
 int								multi_heredoc_signal_test(pid_t pid, int *p_fd);
+void							exec_single_cmd_child(t_minishell *shell);
 
 /************************************************************************
  *								SIGNALS									*

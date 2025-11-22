@@ -45,3 +45,12 @@ int	process_heredocs(t_cmd *cmd, t_minishell *shell)
 	}
 	return (0);
 }
+
+void	secure_fd_in_after_heredoc(t_cmd *cmd, int index)
+{
+	if (index == cmd->count_heredocs - 1 && cmd->fd_in != -1)
+	{
+		close(cmd->fd_in);
+		cmd->fd_in = -1;
+	}
+}

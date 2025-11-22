@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 11:23:47 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/22 15:02:10 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/22 16:10:36 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,14 @@ void	handle_multi_heredoc_child(int *p_fd, char *delimiter,
 	}
 	free_all_life(shell);
 	exit(0);
+}
+
+void	exec_single_cmd_child(t_minishell *shell)
+{
+	char	**tab_to_env;
+
+	restore_default_signals();
+	handle_redirections(shell->cmd);
+	tab_to_env = env_list_to_tab(shell->env);
+	secure_exec(shell->cmd, tab_to_env);
 }
