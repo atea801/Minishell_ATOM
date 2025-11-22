@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/22 16:30:52 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/22 16:36:11 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -328,6 +328,7 @@ int								open_redir_file(char *type, char *file,
 int								open_all_redirs_from_tokens(t_token_2 *tokens,
 									int *fd_in, int *fd_out);
 int								count_args_to_pipe(t_token_2 *token_2);
+int								check_access_to_file(char *type, char *file);
 
 // pars_2.c
 int								parsing_2(t_minishell *shell,
