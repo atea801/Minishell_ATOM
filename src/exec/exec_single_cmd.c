@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 15:44:26 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/21 16:56:11 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/21 17:52:17 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	exec_single_cmd(t_minishell *shell)
 	if (pid == 0)
 	{
 		restore_default_signals();
+		handle_redirections(shell->cmd);
 		tab_to_env = env_list_to_tab(shell->env);
 		secure_exec(shell->cmd, tab_to_env);
 	}

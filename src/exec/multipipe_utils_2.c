@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 11:42:37 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/21 13:21:20 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/21 17:48:39 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	multi_heredoc_readline(char *line, char *delimiter, int *p_fd,
 		}
 		write_here_doc(line, p_fd, shell->env);
 	}
+	close(p_fd[1]);
 }
 
 void	last_heredoc_checker(t_cmd *cmd, int *p_fd, int index)
