@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/22 16:36:11 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/22 16:43:04 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -447,7 +447,8 @@ int								echo_parser(t_cmd *cmd);
 int								search_dollar_in_list(t_token *tok1);
 int								echo_parser(t_cmd *cmd);
 int								search_dollar_in_list(t_token *tok1);
-void							pint	check_access_to_file(char *type, char *file)rint_echo_args(t_cmd *cmd, int out_fd,
+int								check_access_to_file(char *type, char *file);
+void							print_echo_args(t_cmd *cmd, int out_fd,
 									int start);
 
 // export.c
