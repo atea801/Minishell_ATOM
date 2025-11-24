@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 18:18:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/24 11:02:05 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/24 13:23:15 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ void	delete_node_list(t_atom_env **env, char *key)
 	if (!env || !*env || !key)
 		return ;
 	current = *env;
+	previous = NULL;
 	while (current)
 	{
 		if (current->key && ft_strcmp(current->key, key) == 0)
