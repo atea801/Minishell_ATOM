@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 13:55:23 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/21 17:00:27 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/24 13:44:07 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	setup_signals_prompt(void)
 	sa_quit.sa_flags = 0;
 	sigaction(SIGINT, &sa_int, NULL);
 	sigaction(SIGQUIT, &sa_quit, NULL);
+	sigaction(SIGTSTP, &sa_quit, NULL);
 }
 
 void	restore_default_signals(void)
