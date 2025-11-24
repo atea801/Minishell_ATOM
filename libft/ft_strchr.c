@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:03:44 by codespace         #+#    #+#             */
-/*   Updated: 2025/10/23 15:03:43 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/24 12:47:06 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,14 @@
 
 char	*ft_strchr(const char *s, int c)
 {
-	// Si s = "" (chaîne vide)
-	while (*s) // *s = '\0' donc on n'entre pas dans la boucle
+	while (*s)
 	{
 		if (*s == (char)c)
 			return ((char *)s);
 		s++;
 	}
-	if (c == '\0')          // Si on cherche '\0'
-		return ((char *)s); // On retourne un pointeur vers '\0'
+	if (c == '\0')
+		return ((char *)s);
 	return (NULL);
 }
 // int	main(void)

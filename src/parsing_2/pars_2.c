@@ -6,12 +6,11 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 14:55:34 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/08 14:06:07 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/24 12:58:14 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
-
 
 /**
  * @brief Vérifie la validité syntaxique et prépare les tokens pour l'exécution.
@@ -41,9 +40,6 @@ int	parsing_2(t_minishell *shell, t_token *token_head, t_token_2 *token_2)
 	else if (error == 0)
 		tokenizer_2(t_head_1, t_head_2);
 	else if (error == 2)
-	{
-		// check_all() a déjà géré les erreurs, pas besoin de print_redir_error()
 		return (2);
-	}
 	return (0);
 }

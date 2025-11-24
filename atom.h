@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/24 11:01:51 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/24 13:03:13 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ typedef enum e_quote_state_simple
 typedef struct s_quote_context_simple
 {
 	t_quote_state_simple		current_state;
-	int error_pos;   // -1 si OK, sinon position erreur
-	char *error_msg; // Message d'erreur détaillé
-	char *input;     // Input analysé (pour debug)
+	int							error_pos;
+	char						*error_msg;
+	char						*input;
 }								t_quote_context_simple;
 
 typedef struct s_token
@@ -80,7 +80,7 @@ typedef struct s_token
 	char						*head;
 	char						*value;
 	char						*type;
-	int quote_type; // 0=normal, 1=single_quote, 2=double_quote
+	int							quote_type;
 	struct s_token				*next;
 }								t_token;
 
@@ -234,9 +234,7 @@ int								handle_single_redir(char *input, char *res,
 int								is_redir(char c);
 
 // parsing_1.c
-// int								valide_quote(char *str);
 int								validate_quotes_improved(char *str);
-void							free_quote_context_simple(t_quote_context_simple *ctx);
 char							*parsing_1(t_minishell *shell, char *input);
 
 /************************************************************************
@@ -306,6 +304,8 @@ int								check_redir(t_token **token_head);
 // pars_2_cmd_node_utils.c
 void							free_delete_node_list(t_cmd *node);
 void							free_init_new_node_cmd(t_cmd *new_node);
+void							init_new_node_cmd_set(t_cmd *new_node);
+
 int								open_all_redirs_from_tokens(t_token_2 *tokens,
 									int *fd_in, int *fd_out);
 
@@ -407,9 +407,6 @@ void							set_cmd_heredoc_delim(t_cmd *cmd, char *file);
 // check_expand.c
 void							expand_all_vars(t_minishell *shell,
 									t_token_2 *token);
-void							expander(t_minishell *shell, char *res, char *s,
-									int i);
-
 // expand_utils.c
 void							expand_all_tokens(t_minishell *shell,
 									t_token_2 *head);
@@ -419,10 +416,10 @@ int								in_single_quote(char *res, int pos);
 int								in_double_quote(char *res, int pos);
 void							expand_all_tokens(t_minishell *shell,
 									t_token_2 *head);
-char							*replace_env_var(t_minishell *shell, char *s);
-void							check_expendable(char *res, t_token_2 *token_2);
-int								in_single_quote(char *res, int pos);
-int								in_double_quote(char *res, int pos);
+
+// expand_utils_2.c
+int								var_len(char *s, int start);
+char							*ft_strjoin_free(char *s1, char *s2);
 
 /************************************************************************
  *								BUILT_IN								*

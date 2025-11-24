@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 14:35:15 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/13 14:57:42 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/24 12:56:57 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 /**
  * @brief Initialise HOME et OLDPWD et recuperant le home depuis l'environnement
- * 
+ *
  * Fonction utilitaire de builtin_cd
- * @param shell 
- * @param home 
- * @param oldpwd 
- * @return int 
+ * @param shell
+ * @param home
+ * @param oldpwd
+ * @return int
  */
 int	cd_init_vars(t_minishell *shell, char **home, char **oldpwd)
 {
@@ -39,18 +39,18 @@ int	cd_init_vars(t_minishell *shell, char **home, char **oldpwd)
 }
 
 /**
- * @brief Dispatch la logique de cd selon le nombre d'arguments 
+ * @brief Dispatch la logique de cd selon le nombre d'arguments
  * (argc) et la valeur de l'argument
- * 
+ *
  * - gestion de cd sans args
- * 
+ *
  * - gestion de cd -
- * 
+ *
  * - gestion de cd ~
- * 
- * - gestion de cd (avec "" + "    ") partie en commentaire 
- * 
- * 
+ *
+ * - gestion de cd (avec "" + "    ") partie en commentaire
+ *
+ *
  * // // Vérifier si l'argument est vide ou ne contient que des espaces
  * // if (!shell->cmd->argv[1] || shell->cmd->argv[1][0] == '\0')
  * // {
@@ -67,10 +67,10 @@ int	cd_init_vars(t_minishell *shell, char **home, char **oldpwd)
  * // 		|| shell->cmd->argv[1][i] == '\v'
  * // 		|| shell->cmd->argv[1][i] == '\f'))
  * // 	i++;
- * @param shell 
- * @param home 
- * @param oldpwd 
- * @param new_pwd 
+ * @param shell
+ * @param home
+ * @param oldpwd
+ * @param new_pwd
  * @return int 0 = succes / 1 = erreur
  */
 int	cd_dispatch_case(t_minishell *shell, char *home, char *oldpwd,
@@ -86,8 +86,7 @@ int	cd_dispatch_case(t_minishell *shell, char *home, char *oldpwd,
 		if (!shell->cmd->argv[1][i])
 		{
 			ft_putstr_fd("Minishell: cd: invalid argument\n", 2);
-			free(oldpwd);
-			return (1);
+			return (free(oldpwd), 1);
 		}
 		if (ft_strcmp(shell->cmd->argv[1], "-") == 0)
 			return (cd_special_case_dash(shell, oldpwd, new_pwd));
@@ -98,21 +97,20 @@ int	cd_dispatch_case(t_minishell *shell, char *home, char *oldpwd,
 	if (shell->cmd->argc > 2)
 	{
 		ft_putstr_fd("Minishell: cd: too many arguments\n", 2);
-		free(oldpwd);
-		return (1);
+		return (free(oldpwd), 1);
 	}
 	return (0);
 }
 
 /**
- * @brief Parcourt une liste de tokens et détecte si 
+ * @brief Parcourt une liste de tokens et détecte si
  * un token ayant type égal à "ERROR" existe.
- * 
- * - Utile pour décider d'ignorer l'exécution de certains 
- * builtins si parsing invalide. Dans le code builtin_cd il est 
+ *
+ * - Utile pour décider d'ignorer l'exécution de certains
+ * builtins si parsing invalide. Dans le code builtin_cd il est
  * commenté mais conservé comme utilitaire.
- * @param tok1 
- * @return int 
+ * @param tok1
+ * @return int
  */
 int	has_parsing_errors(t_token *tok1)
 {
@@ -130,35 +128,13 @@ int	has_parsing_errors(t_token *tok1)
 	return (0);
 }
 
-// int	is_empty_string_error(t_token *tok1)
-// {
-// 	t_token	*current;
-
-// 	if (!tok1)
-// 		return (0);
-// 	current = tok1;
-// 	while (current)
-// 	{
-// 		if (current->type && ft_strcmp(current->type, "ERROR") == 0)
-// 		{
-// 			// Si c'est une erreur avec une valeur vide, c'est cd ""
-// 			if (!current->value || current->value[0] == '\0')
-// 				return (0); // cd "" ne doit pas afficher d'erreur
-// 			// Si c'est une erreur avec des espaces, c'est cd "   "
-// 			return (1);
-// 		}
-// 		current = current->next;
-// 	}
-// 	return (0);
-// }
-
 /**
- * @brief Point d'entrée du built-in cd. Ordonne la validation et 
+ * @brief Point d'entrée du built-in cd. Ordonne la validation et
  * exécution du changement de répertoire.
- * 
+ *
  * - builtin_cd délègue toute la logique au dispatch
- * @param shell 
- * @return int 
+ * @param shell
+ * @return int
  */
 int	builtin_cd(t_minishell *shell)
 {
@@ -166,21 +142,6 @@ int	builtin_cd(t_minishell *shell)
 	char	*oldpwd;
 	char	new_pwd[BUFFER_SIZE];
 
-	// partie pour gerer cd ""
-	// + cd "          "  a voir si toujours necessaire apres 
-	// refonte de quotes gestions
-	// Vérifier s'il y a des erreurs de parsing pour cd "   " (espaces)
-	// if (shell->cmd->argc == 1 && is_empty_string_error(shell->tok1))
-	// {
-	// 	ft_putstr_fd("Minishell: cd: invalid argument\n", 2);
-	// 	return (1);
-	// }
-	// cd "" reste silencieux et ne fait rien (comme bash)
-	// if (shell->cmd->argc == 1 && has_parsing_errors(shell->tok1))
-	// {
-	// 	return (0); // Retour 0 (succès) et reste dans le même répertoire
-	// }
-	// Si le parsing a échoué (ex: cd ""), ne pas exécuter
 	if (!shell->should_execute)
 	{
 		ft_putstr_fd("Minishell: cd: invalid argument\n", 2);

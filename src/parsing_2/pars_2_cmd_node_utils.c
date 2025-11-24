@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_2_cmd_node_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 13:38:03 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/07 17:54:58 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/24 13:02:28 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,11 @@ void	free_delete_node_list(t_cmd *node)
 	if (node->fd_out != -1)
 		close(node->fd_out);
 	free(node);
+}
+
+void	init_new_node_cmd_set(t_cmd *new_node)
+{
+	new_node->fd_in = -1;
+	new_node->fd_out = -1;
+	new_node->has_redir_error = 0;
 }

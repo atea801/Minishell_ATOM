@@ -1,34 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_print_list_2.c                                  :+:      :+:    :+:   */
+/*   expand_utils_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/22 11:00:03 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/24 11:12:40 by aautret          ###   ########.fr       */
+/*   Created: 2025/11/24 11:05:09 by aautret           #+#    #+#             */
+/*   Updated: 2025/11/24 11:07:09 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
-void	print_token_list(t_token *head)
+int	var_len(char *s, int start)
 {
-	printf("\nT_TOKEN :\n");
-	while (head && head->value)
-	{
-		printf("value:%s | type:%s\n", head->value, head->type);
-		head = head->next;
-	}
+	int	i;
+
+	i = 0;
+	if (!s)
+		return (0);
+	while (ft_isalnum(s[start + i]) || s[start + i] == '_')
+		i++;
+	return (i);
 }
 
-void	print_token_list_type(t_token *head)
+char	*ft_strjoin_free(char *s1, char *s2)
 {
-	printf("\nT_TOKEN :");
-	while (head && head->value)
-	{
-		printf("%s ", head->type);
-		head = head->next;
-	}
-	printf("\n");
+	char	*res;
+
+	res = ft_strjoin(s1, s2);
+	if (!res)
+		return (NULL);
+	free(s1);
+	free(s2);
+	return (res);
 }

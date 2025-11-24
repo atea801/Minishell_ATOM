@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 18:18:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/21 15:21:26 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/24 13:04:01 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,7 @@ t_cmd	*init_new_node_cmd(char **argv)
 				return (free_init_new_node_cmd(new_node), NULL);
 		}
 	}
-	new_node->fd_in = -1;
-	new_node->fd_out = -1;
-	new_node->has_redir_error = 0;
+	init_new_node_cmd_set(new_node);
 	return (new_node);
 }
 

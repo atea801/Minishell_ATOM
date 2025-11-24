@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 15:44:26 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/22 17:08:14 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/24 11:11:58 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +96,3 @@ void	exec_single_cmd(t_minishell *shell)
 	waitpid(pid, &status, 0);
 	handle_child_status(shell, status);
 }
-

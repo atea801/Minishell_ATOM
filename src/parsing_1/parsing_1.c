@@ -6,87 +6,11 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 12:10:28 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/22 17:20:03 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/24 11:15:25 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
-
-/**
- * @brief checke si une single/double quote est ouverte ou fermee
- *
- * return 1 => PAS FERMEE
- * return 0 => FERMEE
- *
- * @param str
- * @return int
- */
-// int	valide_quote(char *str)
-// {
-// 	int	i;
-// 	int	flag_open;
-
-// 	i = 0;
-// 	flag_open = 0;
-// 	while (str[i])
-// 	{
-// 		if (str[i] == 39 || str[i] == 34)
-// 			flag_open++;
-// 		i++;
-// 	}
-// 	if (flag_open % 2 != 0)
-// 		return (1);
-// 	return (0);
-// }
-
-/**
- * @brief Version améliorée de valide_quote avec state machine
- *
- * AMÉLIORATION MAJEURE : Au lieu de compter les quotes, utilise une
- * state machine qui comprend les règles d'imbrication bash
- *
- * RÈGLES GÉRÉES :
- * - Dans des quotes simples : les doubles sont littérales
- * - Dans des quotes doubles : les simples sont littérales
- * - Détection précise des quotes non fermées
- *
- * @param str Chaîne à valider
- * @return int 1 si quotes non fermées, 0 si OK (MÊME INTERFACE que l'original)
- */
-int	validate_quotes_improved(char *str)
-{
-	t_quote_state_simple	state;
-	int						i;
-
-	if (!str)
-		return (1);
-	i = 0;
-	state = STATE_NORMAL;
-	while (str[i])
-	{
-		if (str[i] == '\'' && state != STATE_DOUBLE)
-		{
-			// Toggle state pour quotes simples (sauf si dans doubles)
-			if (state == STATE_SINGLE)
-				state = STATE_NORMAL;
-			else
-				state = STATE_SINGLE;
-		}
-		else if (str[i] == '"' && state != STATE_SINGLE)
-		{
-			// Toggle state pour quotes doubles (sauf si dans simples)
-			if (state == STATE_DOUBLE)
-				state = STATE_NORMAL;
-			else
-				state = STATE_DOUBLE;
-		}
-		i++;
-	}
-	// Retourne 1 si pas fermé (comme l'original)
-	if (state != STATE_NORMAL)
-		return (1);
-	return (0);
-}
 
 static int	valide_pipe(char *str)
 {

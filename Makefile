@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+         #
+#    By: aautret <aautret@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/11/22 15:42:23 by tlorette         ###   ########.fr        #
+#    Updated: 2025/11/24 11:20:29 by aautret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ NAME = minishell
 SRC = src/parsing_1/parsing_1.c \
 		src/parsing_1/clear_input/clear_input_utils.c \
 		src/parsing_1/clear_input/clear_input.c \
+		src/parsing_1/quote_validation/quote_validator.c \
 		src/parsing_1/add_redir_space.c \
 		src/parsing_1/parse_1_utils.c \
 		src/parsing_2/tokenizer_2/token_2_find_type.c \
@@ -38,12 +39,14 @@ SRC = src/parsing_1/parsing_1.c \
 		src/env/env_list_to_tabs.c \
 		src/env/env_path.c \
 		src/env/env_node.c \
+		src/env/env_node_utils.c \
 		src/env/env_utils.c \
 		src/env/env.c \
 		src/myprintlist/my_print_list.c \
 		src/myprintlist/my_print_list_2.c \
 		src/env/check_expandable/check_expand.c \
 		src/env/check_expandable/expand_utils.c \
+		src/env/check_expandable/expand_utils_2.c \
 		src/built_in/built_in_dispatcher.c \
 		src/built_in/built_in.c \
 		src/built_in/echo.c \

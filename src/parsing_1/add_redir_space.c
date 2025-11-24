@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:30:07 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/21 15:00:54 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/24 11:13:21 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
  * @brief Ajoute un espace avant un opérateur de redirection si nécessaire.
  * 
  * Check si le caractère courant dans la chaîne d'entrée est un opérateur 
- * et si le caractère précédent n'est pas un espace ni un autre opérateur de redirection. 
+ * et si le caractère précédent n'est pas un espace ni un autre
+ * opérateur de redirection. 
  * Si c'est le cas, elle ajoute un espace avant operateur.
  * 
  * @param input 

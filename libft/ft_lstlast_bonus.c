@@ -21,5 +21,5 @@ t_list	*ft_lstlast(t_list *lst)
 		if (lst -> next == 0)
 			return (lst);
 	}
-	return (NULL)
+	return (NULL);
 }

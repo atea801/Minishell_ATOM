@@ -3,38 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_expand.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 19:27:38 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/21 14:02:35 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/24 11:10:51 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
-
-static int	var_len(char *s, int start)
-{
-	int	i;
-
-	i = 0;
-	if (!s)
-		return (0);
-	while (ft_isalnum(s[start + i]) || s[start + i] == '_')
-		i++;
-	return (i);
-}
-
-static char	*ft_strjoin_free(char *s1, char *s2)
-{
-	char	*res;
-
-	res = ft_strjoin(s1, s2);
-	if (!res)
-		return (NULL);
-	free(s1);
-	free(s2);
-	return (res);
-}
 
 static char	*process_variable(t_minishell *shell, char *s, int *i, char *res)
 {
