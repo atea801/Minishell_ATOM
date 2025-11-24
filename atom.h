@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/24 13:53:54 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/24 14:58:17 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -586,8 +586,6 @@ void							free_and_close_before_delim(t_minishell *shell,
 									char *line, int *p_fd);
 void							path_not_found_exe_child(t_minishell *shell,
 									t_cmd *cmd, int num_cmd, char **env);
-void							clean_built_in_checker(t_minishell *shell,
-									char **env, int num_cmd);
 
 // exec_heredoc.c
 int								heredoc_detected(t_token_2 *token2);
