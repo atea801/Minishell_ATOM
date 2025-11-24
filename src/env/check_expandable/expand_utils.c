@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 16:10:20 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/08 15:26:22 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/24 16:07:01 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,23 @@
 void	expand_all_tokens(t_minishell *shell, t_token_2 *head)
 {
 	t_token_2	*current;
+	int			k;
 
 	current = head;
 	while (current)
 	{
 		if (current->is_expand == 1 && current->value)
 			expand_all_vars(shell, current);
+		else if (current->value)
+		{
+			k = 0;
+			while (current->value[k])
+			{
+				if (current->value[k] == '\x07')
+					current->value[k] = '$';
+				k++;
+			}
+		}
 		current = current->next;
 	}
 }
