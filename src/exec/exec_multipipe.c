@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_multipipe.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:32:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/24 15:31:26 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/24 17:20:34 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ static void	execute_child(t_minishell *shell, t_cmd *cmd, t_cmd *cmd_list,
 	free_env_tab(env);
 	free_all_life(shell);
 	free_pipes(shell->buffers.pipes, num_cmd - 1);
+	free_cmd_list(cmd);
 	exit(126);
 }
 

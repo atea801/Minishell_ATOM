@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 11:23:47 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/24 16:09:20 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/24 17:28:41 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,6 @@ void	exec_single_cmd_child(t_minishell *shell)
 	restore_default_signals();
 	handle_redirections(shell->cmd);
 	tab_to_env = env_list_to_tab(shell->env);
-	secure_exec(shell->cmd, tab_to_env);
+	secure_exec(shell, tab_to_env);
+	free_env_tab(tab_to_env);
 }

@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/24 15:50:03 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/24 17:15:23 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,11 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 	// }
 	while (1)
 	{
+		if (shell->cmd)
+		{
+			free_cmd_list(shell->cmd);
+			shell->cmd = NULL;
+		}
 		if (shell->tok1)
 		{
 			free_token_1_only(shell->tok1);
@@ -105,11 +110,6 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 		{
 			free_token_2_list(&shell->tok2);
 			shell->tok2 = NULL;
-		}
-		if (shell->cmd)
-		{
-			free_cmd_list(shell->cmd);
-			shell->cmd = NULL;
 		}
 		shell->tok1 = NULL;
 		shell->tok2 = NULL;
