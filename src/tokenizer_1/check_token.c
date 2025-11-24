@@ -6,19 +6,21 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 13:20:49 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/22 13:58:19 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/24 14:03:23 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
 /**
- * @brief Affiche le message d'erreur approprié pour un token de redirection malformé
- * 
- * Analyse la valeur du token ERROR et détermine quel opérateur de redirection
- * est en cause pour afficher le bon message d'erreur.
+ * @brief Affiche le message d'erreur approprié pour un token de
+ * redirection malformé
+ *
+ * Analyse la valeur du token ERROR et détermine quel
+ * opérateur de redirection est en cause pour afficher le
+ * bon message d'erreur.
  * Gère les cas: <<<, <<, >>, <>, <, >
- * 
+ *
  * @param t_head Pointeur vers le token ERROR contenant la redirection malformée
  */
 void	print_redir_error(t_token **t_head)
@@ -31,7 +33,8 @@ void	print_redir_error(t_token **t_head)
 	t_error = *t_head;
 	val = t_error->value;
 	if (ft_strcmp(val, "<>") == 0)
-		write(2, "Minishell: syntax error near unexpected token `newline'\n", 57);
+		write(2, "Minishell: syntax error near unexpected token `newline'\n",
+			57);
 	else if (ft_strncmp(val, "<<<", 3) == 0)
 		write(2, "Minishell: syntax error near unexpected token `<<<'\n", 53);
 	else if (ft_strncmp(val, "<<", 2) == 0)

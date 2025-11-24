@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:34:48 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/18 14:39:38 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/24 14:03:47 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	copy_word(char *res, char *str, int end, int start)
 		res[j++] = str[k++];
 	res[j] = 0;
 }
-
 
 /**
  * @brief Set token.value et set avec appel de token_type token.type

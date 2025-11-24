@@ -6,57 +6,11 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 17:35:21 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/18 14:38:17 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/24 13:54:00 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
-
-/**
- * @brief Dettecte si l'element suivant une double quote suivant une simple quote
- * ou si l'element suivant une simple quote suivant une double quote
- *
- * - "' ou '" => return 1
- * @param c
- * @param next
- * @return int
- */
-int	quote_state(char c, char next)
-{
-	if ((c == '"' && next == 39) || (c == 39 && next == '"'))
-		return (1);
-	return (0);
-}
-
-/**
- * @brief Permet de trouver la fin d'une quote apres avoir
- * detecter le debut d'une quote
- *
- * - si le caractere a la position i est une double quote on avance
- * jusqu'au prochain guillemet double
- * - si le caractere a la position i est une simple quote on avance
- * jusqu'au prochain guillemet simple
- *
- * @param str
- * @param i
- * @return int index de la quote qui est fermante
- */
-int	skip_quote(char *str, int i)
-{
-	if (str[i] == '"')
-	{
-		i++;
-		while (str[i] != '"')
-			i++;
-	}
-	if (str[i] == 39)
-	{
-		i++;
-		while (str[i] != 39)
-			i++;
-	}
-	return (i);
-}
 
 /**
  * @brief Utiliser quand on detecte des cas speciaux "' ou '"
@@ -100,14 +54,12 @@ int	handle_quote(t_token **token, char *str, int *start, int end)
 	if (!res)
 		return (1);
 	copy_word(res, str, end, *start + 1);
-	// Déterminer le type de quote directement
 	if (str[*start] == '\'')
-		quote_type = 1; // Single quote
+		quote_type = 1;
 	else if (str[*start] == '"')
-		quote_type = 2; // Double quote
+		quote_type = 2;
 	else
-		quote_type = 0; // Normal (pas de quotes)
-	// Utiliser la nouvelle fonction avec quote_type
+		quote_type = 0;
 	if (put_token_with_quote(token, res, quote_type))
 		return (free(res), 1);
 	(*start) += 1;
@@ -134,21 +86,19 @@ void	handle_general(t_token **token, char *str, int *start, int i)
 		return ;
 	res = malloc_token(i, *start);
 	copy_word(res, str, i, *start);
-	// Vérifier si le token n'est pas vide ou ne contient que des espaces
 	j = 0;
 	while (res[j] && res[j] == ' ')
 		j++;
-	if (res[j] == '\0') // Si c'est que des espaces
+	if (res[j] == '\0')
 	{
 		free(res);
 		(*start) = i + 1;
 		return ;
 	}
-	// Cas spécial : séparer $? suivi de n'importe quoi ($?$, $??, $?hello,etc.)
 	if (ft_strlen(res) >= 3 && res[0] == '$' && res[1] == '?' && res[2] != '\0')
 	{
 		first_token = ft_strdup("$?");
-		remaining = ft_strdup(res + 2); // Tout ce qui suit $?
+		remaining = ft_strdup(res + 2);
 		put_token(token, first_token);
 		put_token(token, remaining);
 		free(res);

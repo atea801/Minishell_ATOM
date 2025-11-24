@@ -6,7 +6,7 @@
 #    By: aautret <aautret@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/11/24 11:20:29 by aautret          ###   ########.fr        #
+#    Updated: 2025/11/24 13:52:16 by aautret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC = src/parsing_1/parsing_1.c \
 		src/parsing_2/tokenizer_2/token_2_type.c \
 		src/parsing_2/tokenizer_2/tokenizer_2.c \
 		src/parsing_2/pars_2_check_valide.c \
+		src/parsing_2/pars_2_check_valide_utils.c \
 		src/parsing_2/pars_2_cmd_node_utils.c \
 		src/parsing_2/pars_2_cmd_node.c \
 		src/parsing_2/pars_2_utils.c \
@@ -33,6 +34,7 @@ SRC = src/parsing_1/parsing_1.c \
 		src/tokenizer_1/find_type.c \
 		src/tokenizer_1/find_type_2.c \
 		src/tokenizer_1/quote_gestion.c \
+		src/tokenizer_1/quote_gestion_utils.c \
 		src/tokenizer_1/token_utils.c \
 		src/tokenizer_1/tokenizer_1.c \
 		src/env/env_list_to_tabs_utils.c \

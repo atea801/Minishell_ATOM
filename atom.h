@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/24 13:03:13 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/24 13:53:54 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,8 +254,6 @@ char							*get_token_type(char *res);
 char							*type_expand(char *res);
 
 // quote_gestion.c
-int								quote_state(char i, char next);
-int								skip_quote(char *str, int i);
 void							handle_quote_state(t_token **token, char *str,
 									int *start, int end);
 int								handle_quote(t_token **token, char *str,
@@ -265,6 +263,10 @@ void							handle_general(t_token **token, char *str,
 									int *start, int end);
 int								handle_all(t_token **token, char *str,
 									int start, int i);
+
+// quotes_gestion_utils.c
+int								skip_quote(char *str, int i);
+int								quote_state(char i, char next);
 
 // token_utils.c
 void							print_token_list(t_token *head);
@@ -294,12 +296,14 @@ int								malloc_args(t_token **token);
  *								PARSING 2								*
  ************************************************************************/
 // pars_2_check_valide.c
-int								parse_redir_alone(t_token **token_2);
 char							*check_pipe(t_token *token_2);
-t_token							*check_error(t_token *token_head);
 int								check_all(t_minishell *shell,
 									t_token **token_head);
 int								check_redir(t_token **token_head);
+
+// pars_2_check_valide_utils.c
+t_token							*check_error(t_token *token_head);
+int								parse_redir_alone(t_token **token_2);
 
 // pars_2_cmd_node_utils.c
 void							free_delete_node_list(t_cmd *node);

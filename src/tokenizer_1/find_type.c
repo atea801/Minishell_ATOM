@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:18:07 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/22 12:36:31 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/24 14:04:14 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,6 @@ char	*get_token_type(char *res)
 {
 	char	*type;
 
-	// Vérifier d'abord les expansions spéciales ($?)
 	type = type_expand(res);
 	if (type)
 		return (type);
@@ -144,7 +143,5 @@ char	*get_token_type(char *res)
 	type = type_mot(res);
 	if (type)
 		return (type);
-	// if (!type)
-	// 	print_error(res);
 	return (NULL);
 }

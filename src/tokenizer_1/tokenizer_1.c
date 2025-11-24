@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:39:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/22 13:58:19 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/24 14:05:41 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,12 @@ static void	commit_buffer(t_token **token, t_tok_buf *tb)
 	tb->saw_unquoted = 0;
 }
 
-
 static int	skip_dollar_before_quote(const char *s, int i)
 {
 	if (s[i] == '$' && s[i + 1] && (s[i + 1] == '"' || s[i + 1] == '\''))
 		return (i + 1);
 	return (i);
 }
-
 
 static int	handle_single_quote(const char *s, int i, t_tok_buf *tb)
 {
@@ -80,7 +78,6 @@ static int	handle_single_quote(const char *s, int i, t_tok_buf *tb)
 	return (j);
 }
 
-
 static int	handle_double_quote(const char *s, int i, t_tok_buf *tb)
 {
 	int	j;
@@ -102,7 +99,6 @@ static int	handle_double_quote(const char *s, int i, t_tok_buf *tb)
 		return (j + 1);
 	return (j);
 }
-
 
 static int	push_operator(t_token **token, const char *s, int i, t_tok_buf *tb)
 {
@@ -154,7 +150,6 @@ static int	push_operator(t_token **token, const char *s, int i, t_tok_buf *tb)
 	put_token(token, op);
 	return (i + 1);
 }
-
 
 static int	process_next(const char *s, int i, t_token **token, t_tok_buf *tb)
 {
@@ -214,4 +209,3 @@ void	tokenizer(t_token *token, char *str)
 	commit_buffer(&token, &tb);
 	free(buf);
 }
-
