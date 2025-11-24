@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 19:27:38 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/24 11:10:51 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/24 16:22:30 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,22 @@ static char	*handle_escaped_dollar(char **s, int *i, char *res)
 
 static char	*handle_dollar(t_minishell *shell, char **s, int *i, char *res)
 {
-	int	len;
+	int		len;
+	char	*before;
 
 	len = 1 + var_len(*s, *i + 1);
 	if ((*s)[*i + 1] == '?')
 		len = 2;
+	if (len == 1 && (*s)[*i + 1] != '?')
+	{
+		before = ft_substr(*s, 0, *i + 1);
+		res = ft_strjoin_free(res, before);
+		if (!res)
+			return (NULL);
+		*s += *i + 1;
+		*i = 0;
+		return (res);
+	}
 	res = process_variable(shell, *s, i, res);
 	if (!res)
 		return (NULL);
