@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/22 14:37:54 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/24 12:43:09 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
+
+static char	*get_dynamic_prompt_protect(void)
+{
+	char	*directory;
+	char	*prompt_start;
+	char	*prompt_mid;
+	char	*prompt;
+
+	directory = "Minishell";
+	prompt_start = ft_strjoin("\033[1;92m", directory);
+	prompt_mid = ft_strjoin(prompt_start, " > ");
+	prompt = ft_strjoin(prompt_mid, "\033[0m");
+	free(prompt_start);
+	free(prompt_mid);
+	return (prompt);
+}
 
 char	*get_dynamic_prompt(void)
 {
@@ -21,13 +37,15 @@ char	*get_dynamic_prompt(void)
 	char	*prompt;
 
 	cwd = getcwd(NULL, 0);
+	if (cwd == NULL)
+		return (get_dynamic_prompt_protect());
 	directory = ft_strrchr(cwd, '/');
 	if (directory && directory[1])
 		directory++;
 	else if (directory && ft_strcmp(cwd, "/") == 0)
 		directory = "/";
 	else
-		directory = "Atom";
+		directory = "Minishell";
 	prompt_start = ft_strjoin("\033[1;92m", directory);
 	prompt_mid = ft_strjoin(prompt_start, " > ");
 	prompt = ft_strjoin(prompt_mid, "\033[0m");
