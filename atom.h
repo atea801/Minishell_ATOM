@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/22 16:43:04 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/24 11:01:51 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,9 @@ void							valide_key(t_atom_env **env_head,
 int								change_node_list(t_atom_env **env, char *key,
 									char *value);
 void							delete_node_list(t_atom_env **env, char *key);
+
+// env_node_utils.c
+void							init_new_node_env_free(t_atom_env *new_node);
 
 // env_path.c
 void							create_minimal_env(t_atom_env **env);

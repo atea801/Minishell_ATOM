@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 13:51:19 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/21 13:27:51 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/24 10:58:40 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 
 /**
  * @brief Creation mini environnement impermeable au -i env
+ * char	*username;
+ * char	*path_home;
+ * username = get_username(cwd);
+ * path_home = get_home(cwd);
+ * add_node_to_end(env, "USER", username);
+ * add_node_to_end(env, "HOME", path_home);
+ * free(username);
+ * free(path_home);
  *
  * @param env
  */
@@ -21,23 +29,15 @@ void	create_minimal_env(t_atom_env	**env)
 {
 	char	*cwd;
 	char	*minishell_path;
-	// char	*username;
-	// char	*path_home;
 
 	cwd = getcwd(NULL, 0);
 	minishell_path = ft_strjoin(cwd, "/minishell");
-	// username = get_username(cwd);
-	// path_home = get_home(cwd);
-	// add_node_to_end(env, "USER", username);
-	// add_node_to_end(env, "HOME", path_home);
 	add_node_to_end(env, "PWD", cwd);
 	add_node_to_end(env, "SHLVL", "1");
 	add_node_to_end(env, "PATH", "/usr/bin:/bin");
 	add_node_to_end(env, "_", minishell_path);
 	add_node_to_end(env, "OLDPWD", "");
 	free(cwd);
-	// free(username);
-	// free(path_home);
 	free(minishell_path);
 }
 

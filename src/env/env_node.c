@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 18:18:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/21 13:37:47 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/24 11:02:05 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,7 @@ t_atom_env	*init_new_node_env(char *key, char *value)
 	new_node->value = ft_strdup(value);
 	if (!new_node->key || !new_node->value)
 	{
-		free(new_node->key);
-		free(new_node->value);
-		free(new_node);
+		init_new_node_env_free(new_node);
 		return (NULL);
 	}
 	new_node->has_twin = false;

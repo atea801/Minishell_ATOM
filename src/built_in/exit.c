@@ -6,16 +6,32 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 14:20:58 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/21 17:37:24 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/24 10:52:37 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 #include <limits.h>
 
+int	atol_utils(char *str, int i, long res, int sign)
+{
+	if (!ft_isdigit(str[i]))
+		return (0);
+	if (res > LONG_MAX / 10)
+		return (0);
+	if (res == LONG_MAX / 10)
+	{
+		if (sign == 1 && (str[i] - '0') > LONG_MAX % 10)
+			return (0);
+		if (sign == -1 && (str[i] - '0') > -(LONG_MIN % 10))
+			return (0);
+	}
+	return (1);
+}
+
 /**
  * @brief Convertit une string en long avec detection d'overflow
- * 
+ *
  * @param str La string a convertir
  * @param result Pointeur pour stocker le resultat
  * @return int 1 si succès, 0 si overflow ou erreur
@@ -38,17 +54,8 @@ static int	ft_atol_safe(char *str, long *result)
 		return (0);
 	while (str[i])
 	{
-		if (!ft_isdigit(str[i]))
+		if (atol_utils(str, i, res, sign) == 0)
 			return (0);
-		if (res > LONG_MAX / 10)
-			return (0);
-		if (res == LONG_MAX / 10)
-		{
-			if (sign == 1 && (str[i] - '0') > LONG_MAX % 10)
-				return (0);
-			if (sign == -1 && (str[i] - '0') > -(LONG_MIN % 10))
-				return (0);
-		}
 		res = res * 10 + (str[i] - '0');
 		i++;
 	}

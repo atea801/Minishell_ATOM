@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:30:31 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/22 16:39:23 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/24 10:56:09 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,6 @@
 int	case_cd_sin_arg(t_minishell *shell, char *home, char *old_pwd,
 		char *new_pwd)
 {
-	// if (access(home, F_OK) != 0)
-	// {
-	// 	perror("Minishell: cd");
-	// 	free(old_pwd);
-	// 	return (1);
-	// }
 	if (chdir(home) != 0)
 	{
 		perror("Minishell: cd");
@@ -58,11 +52,6 @@ int	case_cd_sin_arg(t_minishell *shell, char *home, char *old_pwd,
  */
 static int	cd_special_dash_check_oldpwd(char	*oldpwd_env)
 {
-	// if (access(oldpwd_env, F_OK) != 0)
-	// {
-	// 	perror("Minishell: cd");
-	// 	return (1);
-	// }
 	if (chdir(oldpwd_env) != 0)
 	{
 		perror("Minishell: cd");
