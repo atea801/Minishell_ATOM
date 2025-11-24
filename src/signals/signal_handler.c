@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 13:55:33 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/21 17:35:35 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/24 13:16:06 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,6 @@ void	handle_sigint_prompt(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	g_signal_received = 1;
+	rl_redisplay();
+	rl_done = 1;
 }
