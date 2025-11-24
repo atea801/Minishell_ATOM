@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_multipipe.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:32:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/24 14:15:08 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/24 15:31:26 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static void	execute_child(t_minishell *shell, t_cmd *cmd, t_cmd *cmd_list,
 {
 	char	*path;
 	char	**env;
+	int		exit_code;
 
 	env = env_list_to_tab_new(shell->env);
 	handle_redirections(cmd);
@@ -53,7 +54,14 @@ static void	execute_child(t_minishell *shell, t_cmd *cmd, t_cmd *cmd_list,
 		exit(0);
 	}
 	if (is_builtin(cmd->argv[0]))
-		clean_built_in_checker(shell, env, num_cmd);
+	{
+		shell->cmd = cmd;
+		exit_code = execute_builtin(shell);
+		free_env_tab(env);
+		free_all_life(shell);
+		free_pipes(shell->buffers.pipes, num_cmd - 1);
+		exit(exit_code);
+	}
 	path = find_command_path(cmd->argv[0], shell);
 	if (!path)
 		path_not_found_exe_child(shell, cmd, num_cmd, env);

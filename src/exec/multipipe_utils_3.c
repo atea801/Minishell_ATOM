@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multipipe_utils_3.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 13:20:42 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/22 15:31:55 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/24 14:58:17 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,4 @@ void	path_not_found_exe_child(t_minishell *shell, t_cmd *cmd, int num_cmd,
 	free_all_life(shell);
 	free_pipes(shell->buffers.pipes, num_cmd - 1);
 	exit(127);
-}
-
-void	clean_built_in_checker(t_minishell *shell, char **env, int num_cmd)
-{
-	shell->exit_code = execute_builtin(shell);
-	free_env_tab(env);
-	free_all_life(shell);
-	free_pipes(shell->buffers.pipes, num_cmd - 1);
-	exit(shell->exit_code);
 }
