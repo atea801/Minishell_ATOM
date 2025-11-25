@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/24 17:15:23 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/25 14:08:35 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,15 +86,7 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 	len = 0;
 	(void)ac;
 	(void)argv;
-	// je suis inquiet de ce com je pense que ca servait possiblement
-	// a quelque chose...
-	// env_tab = env_list_to_tab_new(shell->env);
-	// if (!env_tab)
-	// {
-	// 	ft_putstr_fd("Minishell: Error: failed to convert env to tab\n", 2);
-	// 	return ;
-	// }
-	while (1)
+		while (1)
 	{
 		if (shell->cmd)
 		{
@@ -225,9 +217,18 @@ int	main(int ac, char **av, char **env)
 		init_token_struct(&shell.tok1, &shell.tok2);
 		shell.env = NULL;
 		create_minimal_env(&shell.env);
+		change_node_list(&shell.env, "SHLVL", "1");
 	}
 	else
+	{
+		if (getenv("_MINISHELL_RUNNING"))
+		{
+			ft_putstr_fd("Error: Cannot run minishell inside minishell\n", 2);
+			return (1);
+		}
 		init_all(&shell.env, &shell.tok1, env, &shell.tok2);
+		change_node_list(&shell.env, "_MINISHELL_RUNNING", "1");
+	}
 	setup_signals_prompt();
 	my_readline(ac, av, &shell);
 	if (shell.tok1)
