@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 10:49:30 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/25 14:31:46 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/25 15:06:58 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,14 @@ int	init_cmd_path(t_cmd *cmd, t_minishell *shell)
 
 void	close_fds(t_cmd *cmd)
 {
-	if (cmd->fd_in != -1)
+	if (cmd->fd_in != -1 && cmd->fd_in != 0)
+	{
 		close(cmd->fd_in);
-	if (cmd->fd_out != -1)
+		cmd->fd_in = -1;
+	}
+	if (cmd->fd_out != -1 && cmd->fd_out != 1)
+	{
 		close(cmd->fd_out);
+		cmd->fd_out = -1;
+	}
 }
