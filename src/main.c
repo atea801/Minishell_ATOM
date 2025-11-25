@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/24 17:15:23 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/25 13:34:47 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,6 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 	len = 0;
 	(void)ac;
 	(void)argv;
-	// je suis inquiet de ce com je pense que ca servait possiblement
-	// a quelque chose...
-	// env_tab = env_list_to_tab_new(shell->env);
-	// if (!env_tab)
-	// {
-	// 	ft_putstr_fd("Minishell: Error: failed to convert env to tab\n", 2);
-	// 	return ;
-	// }
 	while (1)
 	{
 		if (shell->cmd)

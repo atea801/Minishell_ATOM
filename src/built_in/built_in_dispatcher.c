@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 13:40:32 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/25 11:21:10 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/25 13:42:46 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	execute_builtin(t_minishell *shell)
 
 void	exec_built_in_child(t_minishell *shell, char **env, int num_cmd)
 {
-	int	exit_code;
+	int		exit_code;
 
 	exit_code = execute_builtin(shell);
 	free_in_child(shell, env, num_cmd);

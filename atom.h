@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/25 11:31:40 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/25 13:41:27 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -430,8 +430,7 @@ char							*ft_strjoin_free(char *s1, char *s2);
  ************************************************************************/
 // built-in_dispatcher.c
 int								execute_builtin(t_minishell *shell);
-void							exec_built_in_child(t_minishell *shell,
-									char **env, int num_cmd);
+void							exec_built_in_child(t_minishell *shell, char** env, int num_cmd);
 // built_in.c
 int								is_builtin(char *cmd);
 int								is_builtin(char *cmd);
