@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_dispatcher.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 13:40:32 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/12 16:12:06 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/25 11:21:10 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,13 @@ int	execute_builtin(t_minishell *shell)
 	if (ft_strcmp(shell->cmd->argv[0], "export") == 0)
 		return (builtin_export(shell));
 	return (1);
+}
+
+void	exec_built_in_child(t_minishell *shell, char **env, int num_cmd)
+{
+	int	exit_code;
+
+	exit_code = execute_builtin(shell);
+	free_in_child(shell, env, num_cmd);
+	exit(exit_code);
 }

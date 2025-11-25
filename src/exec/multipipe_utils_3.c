@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multipipe_utils_3.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 13:20:42 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/24 14:58:17 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/25 11:13:01 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,21 @@ void	free_and_close_before_delim(t_minishell *shell, char *line, int *p_fd)
 void	path_not_found_exe_child(t_minishell *shell, t_cmd *cmd, int num_cmd,
 		char **env)
 {
-	ft_putstr_fd("Minishell : ", 2);
-	ft_putstr_fd(cmd->argv[0], 2);
-	ft_putstr_fd(": command not found\n", 2);
+	int	len_argv;
+
+	len_argv = ft_strlen(cmd->argv[0]);
+	write(2, "Minishell : ", 12);
+	write(2, cmd->argv[0], len_argv);
+	write(2, ": command not found\n", 20);
 	free_env_tab(env);
 	free_all_life(shell);
 	free_pipes(shell->buffers.pipes, num_cmd - 1);
 	exit(127);
+}
+
+void	free_in_child(t_minishell *shell, char **env, int num_cmd)
+{
+	free_env_tab(env);
+	free_all_life(shell);
+	free_pipes(shell->buffers.pipes, num_cmd - 1);
 }

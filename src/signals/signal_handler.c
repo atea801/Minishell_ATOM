@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 13:55:33 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/24 14:19:00 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/25 10:35:54 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ void	handle_sigint_prompt(int sig)
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
-	// rl_redisplay();
 	g_signal_received = 1;
-	rl_redisplay();
-	rl_done = 1;
+	// rl_redisplay();
 }

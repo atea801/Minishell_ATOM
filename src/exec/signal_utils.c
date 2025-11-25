@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 11:23:47 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/24 17:28:41 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/24 18:37:19 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,12 @@ int	multi_heredoc_signal_test(pid_t pid, int *p_fd)
 	int	status;
 
 	waitpid(pid, &status, 0);
-	if (p_fd && p_fd[0] != -1)
-	{
-		close(p_fd[0]);
-		p_fd[0] = -1;
-	}
+	// if (p_fd && p_fd[0] != -1)
+	// {
+	// 	close(p_fd[0]);
+	// 	p_fd[0] = -1;
+	// }
+	(void)p_fd;
 	if ((WIFEXITED(status) && WEXITSTATUS(status) == 130)
 		|| (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT))
 	{

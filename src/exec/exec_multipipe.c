@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:32:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/24 17:20:34 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/25 11:21:46 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,26 +41,19 @@ static void	execute_child(t_minishell *shell, t_cmd *cmd, t_cmd *cmd_list,
 {
 	char	*path;
 	char	**env;
-	int		exit_code;
 
 	env = env_list_to_tab_new(shell->env);
 	handle_redirections(cmd);
 	close_unused_fds(cmd_list, cmd);
 	if (!cmd->argv || !cmd->argv[0] || !cmd->argv[0][0])
 	{
-		free_env_tab(env);
-		free_all_life(shell);
-		free_pipes(shell->buffers.pipes, num_cmd - 1);
+		free_in_child(shell, env, num_cmd);
 		exit(0);
 	}
 	if (is_builtin(cmd->argv[0]))
 	{
 		shell->cmd = cmd;
-		exit_code = execute_builtin(shell);
-		free_env_tab(env);
-		free_all_life(shell);
-		free_pipes(shell->buffers.pipes, num_cmd - 1);
-		exit(exit_code);
+		exec_built_in_child(shell, env, num_cmd);
 	}
 	path = find_command_path(cmd->argv[0], shell);
 	if (!path)
@@ -68,9 +61,7 @@ static void	execute_child(t_minishell *shell, t_cmd *cmd, t_cmd *cmd_list,
 	execve(path, cmd->argv, env);
 	perror("execve");
 	free(path);
-	free_env_tab(env);
-	free_all_life(shell);
-	free_pipes(shell->buffers.pipes, num_cmd - 1);
+	free_in_child(shell, env, num_cmd);
 	free_cmd_list(cmd);
 	exit(126);
 }
