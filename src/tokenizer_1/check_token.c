@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 13:20:49 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/24 14:03:23 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/25 16:42:59 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,41 +98,21 @@ int	check_redir_out(t_token *t_head)
 
 int	check_redir_alone(t_token *t_head)
 {
-	t_token	*r_alone;
+	char	*value;
+	size_t	len;
 
-	r_alone = t_head;
-	if (!r_alone || !r_alone->type || !r_alone->value)
+	if (!t_head || !t_head->type || !t_head->value)
 		return (0);
-	if (ft_strcmp(r_alone->type, "ERROR") == 0)
-	{
-		if (ft_strlen(r_alone->value) == 2)
-		{
-			if (r_alone->value[0] == '>' && r_alone->value[1] == '<')
-				return (1);
-			else if (r_alone->value[0] == '<' && r_alone->value[1] == '>')
-				return (3);
-		}
-		else if (ft_strlen(r_alone->value) == 3)
-		{
-			if (r_alone->value[0] == '<' && r_alone->value[1] == '>'
-				&& r_alone->value[2] == '<')
-				return (1);
-			else if (r_alone->value[0] == '<' && r_alone->value[1] == '>'
-				&& r_alone->value[2] == '>')
-				return (3);
-		}
-		else if (ft_strlen(r_alone->value) > 3)
-		{
-			if ((r_alone->value[0] == '<' && r_alone->value[1] == '>')
-				|| (r_alone->value[0] == '>' && r_alone->value[1] == '<'))
-			{
-				if (r_alone->value[ft_strlen(r_alone->value) - 1] == '<')
-					return (2);
-				else if (r_alone->value[ft_strlen(r_alone->value) - 1] == '>')
-					return (4);
-			}
-		}
-	}
+	if (ft_strcmp(t_head->type, "ERROR") != 0)
+		return (0);
+	value = t_head->value;
+	len = ft_strlen(value);
+	if (len == 2)
+		return (check_two_chars(value));
+	if (len == 3)
+		return (check_three_chars(value));
+	if (len > 3)
+		return (check_many_chars(value, len));
 	return (0);
 }
 

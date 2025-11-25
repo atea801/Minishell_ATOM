@@ -6,24 +6,11 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:39:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/25 11:23:34 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/25 16:47:00 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
-
-/* placeholder utilisé pour protéger '$' dans les quotes simples */
-#define CHAR_PLACEHOLDER '\x07'
-
-/* buffer et flags partagés pour tokenizer : regroupe plusieurs paramètres */
-typedef struct s_tok_buf
-{
-	char	*buf;
-	int		buf_i;
-	int		saw_single;
-	int		saw_double;
-	int		saw_unquoted;
-}			t_tok_buf;
 
 static void	commit_buffer(t_token **token, t_tok_buf *tb)
 {
@@ -44,13 +31,6 @@ static void	commit_buffer(t_token **token, t_tok_buf *tb)
 	tb->saw_single = 0;
 	tb->saw_double = 0;
 	tb->saw_unquoted = 0;
-}
-
-static int	skip_dollar_before_quote(const char *s, int i)
-{
-	if (s[i] == '$' && s[i + 1] && (s[i + 1] == '"' || s[i + 1] == '\''))
-		return (i + 1);
-	return (i);
 }
 
 static int	handle_single_quote(const char *s, int i, t_tok_buf *tb)

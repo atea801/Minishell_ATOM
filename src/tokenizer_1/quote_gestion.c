@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 17:35:21 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/24 13:54:00 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/25 16:15:34 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,18 @@ int	handle_quote(t_token **token, char *str, int *start, int end)
 	return (0);
 }
 
+static void	handle_general_utils(char *res, t_token **token)
+{
+	char	*first_token;
+	char	*remaining;
+
+	first_token = ft_strdup("$?");
+	remaining = ft_strdup(res + 2);
+	put_token(token, first_token);
+	put_token(token, remaining);
+	free(res);
+}
+
 /**
  * @brief Gere les cas normaux qui ne sont pas entre des quotes
  * Sépare spécialement $?$ en deux tokens : $? et $
@@ -79,8 +91,6 @@ void	handle_general(t_token **token, char *str, int *start, int i)
 {
 	char	*res;
 	int		j;
-	char	*first_token;
-	char	*remaining;
 
 	if (*start > i)
 		return ;
@@ -91,18 +101,11 @@ void	handle_general(t_token **token, char *str, int *start, int i)
 		j++;
 	if (res[j] == '\0')
 	{
-		free(res);
 		(*start) = i + 1;
-		return ;
+		return (free(res));
 	}
 	if (ft_strlen(res) >= 3 && res[0] == '$' && res[1] == '?' && res[2] != '\0')
-	{
-		first_token = ft_strdup("$?");
-		remaining = ft_strdup(res + 2);
-		put_token(token, first_token);
-		put_token(token, remaining);
-		free(res);
-	}
+		handle_general_utils(res, token);
 	else
 		put_token(token, res);
 	(*start) = i + 1;

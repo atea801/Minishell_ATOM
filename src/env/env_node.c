@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 18:18:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/24 13:23:15 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/25 15:38:40 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,8 +169,7 @@ void	delete_node_list(t_atom_env **env, char *key)
 				free(current->value);
 			if (current->key)
 				free(current->key);
-			free(current);
-			return ;
+			return (free(current));
 		}
 		previous = current;
 		current = current->next;
