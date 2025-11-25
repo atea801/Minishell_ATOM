@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:32:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/25 16:46:45 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/25 18:38:04 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ static void	close_unused_fds(t_cmd *cmd_list, t_cmd *current_cmd)
 	}
 }
 
-static void	execute_child(t_minishell *shell, int num_cmd)
+static void	execute_child(t_minishell *shell, t_cmd *current, int num_cmd)
 {
 	char	*path;
 	char	**env;
 
 	env = env_list_to_tab_new(shell->env);
-	handle_redirections(shell->cmd);
-	close_unused_fds(shell->cmd, shell->cmd);
+	handle_redirections(current);
+	close_unused_fds(shell->cmd, current);
 	if (!shell->cmd->argv || !shell->cmd->argv[0])
 	{
 		free_in_child(shell, env, num_cmd);
@@ -118,7 +118,7 @@ void	execute_multipipe(t_minishell *shell, t_cmd *cmd)
 		{
 			inside_child_security(shell, current, num_cmd, i);
 			free(pids);
-			execute_child(shell, num_cmd);
+			execute_child(shell, current, num_cmd);
 		}
 		current = current->next;
 		close_all_buffer_pipes(shell, pids, num_cmd, i);

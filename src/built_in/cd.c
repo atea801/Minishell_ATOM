@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 14:35:15 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/24 12:56:57 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/25 17:28:26 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ int	cd_init_vars(t_minishell *shell, char **home, char **oldpwd)
 		ft_putstr_fd("Minishell: cd: HOME not set\n", 2);
 		return (1);
 	}
-	if (!*oldpwd)
-	{
-		perror("Minishell: getcwd");
-		return (1);
-	}
+	// if (!*oldpwd)
+	// {
+	// 	perror("Minishell: getcwd");
+	// 	return (1);
+	// }
 	return (0);
 }
 
