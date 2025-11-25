@@ -6,7 +6,7 @@
 #    By: aautret <aautret@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/11/25 17:17:59 by aautret          ###   ########.fr        #
+#    Updated: 2025/11/25 17:35:44 by aautret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,6 +82,7 @@ SRC = src/parsing_1/parsing_1.c \
 		src/signals/signal_handler.c\
 		src/src_utils.c \
 		src/src_utils_2.c \
+		src/get_dynamic_prompt.c \
 		src/main.c \
 
 OBJ = $(SRC:.c=.o)

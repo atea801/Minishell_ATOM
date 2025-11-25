@@ -3,57 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/25 16:32:38 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/25 17:35:01 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
-
-static char	*get_dynamic_prompt_protect(void)
-{
-	char	*directory;
-	char	*prompt_start;
-	char	*prompt_mid;
-	char	*prompt;
-
-	directory = "Minishell";
-	prompt_start = ft_strjoin("\033[1;92m", directory);
-	prompt_mid = ft_strjoin(prompt_start, " > ");
-	prompt = ft_strjoin(prompt_mid, "\033[0m");
-	free(prompt_start);
-	free(prompt_mid);
-	return (prompt);
-}
-
-char	*get_dynamic_prompt(void)
-{
-	char	*cwd;
-	char	*directory;
-	char	*prompt_start;
-	char	*prompt_mid;
-	char	*prompt;
-
-	cwd = getcwd(NULL, 0);
-	if (cwd == NULL)
-		return (get_dynamic_prompt_protect());
-	directory = ft_strrchr(cwd, '/');
-	if (directory && directory[1])
-		directory++;
-	else if (directory && ft_strcmp(cwd, "/") == 0)
-		directory = "/";
-	else
-		directory = "Minishell";
-	prompt_start = ft_strjoin("\033[1;92m", directory);
-	prompt_mid = ft_strjoin(prompt_start, " > ");
-	prompt = ft_strjoin(prompt_mid, "\033[0m");
-	free(cwd);
-	free(prompt_start);
-	free(prompt_mid);
-	return (prompt);
-}
 
 void	res_to_tokenizer1(t_minishell *shell)
 {
@@ -202,6 +159,28 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 	}
 }
 
+static int	init_shell_env(t_minishell *shell, char **env)
+{
+	if (!env || !env[0])
+	{
+		init_token_struct(&shell->tok1, &shell->tok2);
+		shell->env = NULL;
+		create_minimal_env(&shell->env);
+		change_node_list(&shell->env, "SHLVL", "1");
+	}
+	else
+	{
+		if (getenv("_MINISHELL_RUNNING"))
+		{
+			ft_putstr_fd("Error: Cannot run minishell inside minishell\n", 2);
+			return (1);
+		}
+		init_all(&shell->env, &shell->tok1, env, &shell->tok2);
+		change_node_list(&shell->env, "_MINISHELL_RUNNING", "1");
+	}
+	return (0);
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_minishell	shell;
@@ -212,23 +191,8 @@ int	main(int ac, char **av, char **env)
 	shell.exit_code = 0;
 	shell.should_execute = false;
 	shell.should_exit = false;
-	if (!env || !env[0])
-	{
-		init_token_struct(&shell.tok1, &shell.tok2);
-		shell.env = NULL;
-		create_minimal_env(&shell.env);
-		change_node_list(&shell.env, "SHLVL", "1");
-	}
-	else
-	{
-		if (getenv("_MINISHELL_RUNNING"))
-		{
-			ft_putstr_fd("Error: Cannot run minishell inside minishell\n", 2);
-			return (1);
-		}
-		init_all(&shell.env, &shell.tok1, env, &shell.tok2);
-		change_node_list(&shell.env, "_MINISHELL_RUNNING", "1");
-	}
+	if (init_shell_env(&shell, env) != 0)
+		return (1);
 	setup_signals_prompt();
 	my_readline(ac, av, &shell);
 	if (shell.tok1)

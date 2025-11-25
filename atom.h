@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/25 17:17:24 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/25 17:36:25 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -687,6 +687,9 @@ void							execute_multipipe(t_minishell *shell,
 /************************************************************************
  *								SRC										*
  ************************************************************************/
+// get_dynamic_prompt.c
+char							*get_dynamic_prompt(void);
+
 // init.c
 int								init_token_struct(t_token **token_head,
 									t_token_2 **token_2);
