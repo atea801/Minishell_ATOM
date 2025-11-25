@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/24 17:28:29 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/25 13:41:27 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -430,8 +430,7 @@ char							*ft_strjoin_free(char *s1, char *s2);
  ************************************************************************/
 // built-in_dispatcher.c
 int								execute_builtin(t_minishell *shell);
-int								execute_builtin(t_minishell *shell);
-
+void							exec_built_in_child(t_minishell *shell, char** env, int num_cmd);
 // built_in.c
 int								is_builtin(char *cmd);
 int								is_builtin(char *cmd);
@@ -534,7 +533,6 @@ int								unfound_path(t_cmd *cmd, t_minishell *shell);
 int								init_cmd_path(t_cmd *cmd, t_minishell *shell);
 void							close_fds(t_cmd *cmd);
 
-
 // exec_multipipe.c
 void							wait_all_childrens(pid_t *pids, int num_cmds,
 									t_minishell *shell);
@@ -582,6 +580,8 @@ void							free_and_close_before_delim(t_minishell *shell,
 									char *line, int *p_fd);
 void							path_not_found_exe_child(t_minishell *shell,
 									t_cmd *cmd, int num_cmd, char **env);
+void							free_in_child(t_minishell *shell, char **env,
+									int num_cmd);
 
 // exec_heredoc.c
 int								heredoc_detected(t_token_2 *token2);
