@@ -6,11 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/11/25 16:46:21 by aautret          ###   ########.fr       */
-=======
-/*   Updated: 2025/11/25 15:28:09 by tlorette         ###   ########.fr       */
->>>>>>> ce3bc3f80ddc985854d3bdef1133039a357f7c45
+/*   Updated: 2025/11/25 16:59:19 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -296,6 +292,7 @@ char							*malloc_token(int end, int start);
 
 // tokenizer_1.c
 void							tokenizer(t_token *token, char *str);
+int								skip_dollar_before_quote(const char *s, int i);
 
 // check_token.c
 

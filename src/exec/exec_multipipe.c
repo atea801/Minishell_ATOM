@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:32:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/25 16:54:21 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/25 16:56:44 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,13 @@ static void	execute_child(t_minishell *shell, int num_cmd)
 	char	**env;
 
 	env = env_list_to_tab_new(shell->env);
-	handle_redirections(cmd);
-	close_unused_fds(cmd_list, cmd);
-	if (!cmd->argv || !cmd->argv[0])
+	handle_redirections(shell->cmd);
+	close_unused_fds(shell->cmd, shell->cmd);
+	if (!shell->cmd->argv || !shell->cmd->argv[0])
 		return (free_in_child(shell, env, num_cmd), exit(0));
-	if (!cmd->argv[0][0])
+	if (!shell->cmd->argv[0][0])
 		execute_child_utils(shell, env, num_cmd);
-	if (is_builtin(cmd->argv[0]))
-	{
-		shell->cmd = cmd;
+	if (is_builtin(shell->cmd->argv[0]))
 		exec_built_in_child(shell, env, num_cmd);
 	path = find_command_path(shell->cmd->argv[0], shell);
 	if (!path)
