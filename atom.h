@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/25 17:36:25 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/25 18:47:58 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -685,12 +685,16 @@ void							execute_multipipe(t_minishell *shell,
 									t_cmd *cmd);
 
 /************************************************************************
- *								SRC										*
+ *								MAIN_CORE								*
  ************************************************************************/
+// execute_cmd.c
+void							execute_commands_if_ready(t_minishell *shell);
+
 // get_dynamic_prompt.c
 char							*get_dynamic_prompt(void);
 
 // init.c
+int								init_token_1_only(t_token **token_head);
 int								init_token_struct(t_token **token_head,
 									t_token_2 **token_2);
 int								init_env_struct(t_atom_env **env_head);
@@ -699,9 +703,22 @@ void							init_all(t_atom_env **env_head,
 									t_token **token_head, char **env,
 									t_token_2 **token_2);
 
+// myreadline_utils.c
+void							free_all_buffers(t_minishell *shell);
+void							prepare_prompt_and_input(t_minishell *shell);
+int								handle_exit(t_minishell *shell);
+int								handle_parsing_and_errors(t_minishell *shell);
+void							add_input_to_history(t_minishell *shell);
+
+// myreadline.c
+void							my_readline(int ac, char **argv,
+									t_minishell *shell);
+
+/************************************************************************
+ *								SRC										*
+ ************************************************************************/
+
 // src_utils.c
-void							free_all(t_token *token_head,
-									t_atom_env *env_head, t_token_2 *token_2);
 void							free_token_list(t_token *head,
 									t_token_2 *head_2);
 void							free_env_list(t_atom_env *head);
@@ -713,12 +730,8 @@ void							free_all_life(t_minishell *shell);
 void							free_token_1_only(t_token *head);
 void							free_token_2_list(t_token_2 **head_2);
 
-// init.c
-int								init_token_1_only(t_token **token_head);
-
 // main.c
 char							*get_dynamic_prompt(void);
-void							res_to_tokenizer1(t_minishell *shell);
 void							my_readline(int ac, char **argv,
 									t_minishell *shell);
 

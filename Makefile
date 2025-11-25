@@ -6,7 +6,7 @@
 #    By: aautret <aautret@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/11/25 17:35:44 by aautret          ###   ########.fr        #
+#    Updated: 2025/11/25 18:39:28 by aautret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,12 +77,15 @@ SRC = src/parsing_1/parsing_1.c \
 		src/exec/exec_multiple_heredoc.c \
 		src/exec/redirections.c \
 		src/exec/signal_utils.c \
-		src/init.c\
+		src/main_core/execute_cmd.c \
+		src/main_core/get_dynamic_prompt.c \
+		src/main_core/init.c \
+		src/main_core/myreadline_utils.c \
+		src/main_core/myreadline.c \
 		src/signals/setup_signals.c\
 		src/signals/signal_handler.c\
 		src/src_utils.c \
 		src/src_utils_2.c \
-		src/get_dynamic_prompt.c \
 		src/main.c \
 
 OBJ = $(SRC:.c=.o)
