@@ -6,26 +6,26 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 10:00:00 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/24 11:24:47 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/25 10:34:00 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
-static void	quotes_validator_single(t_quote_state_simple state)
+static void	quotes_validator_single(t_quote_state_simple *state)
 {
-	if (state == STATE_SINGLE)
-		state = STATE_NORMAL;
+	if (*state == STATE_SINGLE)
+		*state = STATE_NORMAL;
 	else
-		state = STATE_SINGLE;
+		*state = STATE_SINGLE;
 }
 
-static void	quotes_validator_double(t_quote_state_simple state)
+static void	quotes_validator_double(t_quote_state_simple *state)
 {
-	if (state == STATE_DOUBLE)
-		state = STATE_NORMAL;
+	if (*state == STATE_DOUBLE)
+		*state = STATE_NORMAL;
 	else
-		state = STATE_DOUBLE;
+		*state = STATE_DOUBLE;
 }
 
 /**
@@ -55,11 +55,11 @@ int	validate_quotes_improved(char *input)
 	{
 		if (input[i] == '\'' && state != STATE_DOUBLE)
 		{
-			quotes_validator_single(state);
+			quotes_validator_single(&state);
 		}
 		else if (input[i] == '"' && state != STATE_SINGLE)
 		{
-			quotes_validator_double(state);
+			quotes_validator_double(&state);
 		}
 		i++;
 	}
