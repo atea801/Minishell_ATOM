@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 13:20:42 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/24 14:58:17 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/25 10:19:50 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	write_ctrld_error_msg(t_minishell *shell, char *delimiter, int *p_fd)
 {
 	(void)shell;
-	ft_putstr_fd("minishell: warning: here-document delimited ", 2);
+	ft_putstr_fd("Minishell: warning: here-document delimited ", 2);
 	ft_putstr_fd("by end-of-file (wanted `", 2);
 	ft_putstr_fd(delimiter, 2);
 	ft_putendl_fd("')", 2);
