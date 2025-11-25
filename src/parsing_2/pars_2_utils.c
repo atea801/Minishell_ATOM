@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_2_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 12:42:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/22 16:36:17 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/25 15:48:57 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,14 +115,30 @@ int	open_all_redirs_from_tokens(t_token_2 *tokens, int *fd_in, int *fd_out)
 		{
 			result = open_redir_file(current->type, current->value, fd_in);
 			if (result == -1)
+			{
+				if (*fd_in != -1 && *fd_in != 0)
+					close(*fd_in);
+				if (*fd_out != -1 && *fd_out != 1)
+					close(*fd_out);
+				*fd_in = -1;
+				*fd_out = -1;
 				return (-1);
+			}
 		}
 		else if (ft_strcmp(current->type, "OUTFILE") == 0
 			|| ft_strcmp(current->type, "APPEND") == 0)
 		{
 			result = open_redir_file(current->type, current->value, fd_out);
 			if (result == -1)
+			{
+				if (*fd_in != -1 && *fd_in != 0)
+					close(*fd_in);
+				if (*fd_out != -1 && *fd_out != 1)
+					close(*fd_out);
+				*fd_in = -1;
+				*fd_out = -1;
 				return (-1);
+			}
 		}
 		current = current->next;
 	}

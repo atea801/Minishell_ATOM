@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_single_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 15:44:26 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/25 11:23:34 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/25 15:29:40 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
-void	redirect_input(char *file)
+void	redirect_input(t_minishell *shell, char *file)
 {
 	int	fd;
 
@@ -20,13 +20,15 @@ void	redirect_input(char *file)
 	if (fd == -1)
 	{
 		perror(file);
+		close_fds(shell->cmd);
+		free_all_life(shell);
 		exit(1);
 	}
 	dup2(fd, STDIN_FILENO);
 	close(fd);
 }
 
-void	redirect_output(char *file)
+void	redirect_output(t_minishell *shell, char *file)
 {
 	int	fd;
 
@@ -34,13 +36,15 @@ void	redirect_output(char *file)
 	if (fd == -1)
 	{
 		perror(file);
+		close_fds(shell->cmd);
+		free_all_life(shell);
 		exit(1);
 	}
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
 }
 
-void	redirect_append(char *file)
+void	redirect_append(t_minishell *shell, char *file)
 {
 	int	fd;
 
@@ -48,6 +52,8 @@ void	redirect_append(char *file)
 	if (fd == -1)
 	{
 		perror(file);
+		close_fds(shell->cmd);
+		free_all_life(shell);
 		exit(1);
 	}
 	dup2(fd, STDOUT_FILENO);
@@ -56,15 +62,17 @@ void	redirect_append(char *file)
 
 void	handle_redirections(t_cmd *cmd)
 {
-	if (cmd->fd_in != -1)
+	if (cmd->fd_in != -1 && cmd->fd_in != 0)
 	{
 		dup2(cmd->fd_in, STDIN_FILENO);
 		close(cmd->fd_in);
+		cmd->fd_in = -1;
 	}
-	if (cmd->fd_out != -1)
+	if (cmd->fd_out != -1 && cmd->fd_out != 1)
 	{
 		dup2(cmd->fd_out, STDOUT_FILENO);
 		close(cmd->fd_out);
+		cmd->fd_out = -1;
 	}
 }
 

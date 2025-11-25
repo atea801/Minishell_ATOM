@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:32:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/25 15:48:58 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/25 16:54:21 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ static void	close_unused_fds(t_cmd *cmd_list, t_cmd *current_cmd)
 	}
 }
 
-static void	execute_child(t_minishell *shell, t_cmd *cmd, t_cmd *cmd_list,
-		int num_cmd)
+static void	execute_child(t_minishell *shell, int num_cmd)
 {
 	char	*path;
 	char	**env;
@@ -53,15 +52,14 @@ static void	execute_child(t_minishell *shell, t_cmd *cmd, t_cmd *cmd_list,
 	{
 		shell->cmd = cmd;
 		exec_built_in_child(shell, env, num_cmd);
-	}
-	path = find_command_path(cmd->argv[0], shell);
+	path = find_command_path(shell->cmd->argv[0], shell);
 	if (!path)
-		path_not_found_exe_child(shell, cmd, num_cmd, env);
-	execve(path, cmd->argv, env);
+		path_not_found_exe_child(shell, shell->cmd, num_cmd, env);
+	execve(path, shell->cmd->argv, env);
 	perror("execve");
 	free(path);
 	free_in_child(shell, env, num_cmd);
-	free_cmd_list(cmd);
+	free_cmd_list(shell->cmd);
 	exit(126);
 }
 
@@ -112,7 +110,7 @@ void	execute_multipipe(t_minishell *shell, t_cmd *cmd)
 		{
 			inside_child_security(shell, current, num_cmd, i);
 			free(pids);
-			execute_child(shell, current, cmd, num_cmd);
+			execute_child(shell, num_cmd);
 		}
 		current = current->next;
 		close_all_buffer_pipes(shell, pids, num_cmd, i);

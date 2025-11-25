@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:38:50 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/25 14:31:03 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/25 16:32:38 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,13 +181,13 @@ void	my_readline(int ac, char **argv, t_minishell *shell)
 				free(shell->buffers.input);
 			if (shell->buffers.res)
 				free(shell->buffers.res);
+			if (shell->buffers.prompt)
+				free(shell->buffers.prompt);
 			if (shell->cmd)
 			{
 				free_cmd_list(shell->cmd);
 				shell->cmd = NULL;
 			}
-			if (shell->buffers.prompt)
-				free(shell->buffers.prompt);
 			break ;
 		}
 		if (isatty(STDIN_FILENO) && shell->buffers.input

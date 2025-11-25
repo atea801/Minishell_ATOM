@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 11:42:37 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/24 16:04:57 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/25 15:10:26 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ void	close_all_cmd_fds(t_cmd *cmd_list)
 	current = cmd_list;
 	while (current)
 	{
-		if (current->fd_in != -1)
+		if (current->fd_in != -1 && current->fd_in != 0)
 		{
 			close(current->fd_in);
 			current->fd_in = -1;
 		}
-		if (current->fd_out != -1)
+		if (current->fd_out != -1 && current->fd_out != 1)
 		{
 			close(current->fd_out);
 			current->fd_out = -1;
@@ -96,5 +96,5 @@ void	last_heredoc_checker(t_cmd *cmd, int *p_fd, int index)
 		cmd->fd_in = p_fd[0];
 	}
 	// else
-		// close(p_fd[0]);
+	// close(p_fd[0]);
 }

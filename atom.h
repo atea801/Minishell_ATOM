@@ -6,7 +6,11 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/11/25 16:46:21 by aautret          ###   ########.fr       */
+=======
+/*   Updated: 2025/11/25 15:28:09 by tlorette         ###   ########.fr       */
+>>>>>>> ce3bc3f80ddc985854d3bdef1133039a357f7c45
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -535,15 +539,11 @@ void							execute_child_utils(t_minishell *shell,
 									char **env, int num_cmd);
 
 // exec_single_cmd.c
-void							redirect_input(char *file);
-void							redirect_output(char *file);
-void							redirect_append(char *file);
+void							redirect_input(t_minishell *shell, char *file);
+void							redirect_output(t_minishell *shell, char *file);
+void							redirect_append(t_minishell *shell, char *file);
 void							handle_redirections(t_cmd *cmd);
 void							exec_single_cmd(t_minishell *shell);
-void							redirect_input(char *file);
-void							redirect_output(char *file);
-void							redirect_append(char *file);
-void							handle_redirections(t_cmd *cmd);
 
 // exec_single_utils.c
 int								check_fork_error(t_minishell *shell,
