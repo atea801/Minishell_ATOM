@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 15:44:26 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/24 11:11:58 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/25 11:23:34 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,16 @@ void	exec_single_cmd(t_minishell *shell)
 	pid_t	pid;
 	int		status;
 
-	if (!shell->cmd || !shell->cmd->argv || !shell->cmd->argv[0]
-		|| !shell->cmd->argv[0][0])
+	if (!shell->cmd || !shell->cmd->argv || !shell->cmd->argv[0])
 	{
 		shell->exit_code = 0;
+		return ;
+	}
+	if (!shell->cmd->argv[0][0])
+	{
+		ft_putstr_fd("Minishell: ", 2);
+		ft_putstr_fd(": command not found\n", 2);
+		shell->exit_code = 127;
 		return ;
 	}
 	if (shell->cmd->has_redir_error)
