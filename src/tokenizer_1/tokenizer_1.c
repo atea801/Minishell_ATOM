@@ -6,32 +6,11 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:39:47 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/25 16:47:00 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/25 17:13:55 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
-
-static void	commit_buffer(t_token **token, t_tok_buf *tb)
-{
-	char	*res;
-	int		qtype;
-
-	if (tb->buf_i <= 0 && !tb->saw_single && !tb->saw_double)
-		return ;
-	tb->buf[tb->buf_i] = '\0';
-	res = ft_strdup(tb->buf);
-	qtype = 0;
-	if (tb->saw_single && !tb->saw_double && !tb->saw_unquoted)
-		qtype = 1;
-	else if (tb->saw_double && !tb->saw_single && !tb->saw_unquoted)
-		qtype = 2;
-	put_token_with_quote(token, res, qtype);
-	tb->buf_i = 0;
-	tb->saw_single = 0;
-	tb->saw_double = 0;
-	tb->saw_unquoted = 0;
-}
 
 static int	handle_single_quote(const char *s, int i, t_tok_buf *tb)
 {
@@ -88,46 +67,22 @@ static int	push_operator(t_token **token, const char *s, int i, t_tok_buf *tb)
 	len = ft_strlen(s);
 	commit_buffer(token, tb);
 	if (s[i] == '<' && i + 2 < len && s[i + 1] == '<' && s[i + 2] == '<')
-	{
-		op = malloc(4 * sizeof(char));
-		if (!op)
-			return (len);
-		op[0] = '<';
-		op[1] = '<';
-		op[2] = '<';
-		op[3] = '\0';
-		put_token(token, op);
-		return (i + 3);
-	}
-	if (s[i] == '<' && i + 1 < len && s[i + 1] == '>')
-	{
-		op = malloc(3 * sizeof(char));
-		if (!op)
-			return (len);
-		op[0] = '<';
-		op[1] = '>';
-		op[2] = '\0';
-		put_token(token, op);
-		return (i + 2);
-	}
-	if ((s[i] == '>' && i + 1 < len && s[i + 1] == '>') || (s[i] == '<' && i
-			+ 1 < len && s[i + 1] == '<'))
-	{
-		op = malloc(3 * sizeof(char));
-		if (!op)
-			return (len);
-		op[0] = s[i];
-		op[1] = s[i + 1];
-		op[2] = '\0';
-		put_token(token, op);
-		return (i + 2);
-	}
-	op = malloc(2 * sizeof(char));
+		op = create_heredoc_op();
+	else if (s[i] == '<' && i + 1 < len && s[i + 1] == '>')
+		op = create_lessgreater_op();
+	else if ((s[i] == '>' && i + 1 < len && s[i + 1] == '>') || (s[i] == '<'
+			&& i + 1 < len && s[i + 1] == '<'))
+		op = create_double_op(s[i]);
+	else
+		op = create_single_op(s[i]);
 	if (!op)
 		return (len);
-	op[0] = s[i];
-	op[1] = '\0';
 	put_token(token, op);
+	if (s[i] == '<' && i + 2 < len && s[i + 1] == '<' && s[i + 2] == '<')
+		return (i + 3);
+	if ((s[i] == '<' && i + 1 < len && s[i + 1] == '>') || ((s[i] == '>'
+				|| s[i] == '<') && i + 1 < len && s[i + 1] == s[i]))
+		return (i + 2);
 	return (i + 1);
 }
 

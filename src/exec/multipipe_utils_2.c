@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multipipe_utils_2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 11:42:37 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/25 15:10:26 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/25 17:22:56 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,4 @@ void	last_heredoc_checker(t_cmd *cmd, int *p_fd, int index)
 			close(cmd->fd_in);
 		cmd->fd_in = p_fd[0];
 	}
-	// else
-	// close(p_fd[0]);
 }

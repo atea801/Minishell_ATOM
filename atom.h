@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/25 16:59:19 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/25 17:17:24 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,9 +290,18 @@ int								put_token_with_quote(t_token **token, char *res,
 void							print_token_2_list(t_token_2 *token_2);
 char							*malloc_token(int end, int start);
 
+// push_operator_utils.c
+char							*create_heredoc_op(void);
+char							*create_lessgreater_op(void);
+char							*create_double_op(char c);
+char							*create_single_op(char c);
+
 // tokenizer_1.c
 void							tokenizer(t_token *token, char *str);
+
+// tokenizer_1_utils.c
 int								skip_dollar_before_quote(const char *s, int i);
+void							commit_buffer(t_token **token, t_tok_buf *tb);
 
 // check_token.c
 
