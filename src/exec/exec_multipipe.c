@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:32:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/25 14:31:39 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/25 16:46:45 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,20 @@ static void	close_unused_fds(t_cmd *cmd_list, t_cmd *current_cmd)
 	}
 }
 
-static void	execute_child(t_minishell *shell, t_cmd *cmd, t_cmd *cmd_list,
-		int num_cmd)
+static void	execute_child(t_minishell *shell, int num_cmd)
 {
 	char	*path;
 	char	**env;
 
 	env = env_list_to_tab_new(shell->env);
-	handle_redirections(cmd);
-	close_unused_fds(cmd_list, cmd);
-	if (!cmd->argv || !cmd->argv[0])
+	handle_redirections(shell->cmd);
+	close_unused_fds(shell->cmd, shell->cmd);
+	if (!shell->cmd->argv || !shell->cmd->argv[0])
 	{
 		free_in_child(shell, env, num_cmd);
 		exit(0);
 	}
-	if (!cmd->argv[0][0])
+	if (!shell->cmd->argv[0][0])
 	{
 		ft_putstr_fd("Minishell: ", 2);
 		ft_putstr_fd(": command not found\n", 2);
@@ -59,19 +58,16 @@ static void	execute_child(t_minishell *shell, t_cmd *cmd, t_cmd *cmd_list,
 		free_pipes(shell->buffers.pipes, num_cmd - 1);
 		exit(127);
 	}
-	if (is_builtin(cmd->argv[0]))
-	{
-		shell->cmd = cmd;
+	if (is_builtin(shell->cmd->argv[0]))
 		exec_built_in_child(shell, env, num_cmd);
-	}
-	path = find_command_path(cmd->argv[0], shell);
+	path = find_command_path(shell->cmd->argv[0], shell);
 	if (!path)
-		path_not_found_exe_child(shell, cmd, num_cmd, env);
-	execve(path, cmd->argv, env);
+		path_not_found_exe_child(shell, shell->cmd, num_cmd, env);
+	execve(path, shell->cmd->argv, env);
 	perror("execve");
 	free(path);
 	free_in_child(shell, env, num_cmd);
-	free_cmd_list(cmd);
+	free_cmd_list(shell->cmd);
 	exit(126);
 }
 
@@ -122,7 +118,7 @@ void	execute_multipipe(t_minishell *shell, t_cmd *cmd)
 		{
 			inside_child_security(shell, current, num_cmd, i);
 			free(pids);
-			execute_child(shell, current, cmd, num_cmd);
+			execute_child(shell, num_cmd);
 		}
 		current = current->next;
 		close_all_buffer_pipes(shell, pids, num_cmd, i);
