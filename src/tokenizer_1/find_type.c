@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:18:07 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/24 14:04:14 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/25 11:23:34 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,10 @@ char	*get_token_type(char *res)
 {
 	char	*type;
 
+	if (!res)
+		return (NULL);
+	if (res[0] == '\0')
+		return ("MOT");
 	type = type_expand(res);
 	if (type)
 		return (type);
