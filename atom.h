@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/24 14:58:17 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/24 17:28:29 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -528,16 +528,12 @@ void							handle_redirections(t_cmd *cmd);
 // exec_single_utils.c
 int								check_fork_error(t_minishell *shell,
 									t_cmd *cmd);
-void							secure_exec(t_cmd *cmd, char **tab_to_env);
+void							secure_exec(t_minishell *shell,
+									char **tab_to_env);
 int								unfound_path(t_cmd *cmd, t_minishell *shell);
 int								init_cmd_path(t_cmd *cmd, t_minishell *shell);
 void							close_fds(t_cmd *cmd);
-int								check_fork_error(t_minishell *shell,
-									t_cmd *cmd);
-void							secure_exec(t_cmd *cmd, char **tab_to_env);
-int								unfound_path(t_cmd *cmd, t_minishell *shell);
-int								init_cmd_path(t_cmd *cmd, t_minishell *shell);
-void							close_fds(t_cmd *cmd);
+
 
 // exec_multipipe.c
 void							wait_all_childrens(pid_t *pids, int num_cmds,

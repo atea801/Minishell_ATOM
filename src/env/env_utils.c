@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 11:23:05 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/24 10:57:25 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/24 17:08:49 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,9 @@ char	*get_value(char *env_line)
 		return (NULL);
 	value = ft_strdup(equal_pos + 1);
 	if (!value)
+	{
 		return (NULL);
+	}
 	return (value);
 }
 
