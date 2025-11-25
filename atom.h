@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/25 13:41:27 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/25 15:28:09 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -430,7 +430,8 @@ char							*ft_strjoin_free(char *s1, char *s2);
  ************************************************************************/
 // built-in_dispatcher.c
 int								execute_builtin(t_minishell *shell);
-void							exec_built_in_child(t_minishell *shell, char** env, int num_cmd);
+void							exec_built_in_child(t_minishell *shell,
+									char **env, int num_cmd);
 // built_in.c
 int								is_builtin(char *cmd);
 int								is_builtin(char *cmd);
@@ -514,15 +515,11 @@ int								builtin_unset(t_minishell *shell);
  *								EXEC									*
  ************************************************************************/
 // exec_single_cmd.c
-void							redirect_input(char *file);
-void							redirect_output(char *file);
-void							redirect_append(char *file);
+void							redirect_input(t_minishell *shell, char *file);
+void							redirect_output(t_minishell *shell, char *file);
+void							redirect_append(t_minishell *shell, char *file);
 void							handle_redirections(t_cmd *cmd);
 void							exec_single_cmd(t_minishell *shell);
-void							redirect_input(char *file);
-void							redirect_output(char *file);
-void							redirect_append(char *file);
-void							handle_redirections(t_cmd *cmd);
 
 // exec_single_utils.c
 int								check_fork_error(t_minishell *shell,
