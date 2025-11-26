@@ -6,41 +6,27 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 18:32:10 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/25 18:36:40 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/26 11:02:18 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
-
-void	free_all_buffers(t_minishell *shell)
-{
-	if (shell->cmd)
-	{
-		free_cmd_list(shell->cmd);
-		shell->cmd = NULL;
-	}
-	if (shell->tok1)
-	{
-		free_token_1_only(shell->tok1);
-		shell->tok1 = NULL;
-	}
-	if (shell->tok2)
-	{
-		free_token_2_list(&shell->tok2);
-		shell->tok2 = NULL;
-	}
-	shell->tok1 = NULL;
-	shell->tok2 = NULL;
-	shell->should_execute = false;
-	shell->buffers.prompt = NULL;
-	shell->buffers.input = NULL;
-}
 
 void	prepare_prompt_and_input(t_minishell *shell)
 {
 	shell->buffers.prompt = get_dynamic_prompt();
 	if (isatty(STDIN_FILENO))
 		shell->buffers.input = readline(shell->buffers.prompt);
+}
+
+static void	handle_exit_util(t_minishell *shell)
+{
+	if (shell->buffers.input)
+		free(shell->buffers.input);
+	if (shell->buffers.res)
+		free(shell->buffers.res);
+	if (shell->buffers.prompt)
+		free(shell->buffers.prompt);
 }
 
 int	handle_exit(t_minishell *shell)
@@ -61,12 +47,7 @@ int	handle_exit(t_minishell *shell)
 	}
 	if (shell->should_exit)
 	{
-		if (shell->buffers.input)
-			free(shell->buffers.input);
-		if (shell->buffers.res)
-			free(shell->buffers.res);
-		if (shell->buffers.prompt)
-			free(shell->buffers.prompt);
+		handle_exit_util(shell);
 		if (shell->cmd)
 		{
 			free_cmd_list(shell->cmd);
