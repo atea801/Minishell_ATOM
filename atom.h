@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/25 18:47:58 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/26 11:07:16 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -362,6 +362,9 @@ int								open_all_redirs_from_tokens(t_token_2 *tokens,
 									int *fd_in, int *fd_out);
 int								count_args_to_pipe(t_token_2 *token_2);
 int								check_access_to_file(char *type, char *file);
+
+// pars_2_utils_2.c
+void							secure_fds_after_open(int *fd_in, int *fd_out);
 
 // pars_2.c
 int								parsing_2(t_minishell *shell,

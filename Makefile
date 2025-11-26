@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aautret <aautret@student.42.fr>            +#+  +:+       +#+         #
+#    By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/11/25 18:39:28 by aautret          ###   ########.fr        #
+#    Updated: 2025/11/26 11:09:58 by tlorette         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC = src/parsing_1/parsing_1.c \
 		src/parsing_2/pars_2_cmd_node_utils.c \
 		src/parsing_2/pars_2_cmd_node.c \
 		src/parsing_2/pars_2_utils.c \
+		src/parsing_2/pars_2_utils_2.c \
 		src/parsing_2/pars_2.c \
 		src/parsing_2/token_2_to_cmd.c \
 		src/tokenizer_1/check_token.c \
