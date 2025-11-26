@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:47:58 by codespace         #+#    #+#             */
-/*   Updated: 2025/11/19 13:13:21 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/26 11:50:45 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,23 +64,3 @@ void	my_getenv(t_atom_env **my_env, char **env)
 		i++;
 	}
 }
-
-// int	check_special_case(char *env_line)
-// {
-// 	int		i;
-// 	char	*equal_pos;
-
-// 	i = -1;
-// 	if (env_line[0] == '=')
-// 		return (1);
-// 	equal_pos = ft_strchr(env_line, '=');
-// 	if (ft_strchr(equal_pos + 1, '='))
-// 		return (2);
-// 	while (env_line[++i])
-// 	{
-// 		if (env_line[i] == '=')
-// 			if (env_line[i + 2] != 0)
-// 				return (3);
-// 	}
-// 	return (0);
-// }

@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 13:20:49 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/25 16:42:59 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/26 13:18:10 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,6 @@ void	print_redir_error(t_token **t_head)
 	else if (val[0] == '>')
 		write(2, "Minishell: syntax error near unexpected token `>'\n", 51);
 }
-
-// void	print_redir_error(t_token **error_token)
-// {
-// 	if (!error_token || !*error_token)
-// 		return ;
-// 	if (!(*error_token)->value)
-// 	{
-// 		printf("Minishell: syntax error\n");
-// 		return ;
-// 	}
-// 	printf("Minishell: syntax error near unexpected token `%s'\n",
-// 		(*error_token)->value);
-// }
 
 int	check_redir_in(t_token *t_head)
 {
