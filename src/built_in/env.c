@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 10:41:03 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/26 14:25:45 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/26 14:46:51 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 /**
  * @brief Permet d'afficher l'env mais uniquement les cles
  * associe a une value
- * 
- * @param shell 
- * @return int 
+ *
+ * @param shell
+ * @return int
  */
 int	builtin_env(t_minishell *shell)
 {
@@ -36,7 +36,13 @@ int	builtin_env(t_minishell *shell)
 	while (tmp)
 	{
 		if (tmp->has_value == true && tmp->value != NULL)
-			printf("%s=%s\n", tmp->key, tmp->value);
+		{
+			ft_putstr_fd(tmp->key, 1);
+			ft_putstr_fd("=", 1);
+			ft_putstr_fd(tmp->value, 1);
+			ft_putstr_fd("\n", 1);
+		}
+		// printf("%s=%s\n", tmp->key, tmp->value);
 		tmp = tmp->next;
 	}
 	return (0);
