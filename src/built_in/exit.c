@@ -6,14 +6,14 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 14:20:58 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/24 10:52:37 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/26 11:39:55 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 #include <limits.h>
 
-int	atol_utils(char *str, int i, long res, int sign)
+static int	atol_utils(char *str, int i, long res, int sign)
 {
 	if (!ft_isdigit(str[i]))
 		return (0);

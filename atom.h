@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/26 11:12:26 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/26 11:41:34 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,8 @@ typedef struct s_minishell
 
 ****************************************************************************
 ****************************************************************************/
+int								check_access_to_file(char *type, char *file);
+
 
 /************************************************************************
  *								BUILT_IN								*
@@ -190,44 +192,34 @@ void							cd_with_args_error_print(char *path);
 int								cd_dispatch_case(t_minishell *shell, char *home,
 									char *oldpwd, char *new_pwd);
 int								builtin_cd(t_minishell *shell);
+
+// echo_utils.c
+int								echo_parser(t_cmd *cmd);
+int								search_dollar_in_list(t_token *tok1);
+void							print_echo_args(t_cmd *cmd, int out_fd,
+									int start);
+
 // echo.c
 int								check_echo_dollar(t_minishell *shell);
 int								restore_dollar_in_argv(t_minishell *shell);
 int								builtin_echo(t_minishell *shell);
 int								echo_completed(t_minishell *shell);
-int								check_echo_dollar(t_minishell *shell);
-int								restore_dollar_in_argv(t_minishell *shell);
-int								builtin_echo(t_minishell *shell);
-int								echo_completed(t_minishell *shell);
 
-// echo_utils.c
-int								echo_parser(t_cmd *cmd);
-int								search_dollar_in_list(t_token *tok1);
-int								echo_parser(t_cmd *cmd);
-int								search_dollar_in_list(t_token *tok1);
-int								check_access_to_file(char *type, char *file);
-void							print_echo_args(t_cmd *cmd, int out_fd,
-									int start);
+// env.c
+int								builtin_env(t_minishell *shell);
+
+// exit.c
+int								builtin_exit(t_minishell *shell);
 
 // export.c
 int								builtin_export(t_minishell *shell);
 
 // pwd.c
 int								builtin_pwd(t_minishell *shell);
-int								pwd_parser(t_minishell *shell);
-int								builtin_pwd(t_minishell *shell);
-int								pwd_parser(t_minishell *shell);
-
-// env.c
-int								builtin_env(t_minishell *shell);
-int								builtin_env(t_minishell *shell);
-
-// exit.c
-int								builtin_exit(t_minishell *shell);
-int								builtin_exit(t_minishell *shell);
 
 // unset.c
 int								builtin_unset(t_minishell *shell);
+
 /***************************************************************************
  *								EVIRONNEMENT								*
  ****************************************************************************/
