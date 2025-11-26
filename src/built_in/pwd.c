@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 14:07:37 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/13 14:53:32 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/26 11:41:04 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	pwd_invalid_kind(char *arg)
 	return (0);
 }
 
-int	pwd_parser(t_minishell *shell)
+static int	pwd_parser(t_minishell *shell)
 {
 	int		kind;
 	char	*arg;
