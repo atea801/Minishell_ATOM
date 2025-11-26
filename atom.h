@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/26 11:07:16 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/26 11:28:28 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -546,6 +546,7 @@ int								builtin_unset(t_minishell *shell);
 // exec_utils_2.c
 void							execute_child_utils(t_minishell *shell,
 									char **env, int num_cmd);
+int								exec_single_securities(t_minishell *shell);
 
 // exec_single_cmd.c
 void							redirect_input(t_minishell *shell, char *file);
