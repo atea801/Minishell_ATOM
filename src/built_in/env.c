@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 10:41:03 by aautret           #+#    #+#             */
-/*   Updated: 2025/10/30 17:33:42 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/26 14:25:45 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	builtin_env(t_minishell *shell)
 	tmp = shell->env;
 	if (shell->cmd->argv[1])
 	{
-		write(2, "Atom: env:", 10);
+		write(2, "Minishell: env:", 10);
 		write(2, shell->cmd->argv[1], ft_strlen(shell->cmd->argv[1]));
 		write(2, ": No such file or directory\n", 28);
 		return (1);
