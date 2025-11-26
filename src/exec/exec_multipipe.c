@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:32:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/25 18:53:41 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/26 14:41:20 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,16 @@ static void	execute_child(t_minishell *shell, t_cmd *current, int num_cmd)
 	env = env_list_to_tab_new(shell->env);
 	handle_redirections(current);
 	close_unused_fds(shell->cmd, current);
-	if (!shell->cmd->argv || !shell->cmd->argv[0])
+	if (!current->argv || !current->argv[0])
 		return (free_in_child(shell, env, num_cmd), exit(0));
-	if (!shell->cmd->argv[0][0])
+	if (!current->argv[0][0])
 		execute_child_utils(shell, env, num_cmd);
-	if (is_builtin(shell->cmd->argv[0]))
+	if (is_builtin(current->argv[0]))
 		exec_built_in_child(shell, env, num_cmd);
-	path = find_command_path(shell->cmd->argv[0], shell);
+	path = find_command_path(current->argv[0], shell);
 	if (!path)
-		path_not_found_exe_child(shell, shell->cmd, num_cmd, env);
-	execve(path, shell->cmd->argv, env);
+		path_not_found_exe_child(shell, current, num_cmd, env);
+	execve(path, current->argv, env);
 	perror("execve");
 	free(path);
 	free_in_child(shell, env, num_cmd);

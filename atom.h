@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/26 11:28:28 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/26 11:38:27 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,73 @@ typedef struct s_minishell
 ****************************************************************************
 ****************************************************************************/
 
+/************************************************************************
+ *								BUILT_IN								*
+ ************************************************************************/
+// built-in_dispatcher.c
+int								execute_builtin(t_minishell *shell);
+void							exec_built_in_child(t_minishell *shell,
+									char **env, int num_cmd);
+
+// built_in.c
+int								is_builtin(char *cmd);
+
+// cd_case.c
+int								case_cd_sin_arg(t_minishell *shell, char *home,
+									char *old_pwd, char *new_pwd);
+int								cd_special_case_dash(t_minishell *shell,
+									char *old_pwd, char *new_pwd);
+int								cd_with_args(t_minishell *shell, char *old_pwd,
+									char *new_pwd);
+
+// cd_utils.c
+void							cd_update_env(t_minishell *shell, char *old_pwd,
+									char *new_pwd);
+void							cd_with_args_free(char *old_pwd, char *path);
+void							cd_with_args_error_print(char *path);
+
+// cd.c
+int								cd_dispatch_case(t_minishell *shell, char *home,
+									char *oldpwd, char *new_pwd);
+int								builtin_cd(t_minishell *shell);
+// echo.c
+int								check_echo_dollar(t_minishell *shell);
+int								restore_dollar_in_argv(t_minishell *shell);
+int								builtin_echo(t_minishell *shell);
+int								echo_completed(t_minishell *shell);
+int								check_echo_dollar(t_minishell *shell);
+int								restore_dollar_in_argv(t_minishell *shell);
+int								builtin_echo(t_minishell *shell);
+int								echo_completed(t_minishell *shell);
+
+// echo_utils.c
+int								echo_parser(t_cmd *cmd);
+int								search_dollar_in_list(t_token *tok1);
+int								echo_parser(t_cmd *cmd);
+int								search_dollar_in_list(t_token *tok1);
+int								check_access_to_file(char *type, char *file);
+void							print_echo_args(t_cmd *cmd, int out_fd,
+									int start);
+
+// export.c
+int								builtin_export(t_minishell *shell);
+
+// pwd.c
+int								builtin_pwd(t_minishell *shell);
+int								pwd_parser(t_minishell *shell);
+int								builtin_pwd(t_minishell *shell);
+int								pwd_parser(t_minishell *shell);
+
+// env.c
+int								builtin_env(t_minishell *shell);
+int								builtin_env(t_minishell *shell);
+
+// exit.c
+int								builtin_exit(t_minishell *shell);
+int								builtin_exit(t_minishell *shell);
+
+// unset.c
+int								builtin_unset(t_minishell *shell);
 /***************************************************************************
  *								EVIRONNEMENT								*
  ****************************************************************************/
@@ -453,92 +520,6 @@ void							expand_all_tokens(t_minishell *shell,
 // expand_utils_2.c
 int								var_len(char *s, int start);
 char							*ft_strjoin_free(char *s1, char *s2);
-
-/************************************************************************
- *								BUILT_IN								*
- ************************************************************************/
-// built-in_dispatcher.c
-int								execute_builtin(t_minishell *shell);
-void							exec_built_in_child(t_minishell *shell,
-									char **env, int num_cmd);
-// built_in.c
-int								is_builtin(char *cmd);
-int								is_builtin(char *cmd);
-
-// echo.c
-int								check_echo_dollar(t_minishell *shell);
-int								restore_dollar_in_argv(t_minishell *shell);
-int								builtin_echo(t_minishell *shell);
-int								echo_completed(t_minishell *shell);
-int								check_echo_dollar(t_minishell *shell);
-int								restore_dollar_in_argv(t_minishell *shell);
-int								builtin_echo(t_minishell *shell);
-int								echo_completed(t_minishell *shell);
-
-// echo_utils.c
-int								echo_parser(t_cmd *cmd);
-int								search_dollar_in_list(t_token *tok1);
-int								echo_parser(t_cmd *cmd);
-int								search_dollar_in_list(t_token *tok1);
-int								check_access_to_file(char *type, char *file);
-void							print_echo_args(t_cmd *cmd, int out_fd,
-									int start);
-
-// export.c
-int								builtin_export(t_minishell *shell);
-
-// pwd.c
-int								builtin_pwd(t_minishell *shell);
-int								pwd_parser(t_minishell *shell);
-int								builtin_pwd(t_minishell *shell);
-int								pwd_parser(t_minishell *shell);
-
-// env.c
-int								builtin_env(t_minishell *shell);
-int								builtin_env(t_minishell *shell);
-
-// exit.c
-int								builtin_exit(t_minishell *shell);
-int								builtin_exit(t_minishell *shell);
-
-// cd.c
-int								cd_init_vars(t_minishell *shell, char **home,
-									char **oldpwd);
-int								cd_dispatch_case(t_minishell *shell, char *home,
-									char *oldpwd, char *new_pwd);
-int								builtin_cd(t_minishell *shell);
-int								cd_init_vars(t_minishell *shell, char **home,
-									char **oldpwd);
-int								cd_dispatch_case(t_minishell *shell, char *home,
-									char *oldpwd, char *new_pwd);
-int								builtin_cd(t_minishell *shell);
-
-// cd_utils.c
-void							cd_update_env(t_minishell *shell, char *old_pwd,
-									char *new_pwd);
-void							cd_with_args_free(char *old_pwd, char *path);
-void							cd_with_args_error_print(char *path);
-void							cd_update_env(t_minishell *shell, char *old_pwd,
-									char *new_pwd);
-void							cd_with_args_free(char *old_pwd, char *path);
-void							cd_with_args_error_print(char *path);
-
-// cd_case.c
-int								case_cd_sin_arg(t_minishell *shell, char *home,
-									char *old_pwd, char *new_pwd);
-int								cd_special_case_dash(t_minishell *shell,
-									char *old_pwd, char *new_pwd);
-int								cd_with_args(t_minishell *shell, char *old_pwd,
-									char *new_pwd);
-int								case_cd_sin_arg(t_minishell *shell, char *home,
-									char *old_pwd, char *new_pwd);
-int								cd_special_case_dash(t_minishell *shell,
-									char *old_pwd, char *new_pwd);
-int								cd_with_args(t_minishell *shell, char *old_pwd,
-									char *new_pwd);
-
-// unset.c
-int								builtin_unset(t_minishell *shell);
 
 /************************************************************************
  *								EXEC									*

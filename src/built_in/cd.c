@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 14:35:15 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/25 17:28:26 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/26 11:12:21 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,18 @@
  * @brief Initialise HOME et OLDPWD et recuperant le home depuis l'environnement
  *
  * Fonction utilitaire de builtin_cd
+ * 
+ * 	// if (!*oldpwd)
+	// {
+	// 	perror("Minishell: getcwd");
+	// 	return (1);
+	// }
  * @param shell
  * @param home
  * @param oldpwd
  * @return int
  */
-int	cd_init_vars(t_minishell *shell, char **home, char **oldpwd)
+static int	cd_init_vars(t_minishell *shell, char **home, char **oldpwd)
 {
 	*home = search_in_list(&shell->env, "HOME");
 	*oldpwd = getcwd(NULL, 0);
@@ -30,11 +36,6 @@ int	cd_init_vars(t_minishell *shell, char **home, char **oldpwd)
 		ft_putstr_fd("Minishell: cd: HOME not set\n", 2);
 		return (1);
 	}
-	// if (!*oldpwd)
-	// {
-	// 	perror("Minishell: getcwd");
-	// 	return (1);
-	// }
 	return (0);
 }
 

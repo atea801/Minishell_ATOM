@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 18:34:00 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/25 18:37:45 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/26 10:51:53 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ static void	res_to_tokenizer1(t_minishell *shell)
 	}
 }
 
+static void	prepare_command_data(t_minishell *shell)
+{
+	check_expendable(shell->buffers.res, shell->tok2);
+	expand_all_tokens(shell, shell->tok2);
+	token_2_to_cmd(&shell->cmd, &shell->tok2);
+}
+
 void	execute_commands_if_ready(t_minishell *shell)
 {
 	int	parsing_res;
@@ -41,9 +48,7 @@ void	execute_commands_if_ready(t_minishell *shell)
 	if (parsing_res == 0)
 	{
 		shell->should_execute = true;
-		check_expendable(shell->buffers.res, shell->tok2);
-		expand_all_tokens(shell, shell->tok2);
-		token_2_to_cmd(&shell->cmd, &shell->tok2);
+		prepare_command_data(shell);
 	}
 	if (shell->should_execute && shell->cmd)
 	{
