@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 14:35:15 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/26 10:45:48 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/26 11:12:21 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
  * @param oldpwd
  * @return int
  */
-int	cd_init_vars(t_minishell *shell, char **home, char **oldpwd)
+static int	cd_init_vars(t_minishell *shell, char **home, char **oldpwd)
 {
 	*home = search_in_list(&shell->env, "HOME");
 	*oldpwd = getcwd(NULL, 0);
