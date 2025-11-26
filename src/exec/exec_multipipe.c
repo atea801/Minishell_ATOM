@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_multipipe.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gpollast <gpollast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:32:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/26 17:02:15 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/26 18:08:48 by gpollast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	close_unused_fds(t_cmd *cmd_list, t_cmd *current_cmd)
 	}
 }
 
-static void	execute_child(t_minishell *shell, t_cmd *current, int num_cmd)
+static void	execute_child(t_minishell *shell, t_cmd *current, int num_cmd, t_cmd *cmd)
 {
 	char	*path;
 	char	**env;
@@ -50,7 +50,7 @@ static void	execute_child(t_minishell *shell, t_cmd *current, int num_cmd)
 	if (!current->argv[0][0])
 		execute_child_utils(shell, env, num_cmd);
 	if (is_builtin(current->argv[0]))
-		exec_built_in_child(shell, env, num_cmd);
+		exec_built_in_child(shell, env, num_cmd, cmd);
 	path = find_command_path(current->argv[0], shell);
 	if (!path)
 		path_not_found_exe_child(shell, current, num_cmd, env);
@@ -109,7 +109,7 @@ void	execute_multipipe(t_minishell *shell, t_cmd *cmd)
 		{
 			inside_child_security(shell, current, num_cmd, i);
 			free(pids);
-			execute_child(shell, current, num_cmd);
+			execute_child(shell, current, num_cmd, cmd);
 		}
 		current = current->next;
 		close_all_buffer_pipes(shell, pids, num_cmd, i);

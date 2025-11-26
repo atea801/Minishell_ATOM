@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gpollast <gpollast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/26 13:30:44 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/26 18:08:39 by gpollast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ int								check_access_to_file(char *type, char *file);
 // built-in_dispatcher.c
 int								execute_builtin(t_minishell *shell);
 void							exec_built_in_child(t_minishell *shell,
-									char **env, int num_cmd);
+									char **env, int num_cmd, t_cmd *cmd);
 
 // built_in.c
 int								is_builtin(char *cmd);

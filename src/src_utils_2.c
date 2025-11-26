@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   src_utils_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpollast <gpollast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 10:48:02 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/25 16:00:15 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/26 18:02:51 by gpollast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void	free_all_life(t_minishell *shell)
 	if (shell->cmd)
 		close_all_cmd_fds(shell->cmd);
 	free_env_list(shell->env);
-	free_cmd_list(shell->cmd);
+	if (shell->cmd)
+		free_cmd_list(shell->cmd);
 	free_token_1_only(shell->tok1);
 	free_token_2_list(&shell->tok2);
 	if (shell->buffers.prompt)
