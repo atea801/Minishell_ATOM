@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_expand.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 19:27:38 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/24 16:22:30 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/26 10:59:03 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	expand_all_vars(t_minishell *shell, t_token_2 *token)
 	char	*res;
 	int		k;
 
-	if (ft_strcmp(token->type, "HEREDOC") == 0)
+	if (ft_strcmp(token->type, "HEREDOC_DELIM") == 0)
 		return ;
 	res = expand_vars_loop(shell, token->value, ft_strdup(""));
 	if (!res)
