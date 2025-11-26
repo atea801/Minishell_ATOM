@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 10:41:03 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/26 14:46:51 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/26 15:08:42 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	builtin_env(t_minishell *shell)
 			ft_putstr_fd(tmp->value, 1);
 			ft_putstr_fd("\n", 1);
 		}
-		// printf("%s=%s\n", tmp->key, tmp->value);
 		tmp = tmp->next;
 	}
 	return (0);
