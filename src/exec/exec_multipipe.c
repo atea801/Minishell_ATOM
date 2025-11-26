@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_multipipe.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpollast <gpollast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:32:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/26 18:08:48 by gpollast         ###   ########.fr       */
+/*   Updated: 2025/11/26 18:14:51 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ static void	close_unused_fds(t_cmd *cmd_list, t_cmd *current_cmd)
 	}
 }
 
-static void	execute_child(t_minishell *shell, t_cmd *current, int num_cmd, t_cmd *cmd)
+static void	execute_child(t_minishell *shell, t_cmd *current, int num_cmd,
+		t_cmd *cmd)
 {
 	char	*path;
 	char	**env;
