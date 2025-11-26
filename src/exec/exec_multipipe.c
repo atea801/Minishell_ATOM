@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_multipipe.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:32:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/26 14:41:20 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/26 17:02:15 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static void	execute_child(t_minishell *shell, t_cmd *current, int num_cmd)
 	char	**env;
 
 	env = env_list_to_tab_new(shell->env);
+	shell->cmd = current;
 	handle_redirections(current);
 	close_unused_fds(shell->cmd, current);
 	if (!current->argv || !current->argv[0])
