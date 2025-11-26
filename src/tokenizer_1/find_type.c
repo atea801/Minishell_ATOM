@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_type.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:18:07 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/25 17:54:04 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/26 10:24:00 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ char	*type_mot(char *res)
 			|| res[i] == '.' || res[i] == ':' || res[i] == '/' || res[i] == '_'
 			|| res[i] == '~' || res[i] == '\'' || res[i] == '"' || res[i] == '$'
 			|| res[i] == '=' || res[i] == '+' || res[i] == '@' || res[i] == '%'
-			|| res[i] == ',' || res[i] == ')' || res[i] == '(' || res[i] == '&')
+			|| res[i] == ',' || res[i] == ')' || res[i] == '(' || res[i] == '&'
+			|| res[i] == '!' || res[i] == '#' || res[i] == '^' || res[i] == '*')
 			return ("MOT");
 	}
 	return (NULL);
