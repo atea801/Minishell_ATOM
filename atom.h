@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/26 18:15:34 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/27 14:34:53 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,6 +300,9 @@ void							secure_fd_in_after_heredoc(t_cmd *cmd,
 // exec_multipipe.c
 void							wait_all_childrens(pid_t *pids, int num_cmds,
 									t_minishell *shell);
+int								init_resources(int ***pipes, pid_t **pids,
+									int num_cmd);
+
 void							execute_multipipe(t_minishell *shell,
 									t_cmd *cmd);
 
@@ -311,6 +314,16 @@ int								multiple_heredoc_gestion(t_cmd *cmd,
 									t_minishell *shell, int index);
 int								exec_multiple_heredoc(t_cmd *cmd,
 									t_minishell *shell);
+void							close_unused_fds_heredoc(int *p_fd, t_cmd *cmd,
+									int index);
+
+// exec_multiple_heredoc_utils.c
+void							close_unused_fd0_heredoc(int *p_fd, int index,
+									t_cmd *cmd);
+void							close_unused_fd1_heredoc(int *p_fd, int index,
+									t_cmd *cmd);
+void							check_closing_fd(int *p_fd, int index,
+									t_cmd *cmd);
 
 // exec_single_cmd.c
 void							redirect_input(t_minishell *shell, char *file);

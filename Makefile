@@ -6,7 +6,7 @@
 #    By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/11/26 11:09:58 by tlorette         ###   ########.fr        #
+#    Updated: 2025/11/27 14:37:44 by tlorette         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,6 +76,7 @@ SRC = src/parsing_1/parsing_1.c \
 		src/exec/multipipe_utils_4.c \
 		src/exec/exec_heredoc.c \
 		src/exec/exec_multiple_heredoc.c \
+		src/exec/exec_multipipe_heredoc_utils.c \
 		src/exec/redirections.c \
 		src/exec/signal_utils.c \
 		src/main_core/execute_cmd.c \
