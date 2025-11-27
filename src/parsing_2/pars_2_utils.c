@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 12:42:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/26 11:11:04 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/27 19:07:49 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	open_redir_file(char *type, char *file, int *old_fd)
 		fd = open(file, O_RDONLY);
 	else if (ft_strcmp(type, "OUTFILE") == 0)
 		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else if (ft_strcmp(type, "APPEND") == 0)
+	else if (ft_strcmp(type, "APPEND_FILE") == 0)
 		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else
 		return (-1);
@@ -118,7 +118,7 @@ int	open_all_redirs_from_tokens(t_token_2 *tokens, int *fd_in, int *fd_out)
 				return (secure_fds_after_open(fd_in, fd_out), -1);
 		}
 		else if (ft_strcmp(current->type, "OUTFILE") == 0
-			|| ft_strcmp(current->type, "APPEND") == 0)
+			|| ft_strcmp(current->type, "APPEND_FILE") == 0)
 		{
 			result = open_redir_file(current->type, current->value, fd_out);
 			if (result == -1)
