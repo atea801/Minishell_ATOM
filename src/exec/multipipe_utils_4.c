@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 15:41:38 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/25 18:36:42 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/27 17:08:09 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,11 @@ void	handle_child_status(t_minishell *shell, int status)
 		else
 			shell->exit_code = 128 + WTERMSIG(status);
 	}
+}
+
+void	execute_child_and_close(t_minishell *shell, t_cmd *cmd,
+		t_cmd *current, int num_cmd)
+{
+	close_unused_fds(cmd, current);
+	execute_child(shell, current, num_cmd, cmd);
 }

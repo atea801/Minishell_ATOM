@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/27 14:43:23 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/27 17:09:30 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -381,6 +381,8 @@ void							inside_child_security(t_minishell *shell,
 									t_cmd *current, int num_cmd, int i);
 void							handle_child_status(t_minishell *shell,
 									int status);
+void							execute_child_and_close(t_minishell *shell,
+									t_cmd *cmd, t_cmd *current, int num_cmd);
 
 // multipipe_utils.c
 int								count_commands(t_cmd *cmd_list);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 18:34:00 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/26 10:51:53 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/27 17:09:19 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,12 @@ void	execute_commands_if_ready(t_minishell *shell)
 		count_and_extract_heredocs(shell->cmd);
 		if (process_heredocs(shell->cmd, shell) == 0)
 		{
-			if (shell->cmd->next)
+			if (shell->cmd->next && has_real_command(shell->cmd))
 				execute_multipipe(shell, shell->cmd);
-			else
+			else if (has_real_command(shell->cmd))
 				exec_single_cmd(shell);
 		}
-		else
-			close_all_cmd_fds(shell->cmd);
+		close_all_cmd_fds(shell->cmd);
 	}
 	if (isatty(STDIN_FILENO))
 		setup_signals_prompt();

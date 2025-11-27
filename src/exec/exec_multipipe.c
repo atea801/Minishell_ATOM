@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_multipipe.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:32:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/26 18:14:51 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/27 17:10:28 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	execute_multipipe(t_minishell *shell, t_cmd *cmd)
 		{
 			inside_child_security(shell, current, num_cmd, i);
 			free(pids);
-			execute_child(shell, current, num_cmd, cmd);
+			execute_child_and_close(shell, cmd, current, num_cmd);
 		}
 		current = current->next;
 		close_all_buffer_pipes(shell, pids, num_cmd, i);
