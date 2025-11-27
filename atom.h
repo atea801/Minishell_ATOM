@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/26 18:15:34 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/27 15:04:25 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -481,6 +481,9 @@ int								is_redir(char c);
 
 // parsing_1.c
 char							*parsing_1(t_minishell *shell, char *input);
+
+// separate_patterns.c
+char							*separate_exit_patterns(const char *s);
 
 /************************************************************************
  *								PARSING 2								*

@@ -6,7 +6,7 @@
 /*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 12:10:28 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/25 11:21:36 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/27 15:02:22 by aautret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,25 +52,24 @@ char	*parsing_1(t_minishell *shell, char *input)
 {
 	char	*res_1;
 	char	*res_2;
+	char	*res_3;
 
-	res_1 = add_space_to_operator(input);
+	res_3 = separate_exit_patterns(input);
+	res_1 = add_space_to_operator(res_3);
 	res_2 = clear_input(res_1);
 	free(res_1);
+	free(res_3);
 	if (valide_pipe(res_2))
 	{
 		ft_putstr_fd("Minishell: syntax error near unexpected token `||'\n", 2);
 		add_history(input);
-		free(res_2);
-		shell->exit_code = 2;
-		return (NULL);
+		return (free(res_2), shell->exit_code = 2, NULL);
 	}
 	if (validate_quotes_improved(res_2))
 	{
 		ft_putstr_fd("Minishell: unclosed quotes\n", 2);
 		add_history(input);
-		free(res_2);
-		shell->exit_code = 258;
-		return (NULL);
+		return (free(res_2), shell->exit_code = 258, NULL);
 	}
 	return (res_2);
 }
