@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 18:34:00 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/27 17:11:32 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/27 17:14:25 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,17 @@ static void	prepare_command_data(t_minishell *shell)
 	check_expendable(shell->buffers.res, shell->tok2);
 	expand_all_tokens(shell, shell->tok2);
 	token_2_to_cmd(&shell->cmd, &shell->tok2);
+}
+
+static int	has_real_command(t_cmd *cmd)
+{
+	while (cmd)
+	{
+		if (cmd->argv && cmd->argv[0] && cmd->argv[0][0])
+			return (1);
+		cmd = cmd->next;
+	}
+	return (0);
 }
 
 void	execute_commands_if_ready(t_minishell *shell)

@@ -6,13 +6,13 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:32:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/27 17:10:28 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/27 17:13:43 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "atom.h"
 
-static void	close_unused_fds(t_cmd *cmd_list, t_cmd *current_cmd)
+void	close_unused_fds(t_cmd *cmd_list, t_cmd *current_cmd)
 {
 	t_cmd	*tmp;
 
@@ -36,7 +36,7 @@ static void	close_unused_fds(t_cmd *cmd_list, t_cmd *current_cmd)
 	}
 }
 
-static void	execute_child(t_minishell *shell, t_cmd *current, int num_cmd,
+void	execute_child(t_minishell *shell, t_cmd *current, int num_cmd,
 		t_cmd *cmd)
 {
 	char	*path;

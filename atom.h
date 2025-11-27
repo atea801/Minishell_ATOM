@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:55:24 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/27 17:11:25 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/27 17:13:57 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,7 +300,10 @@ void							secure_fd_in_after_heredoc(t_cmd *cmd,
 // exec_multipipe.c
 void							wait_all_childrens(pid_t *pids, int num_cmds,
 									t_minishell *shell);
-
+void							close_unused_fds(t_cmd *cmd_list,
+									t_cmd *current_cmd);
+void							execute_child(t_minishell *shell,
+									t_cmd *current, int num_cmd, t_cmd *cmd);
 void							execute_multipipe(t_minishell *shell,
 									t_cmd *cmd);
 
