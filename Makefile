@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+         #
+#    By: aautret <aautret@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/23 17:41:33 by aautret           #+#    #+#              #
-#    Updated: 2025/11/27 14:37:44 by tlorette         ###   ########.fr        #
+#    Updated: 2025/11/27 15:06:21 by aautret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRC = src/parsing_1/parsing_1.c \
 		src/parsing_1/quote_validation/quote_validator.c \
 		src/parsing_1/add_redir_space.c \
 		src/parsing_1/parse_1_utils.c \
+		src/parsing_1/separate_patterns.c \
 		src/parsing_2/tokenizer_2/token_2_find_type.c \
 		src/parsing_2/tokenizer_2/token_2_type.c \
 		src/parsing_2/tokenizer_2/tokenizer_2.c \
