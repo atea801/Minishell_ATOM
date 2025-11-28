@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:32:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/28 11:23:41 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/28 14:42:53 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	execute_child(t_minishell *shell, t_cmd *current, int num_cmd,
 		exec_built_in_child(shell, env, num_cmd, cmd);
 	path = find_command_path(current->argv[0], shell);
 	if (!path)
-		path_not_found_exe_child(shell, current, num_cmd, env);
+		path_not_found_exe_child(shell, cmd, num_cmd, env);
 	execve(path, current->argv, env);
 	perror("execve");
 	free(path);

@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 13:20:42 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/25 15:59:05 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/28 14:44:52 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,14 @@ void	path_not_found_exe_child(t_minishell *shell, t_cmd *cmd, int num_cmd,
 {
 	int	len_argv;
 
-	len_argv = ft_strlen(cmd->argv[0]);
+	len_argv = ft_strlen(shell->cmd->argv[0]);
 	write(2, "Minishell : ", 12);
-	write(2, cmd->argv[0], len_argv);
+	write(2, shell->cmd->argv[0], len_argv);
 	write(2, ": command not found\n", 20);
 	free_env_tab(env);
+	free_cmd_list(cmd);
+	cmd = NULL;
+	shell->cmd = NULL;
 	free_all_life(shell);
 	free_pipes(shell->buffers.pipes, num_cmd - 1);
 	exit(127);
