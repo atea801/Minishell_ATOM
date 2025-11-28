@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   myreadline_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautret <aautret@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 18:32:10 by aautret           #+#    #+#             */
-/*   Updated: 2025/11/26 11:02:18 by aautret          ###   ########.fr       */
+/*   Updated: 2025/11/28 12:10:25 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	prepare_prompt_and_input(t_minishell *shell)
 {
 	shell->buffers.prompt = get_dynamic_prompt();
-	if (isatty(STDIN_FILENO))
+	if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO))
 		shell->buffers.input = readline(shell->buffers.prompt);
 }
 
@@ -70,7 +70,10 @@ int	handle_parsing_and_errors(t_minishell *shell)
 		return (1);
 	}
 	if (g_signal_received == 1)
+	{
 		shell->exit_code = 130;
+		g_signal_received = 0;
+	}
 	return (0);
 }
 
