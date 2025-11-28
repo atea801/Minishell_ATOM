@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:32:32 by tlorette          #+#    #+#             */
-/*   Updated: 2025/11/27 17:13:43 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/11/28 11:23:41 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,7 @@ void	wait_all_childrens(pid_t *pids, int num_cmds, t_minishell *shell)
 	while (i < num_cmds)
 	{
 		waitpid(pids[i], &status, 0);
-		if (i == num_cmds - 1)
-			handle_child_status(shell, status);
+		handle_child_status(shell, status);
 		i++;
 	}
 }
